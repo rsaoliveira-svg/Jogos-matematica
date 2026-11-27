@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Estúdio de Algoritmos e Padrões 8º Ano - GET Ministro Gama Filho</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: preserva as fontes do logotipo + tipografia geométrica e monoespaçada do 8º ano -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@600;700&family=IBM+Plex+Mono:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-slate-deep: #0c131d;
+      --surface-slate: #111b29;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-cyan: #06b6d4;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden !important;
+      font-family: 'Space Grotesk', sans-serif;
+      background: radial-gradient(circle at 75% 12%, #132c33 0%, #0c131d 55%, #070b12 100%);
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Grade pontilhada isométrica do Estúdio 8º Ano */
+    .iso-dot-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: radial-gradient(rgba(6, 182, 212, 0.17) 1.3px, transparent 1.3px);
+      background-size: 24px 24px;
+    }
+
+    /* Fontes do Cabeçalho Preservado */
+    .font-logo-get { font-family: 'Fredoka', sans-serif; }
+    .font-logo-ministro { font-family: 'Fredoka', sans-serif; font-style: italic; }
+    .font-logo-gamafilho { font-family: 'Caveat', cursive; }
+    .font-code-math { font-family: 'IBM Plex Mono', monospace; }
+
+    /* Pílula Branca do Cabeçalho (Cores e Marca Preservadas) */
+    .header-pill {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 3px solid #10b981;
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.32), 0 6px 16px rgba(0, 0, 0, 0.48);
+      border-radius: 9999px;
+    }
+
+    /* Chassi Principal Zero-Scroll */
+    .studio-chassis {
+      background: linear-gradient(170deg, rgba(17, 27, 41, 0.96) 0%, rgba(12, 19, 29, 0.98) 100%);
+      border: 2px solid rgba(6, 182, 212, 0.35);
+      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Botões 3D / Técnicos */
+    .btn-tech {
+      border-radius: 11px;
+      font-weight: 700;
+      transition: all 0.13s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.45);
+    }
+    .btn-tech:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+    .btn-tech:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+    }
+    .btn-tech:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #031610;
+      font-weight: 800;
+    }
+    .btn-cyan {
+      background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+      color: #ffffff;
+    }
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0c131d;
+      font-weight: 800;
+    }
+    .btn-indigo {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #ffffff;
+    }
+    .btn-slate {
+      background: #1a2638;
+      color: #e2e8f0;
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    /* Blocos do Fluxograma Algorítmico */
+    .flow-terminal {
+      border-radius: 9999px;
+      background: #0f172a;
+      border: 2px solid #475569;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+      transition: all 0.2s ease;
+    }
+    .flow-io {
+      transform: skewX(-12deg);
+      background: #162236;
+      border: 2px solid #06b6d4;
+      padding: 4px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .flow-io > span {
+      display: inline-block;
+      transform: skewX(12deg);
+    }
+    .flow-process-btn {
+      background: #162338;
+      border: 2px dashed #10b981;
+      border-radius: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      box-shadow: 0 3px 10px rgba(16, 185, 129, 0.16);
+    }
+    .flow-process-btn:hover:not(:disabled) {
+      background: #1d2f4a;
+      border-style: solid;
+      transform: scale(1.03);
+    }
+    .flow-process-btn:disabled {
+      cursor: default;
+      border-style: solid;
+    }
+    .flow-active-pulse {
+      box-shadow: 0 0 18px rgba(6, 182, 212, 0.85) !important;
+      border-color: #38bdf8 !important;
+      background: #0e3a47 !important;
+      transform: scale(1.05);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+    }
+    .shake-card {
+      animation: shakeError 0.32s ease-in-out;
+    }
+
+    #patternCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body class="px-2.5 sm:px-5 py-2 sm:py-2.5 justify-between">
+
+  <!-- Fundo Técnico Pontilhado -->
+  <div class="iso-dot-bg" aria-hidden="true"></div>
+
+  <!-- CABEÇALHO SUPERIOR EM PÍLULA BRANCA (MARCA E CORES PRESERVADAS + CONTADORES DE ACERTOS E ERROS) -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between gap-2 shrink-0 mb-2" style="height: clamp(50px, 8vh, 66px);">
+    <!-- Tag Esquerda 8º Ano -->
+    <div class="hidden xl:flex items-center gap-2 bg-[#111b29]/95 border border-cyan-500/40 px-3 py-1.5 rounded-xl shadow-lg">
+      <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-code-math text-xs font-bold">EF08MA10</span>
+      <span class="text-xs font-bold tracking-wide text-slate-200">Algoritmos & Padrões</span>
+    </div>
+
+    <!-- Pílula Branca Central: GET Ministro Gama Filho | Professor Rafael | Acertos & Erros -->
+    <div class="header-pill h-full px-3.5 sm:px-6 mx-auto flex items-center justify-center gap-2.5 sm:gap-4">
+      <!-- Logotipo GET Ministro Gama Filho (Cores Originais Preservadas) -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1">
+          <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-[#081844] flex items-center justify-center shadow border border-[#102a6e]">
+            <span class="font-logo-get text-base sm:text-xl font-bold text-[#ff2e4c] leading-none">G</span>
+          </div>
+          <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-[#ffe600] flex items-center justify-center shadow border border-[#f5d000]">
+            <span class="font-logo-get text-base sm:text-xl font-bold text-[#ff2e4c] leading-none">E</span>
+          </div>
+          <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-[#00d2ff] flex items-center justify-center shadow border border-[#00b8e6]">
+            <span class="font-logo-get text-base sm:text-xl font-bold text-[#ff2e4c] leading-none">T</span>
+          </div>
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="font-logo-ministro text-xs sm:text-base font-extrabold text-[#ff6a1a] tracking-wide">MINISTRO</span>
+          <span class="font-logo-gamafilho text-lg sm:text-2xl font-bold text-[#111827] -mt-1 ml-1">Gama Filho</span>
+        </div>
+      </div>
+
+      <!-- Divisor vertical azul-marinho -->
+      <div class="w-0.5 sm:w-1 h-7 sm:h-8 bg-[#081844] rounded-full opacity-90"></div>
+
+      <!-- Professor Rafael -->
+      <span class="text-sm sm:text-xl font-extrabold text-[#081844] tracking-tight whitespace-nowrap">
+        Professor Rafael
+      </span>
+
+      <!-- Contadores de Acertos (Estrela Dourada) e Erros (X Vermelho) -->
+      <div class="flex items-center gap-1.5 sm:gap-2 pl-1 sm:pl-2 border-l border-slate-300">
+        <div class="flex items-center gap-1 bg-amber-100 border border-amber-400 px-2 py-0.5 rounded-full" title="Acertos">
+          <span class="text-xs sm:text-sm text-amber-500">★</span>
+          <span id="hitsCounter" class="font-code-math text-xs sm:text-sm font-extrabold text-[#081844]">0</span>
+        </div>
+        <div class="flex items-center gap-1 bg-rose-100 border border-rose-400 px-2 py-0.5 rounded-full" title="Erros">
+          <span class="text-xs sm:text-sm font-black text-rose-600">✕</span>
+          <span id="errorsCounter" class="font-code-math text-xs sm:text-sm font-extrabold text-rose-700">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles Rápidos Direita (Áudio + Tela Cheia) -->
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button onclick="toggleSound()" id="btnSound" class="btn-tech btn-slate px-2.5 py-2 text-xs sm:text-sm" title="Ativar/Desativar Som">
+        🔊
+      </button>
+      <button onclick="toggleFullscreen()" id="btnFullscreen" class="btn-tech btn-cyan px-3 py-2 text-xs sm:text-sm" title="Tela Cheia">
+        <span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CHASSI PRINCIPAL DO ESTÚDIO DE ALGORITMOS E PADRÕES (ZERO-SCROLL 100vw x 100vh) -->
+  <main class="relative z-10 w-full max-w-6xl mx-auto studio-chassis">
+
+    <!-- Faixa Superior de Telemetria -->
+    <div class="bg-[#090f18] border-b border-slate-800/90 px-3 sm:px-5 py-1.5 flex flex-wrap items-center justify-between gap-2 shrink-0">
+      <div class="flex items-center gap-2">
+        <span id="challengeBadge" class="bg-cyan-950 text-cyan-300 border border-cyan-600/50 font-code-math text-xs font-bold px-2.5 py-0.5 rounded-lg">
+          Desafio 1 / 10
+        </span>
+        <span id="patternCategoryLabel" class="text-xs sm:text-sm font-bold text-slate-200 truncate">
+          Torres de Blocos Crescendo
+        </span>
+      </div>
+
+      <!-- Expressão Não Recursiva Gerada pelo Fluxograma -->
+      <div class="flex items-center gap-2 bg-[#131e2e] border border-slate-700/80 px-3 py-0.5 rounded-lg">
+        <span class="text-[11px] font-bold uppercase text-slate-400 hidden md:inline">Regra Geral (n):</span>
+        <span id="liveFormulaDisplay" class="font-code-math text-xs sm:text-sm font-bold text-amber-400">
+          T(n) = (n × 2) + 0
+        </span>
+      </div>
+
+      <!-- Botão Dica Progressiva -->
+      <button onclick="showNextHint()" id="btnHint" class="btn-tech btn-amber px-3 py-1 text-xs">
+        💡 Dica (<span id="hintCounterBadge">0/2</span>)
+      </button>
+    </div>
+
+    <!-- Banner de Dicas Progressivas -->
+    <div id="hintBanner" class="hidden mx-3 sm:mx-4 mt-2 bg-amber-950/90 border border-amber-500/60 text-amber-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 animate-pop">
+      💡 Pista...
+    </div>
+
+    <!-- CORPO CENTRAL DIVIDIDO: OBSERVADOR DE PADRÕES (ESQUERDA) + CONSTRUTOR DE FLUXOGRAMA (DIREITA) -->
+    <div class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3 p-2.5 sm:p-3.5 overflow-hidden">
+
+      <!-- PAINEL ESQUERDO (6 cols): OBSERVADOR VISUAL DE SEQUÊNCIA FIGURAL/NUMÉRICA & TABELA n -> T_n -->
+      <div class="lg:col-span-6 flex flex-col min-h-0 bg-[#0b111b] border border-slate-800 rounded-2xl p-2.5 gap-2 overflow-hidden">
+        <!-- Contexto do Padrão -->
+        <div class="flex items-center justify-between gap-2 shrink-0">
+          <p id="challengeDescription" class="text-xs sm:text-sm text-slate-200 font-semibold leading-snug">
+            Observe a sequência de figuras abaixo e descubra como calcular a quantidade de peças diretamente pela posição n.
+          </p>
+          <button onclick="toggleDecomposeMode()" id="btnDecompose" class="btn-tech btn-slate px-2.5 py-1 text-[11px] shrink-0 border-cyan-500/40 text-cyan-300" title="Destacar núcleo fixo vs. parte que cresce com n">
+            🔍 Decompor em n
+          </button>
+        </div>
+
+        <!-- Canvas Interativo das Figuras 1, 2, 3 e 4 -->
+        <div class="relative flex-1 min-h-0 w-full rounded-xl overflow-hidden bg-[#080d16] border border-slate-800/90">
+          <canvas id="patternCanvas"></canvas>
+        </div>
+
+        <!-- Tabela Posição (n) vs Quantidade (T_n) -->
+        <div class="bg-[#111b29] border border-slate-800 rounded-xl p-2 shrink-0">
+          <div class="grid grid-cols-5 text-center font-code-math text-xs">
+            <div class="text-slate-400 font-bold border-b border-slate-800 pb-1">Posição (n)</div>
+            <div class="text-cyan-300 font-bold border-b border-slate-800 pb-1">n = 1</div>
+            <div class="text-cyan-300 font-bold border-b border-slate-800 pb-1">n = 2</div>
+            <div class="text-cyan-300 font-bold border-b border-slate-800 pb-1">n = 3</div>
+            <div class="text-cyan-300 font-bold border-b border-slate-800 pb-1">n = 4</div>
+
+            <div id="tableMeasureLabel" class="text-emerald-400 font-bold pt-1">Peças (T)</div>
+            <div id="tabT1" class="text-white font-bold pt-1">3</div>
+            <div id="tabT2" class="text-white font-bold pt-1">5</div>
+            <div id="tabT3" class="text-white font-bold pt-1">7</div>
+            <div id="tabT4" class="text-white font-bold pt-1">9</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL DIREITO (6 cols): ETAPA 1 (FLUXOGRAMA ALGORÍTMICO) + ETAPA 2 (PREVISÃO) + RODAPÉ -->
+      <div class="lg:col-span-6 flex flex-col justify-between min-h-0 bg-[#121d2c] border border-slate-800 rounded-2xl p-2.5 sm:p-3 gap-2 overflow-hidden">
+
+        <!-- ETAPA 1: CONSTRUTOR DE FLUXOGRAMA NÃO RECURSIVO -->
+        <div id="step1Box" class="bg-[#0b111b] border-2 border-emerald-500/70 rounded-xl p-2.5 flex flex-col justify-between transition-all shrink-0">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-emerald-400 text-slate-950 inline-flex items-center justify-center font-extrabold text-xs">1</span>
+              Construir Fluxograma (Em Função de n)
+            </span>
+            <span id="step1StatusTag" class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              Clique nos blocos para editar
+            </span>
+          </div>
+
+          <!-- Diagrama de Fluxograma Padronizado -->
+          <div class="flex flex-col items-center gap-1 py-1 bg-[#0e1624] rounded-xl border border-slate-800/90 px-2">
+            <!-- Linha 1: INÍCIO -> Ler posição n -->
+            <div class="flex items-center justify-center gap-2 flex-wrap">
+              <div id="nodeStart" class="flow-terminal">INÍCIO</div>
+              <span class="text-slate-500 font-bold text-xs">➔</span>
+              <div id="nodeInput" class="flow-io font-code-math text-xs font-bold text-cyan-300">
+                <span>Ler posição n</span>
+              </div>
+              <span class="text-slate-500 font-bold text-xs">➔</span>
+              <!-- Bloco de Processamento 1 (Editável: Operação com n) -->
+              <button onclick="cycleOp1()" id="btnFlowOp1" class="flow-process-btn font-code-math text-xs sm:text-sm font-bold text-emerald-300" title="Clique para alternar a operação em função de n">
+                A = n × 2 ▾
+              </button>
+            </div>
+
+            <!-- Seta conectora -->
+            <div class="text-slate-500 font-bold text-xs leading-none">⬇</div>
+
+            <!-- Linha 2: Bloco de Processamento 2 (Editável: Ajuste constante) -> Escrever T -> FIM -->
+            <div class="flex items-center justify-center gap-2 flex-wrap">
+              <button onclick="cycleOp2()" id="btnFlowOp2" class="flow-process-btn font-code-math text-xs sm:text-sm font-bold text-amber-300" title="Clique para alternar o ajuste constante">
+                T = A + 0 ▾
+              </button>
+              <span class="text-slate-500 font-bold text-xs">➔</span>
+              <div id="nodeOutput" class="flow-io font-code-math text-xs font-bold text-cyan-300">
+                <span>Escrever T</span>
+              </div>
+              <span class="text-slate-500 font-bold text-xs">➔</span>
+              <div id="nodeEnd" class="flow-terminal">FIM</div>
+            </div>
+          </div>
+
+          <!-- Resultado da Simulação do Fluxograma + Botão Executar -->
+          <div class="flex items-center justify-between gap-2 mt-2">
+            <div id="flowTraceLog" class="font-code-math text-[11px] text-slate-300 bg-[#131e2e] px-2.5 py-1.5 rounded-lg border border-slate-800 flex-1 truncate">
+              Teste: n=1➔? | n=2➔? | n=3➔?
+            </div>
+            <button onclick="runFlowchartSimulation()" id="btnRunFlow" class="btn-tech btn-emerald px-3 py-1.5 text-xs sm:text-sm shrink-0">
+              ▶ Executar Fluxograma
+            </button>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: APLICAR O FLUXOGRAMA PARA PREVER TERMOS SEGUINTES -->
+        <div id="step2Box" class="bg-[#0b111b] border-2 border-slate-800 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-45">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-cyan-400 text-slate-950 inline-flex items-center justify-center font-extrabold text-xs">2</span>
+              Aplicar Algoritmo nos Termos Seguintes
+            </span>
+            <span id="step2StatusTag" class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-400">
+              Bloqueado
+            </span>
+          </div>
+
+          <p id="predictionInstructionText" class="text-xs text-slate-300 font-semibold leading-snug">
+            Valide primeiro o fluxograma na Etapa 1 para calcular os termos seguintes sem precisar desenhar.
+          </p>
+
+          <!-- Campos de Entrada para Dois Termos Futuros (ex: n=6 e n=12) -->
+          <div class="grid grid-cols-2 gap-2.5 my-auto py-0.5">
+            <div class="bg-[#131e2e] border border-cyan-500/40 rounded-xl px-2.5 py-1.5 flex items-center justify-between gap-2">
+              <label for="inputTermA" id="labelTermA" class="font-code-math text-xs sm:text-sm font-bold text-cyan-300 whitespace-nowrap">
+                n = 6 ➔
+              </label>
+              <input type="number" id="inputTermA" disabled placeholder="?" class="font-code-math w-16 sm:w-20 bg-[#080d16] border border-slate-600 focus:border-cyan-400 rounded-lg px-2 py-1 text-center text-sm font-bold text-amber-300 outline-none" />
+            </div>
+
+            <div class="bg-[#131e2e] border border-emerald-500/40 rounded-xl px-2.5 py-1.5 flex items-center justify-between gap-2">
+              <label for="inputTermB" id="labelTermB" class="font-code-math text-xs sm:text-sm font-bold text-emerald-300 whitespace-nowrap">
+                n = 12 ➔
+              </label>
+              <input type="number" id="inputTermB" disabled placeholder="?" class="font-code-math w-16 sm:w-20 bg-[#080d16] border border-slate-600 focus:border-emerald-400 rounded-lg px-2 py-1 text-center text-sm font-bold text-amber-300 outline-none" />
+            </div>
+          </div>
+
+          <button onclick="verifyFutureTerms()" id="btnVerifyTerms" disabled class="btn-tech btn-cyan w-full py-1.5 text-xs sm:text-sm">
+            ✔ CONFIRMAR TERMOS SEGUINTES
+          </button>
+        </div>
+
+        <!-- RODAPÉ COMPACTO COM OS 4 BOTÕES OBRIGATÓRIOS -->
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="prevChallenge()" id="btnPrev" class="btn-tech btn-slate py-1.5 px-2 text-xs" title="Desafio Anterior">
+            ⬅ Voltar
+          </button>
+          <button onclick="openChallengesModal()" class="btn-tech btn-indigo py-1.5 px-2 text-xs truncate" title="Abrir Mapa dos 10 Desafios">
+            📋 Desafios
+          </button>
+          <button onclick="skipChallenge()" id="btnSkip" class="btn-tech btn-slate py-1.5 px-2 text-xs truncate" title="Pular Desafio">
+            ⏭ Pular
+          </button>
+          <button onclick="nextChallenge()" id="btnNext" class="btn-tech btn-emerald py-1.5 px-2 text-xs truncate" title="Próximo Desafio">
+            Avançar ➡
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL DE CONCLUSÃO DO DESAFIO -->
+  <div id="successModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-[#111b29] border-2 border-emerald-400 rounded-2xl max-w-md w-full p-5 sm:p-6 text-center shadow-2xl animate-pop">
+      <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-3xl flex items-center justify-center mx-auto mb-3">
+        ⚙️
+      </div>
+      <h3 id="modalSuccessTitle" class="text-xl sm:text-2xl font-bold text-white mb-1">
+        Algoritmo Validado!
+      </h3>
+      <p id="modalSuccessDesc" class="text-xs sm:text-sm text-slate-300 font-medium mb-3 leading-relaxed">
+        Explicação da regularidade não recursiva.
+      </p>
+      <div id="modalFormulaSummary" class="font-code-math bg-[#080d16] border border-cyan-500/40 rounded-xl py-2.5 px-3 mb-4 text-xs sm:text-sm font-bold text-emerald-300">
+        T(n) = 2n + 1
+      </div>
+      <button onclick="advanceAfterSuccess()" id="btnModalContinue" class="btn-tech btn-emerald w-full py-2.5 text-sm sm:text-base">
+        Próximo Desafio ➡
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL GRADE DOS 10 DESAFIOS -->
+  <div id="challengesModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-[#111b29] border-2 border-cyan-500/50 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
+      <div class="bg-[#090f18] px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-white">📋 Mapa dos 10 Desafios — 8º Ano</h3>
+          <p class="text-xs text-cyan-300 font-medium">Sequências Não Recursivas e Fluxogramas (EF08MA10 / EF08MA11)</p>
+        </div>
+        <button onclick="closeChallengesModal()" class="btn-tech btn-slate w-8 h-8 text-sm">✕</button>
+      </div>
+      <div id="challengesGrid" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 overflow-y-auto">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="px-5 py-3 bg-[#090f18] border-t border-slate-800 flex items-center justify-between">
+        <span id="modalProgressText" class="text-xs sm:text-sm font-bold text-slate-300">0 de 10 concluídos</span>
+        <button onclick="closeChallengesModal()" class="btn-tech btn-cyan px-4 py-1.5 text-xs sm:text-sm">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE VITÓRIA FINAL (10/10 DESAFIOS) -->
+  <div id="finalVictoryModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-[#111b29] border-2 border-amber-400 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl animate-pop">
+      <div class="text-5xl mb-2">🏆</div>
+      <h2 class="text-2xl font-bold text-white mb-1">Mestre dos Algoritmos — 8º Ano!</h2>
+      <p class="text-xs sm:text-sm text-slate-300 font-medium mb-4">
+        Você identificou todas as regularidades não recursivas e construiu os 10 fluxogramas no <strong>GET Ministro Gama Filho</strong>!
+      </p>
+      <div id="finalStatsBox" class="bg-[#080d16] border border-slate-800 rounded-2xl p-3.5 mb-4 grid grid-cols-2 gap-3">
+        <!-- Preenchido via JS -->
+      </div>
+      <button onclick="restartAllChallenges()" class="btn-tech btn-emerald w-full py-2.5 text-sm sm:text-base">
+        🔄 Jogar Novamente
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * SISTEMA DE ÁUDIO SINTETIZADO (WEB AUDIO API)
+     * ============================================================================
+     */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playSynthSound(type) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(540, now);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
+          osc.start(now);
+          osc.stop(now + 0.055);
+        } else if (type === 'step') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(620, now);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'valid') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(480, now);
+          osc.frequency.setValueAtTime(720, now + 0.08);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (type === 'success') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(554.37, now + 0.09);
+          osc.frequency.setValueAtTime(659.25, now + 0.18);
+          osc.frequency.setValueAtTime(880, now + 0.27);
+          gain.gain.setValueAtTime(0.17, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+          osc.start(now);
+          osc.stop(now + 0.5);
+        } else if (type === 'error') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(185, now);
+          osc.frequency.linearRampToValueAtTime(130, now + 0.22);
+          gain.gain.setValueAtTime(0.11, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+          osc.start(now);
+          osc.stop(now + 0.24);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('btnSound').textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    /**
+     * ============================================================================
+     * TELA CHEIA (FULLSCREEN API)
+     * ============================================================================
+     */
+    function toggleFullscreen() {
+      const el = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('btnFullscreen');
+      btn.innerHTML = document.fullscreenElement
+        ? '<span>🗗</span><span class="hidden sm:inline">Sair Tela Cheia</span>'
+        : '<span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>';
+      setTimeout(resizePatternCanvas, 60);
+    });
+
+    /**
+     * ============================================================================
+     * BANCO DOS 10 DESAFIOS (SEQUÊNCIAS FIGURAIS E NUMÉRICAS NÃO RECURSIVAS)
+     * ============================================================================
+     * Cada desafio define:
+     * - title: nome do padrão
+     * - visualType: desenho geométrico em Canvas ('tower', 'cross', 'tables', 'stairs',
+     *               'squareCore', 'frame', 'triangleDots', 'Lshape', 'numericBoxes', 'mosaicPlus')
+     * - measureLabel: rótulo da grandeza na tabela (ex: "Blocos (T)", "Cadeiras (T)")
+     * - description: texto contextualizado
+     * - op1Options: opções clicáveis no 1º bloco do fluxograma (função direta de n)
+     * - op2Options: opções clicáveis no 2º bloco do fluxograma (ajuste constante)
+     * - correctOp1Idx / correctOp2Idx: índices das opções corretas
+     * - evalFn(n): fórmula matemática exata T(n)
+     * - formulaText: expressão algébrica limpa
+     * - targetN1, targetN2: duas posições futuras para prever na Etapa 2
+     * - hints: 2 pistas progressivas
+     */
+    const CHALLENGES = [
+      {
+        id: 1,
+        title: 'Torres de Blocos com Base Fixa',
+        visualType: 'tower',
+        measureLabel: 'Blocos (T)',
+        description: 'Cada figura tem 1 bloco base amarelo e 2 colunas verdes com n blocos cada. Monte o fluxograma não recursivo para calcular o total de blocos T.',
+        op1Options: [
+          { label: 'A = n × 2', fn: n => n * 2 },
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n²', fn: n => n * n }
+        ],
+        op2Options: [
+          { label: 'T = A + 0', fn: a => a },
+          { label: 'T = A + 1', fn: a => a + 1 },
+          { label: 'T = A + 2', fn: a => a + 2 }
+        ],
+        correctOp1Idx: 0,
+        correctOp2Idx: 1,
+        evalFn: n => 2 * n + 1,
+        formulaText: 'T(n) = 2n + 1',
+        targetN1: 6,
+        targetN2: 12,
+        hints: [
+          'Clique em "🔍 Decompor em n": note que há sempre 1 bloco fixo na base e 2 grupos de n blocos crescendo.',
+          'Dois grupos de n blocos equivalem a A = n × 2. Somando o 1 bloco fixo da base, temos T = A + 1 (ou 2n + 1).'
+        ]
+      },
+      {
+        id: 2,
+        title: 'Cruzes de Ladrilhos',
+        visualType: 'cross',
+        measureLabel: 'Ladrilhos (T)',
+        description: 'Uma cruz de ladrilhos possui 1 ladrilho central e 4 braços iguais de comprimento n. Construa o algoritmo que calcula o total T a partir da posição n.',
+        op1Options: [
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n × 4', fn: n => n * 4 },
+          { label: 'A = n × 5', fn: n => n * 5 }
+        ],
+        op2Options: [
+          { label: 'T = A + 0', fn: a => a },
+          { label: 'T = A + 1', fn: a => a + 1 },
+          { label: 'T = A − 1', fn: a => a - 1 }
+        ],
+        correctOp1Idx: 1,
+        correctOp2Idx: 1,
+        evalFn: n => 4 * n + 1,
+        formulaText: 'T(n) = 4n + 1',
+        targetN1: 5,
+        targetN2: 10,
+        hints: [
+          'Observe que a cruz tem 4 braços (cima, baixo, esquerda, direita), e cada braço tem exatamente n ladrilhos.',
+          'Os 4 braços somam A = n × 4. Adicionando o 1 ladrilho central fixo, obtemos T = A + 1 (4n + 1).'
+        ]
+      },
+      {
+        id: 3,
+        title: 'Mesas Juntas e Cadeiras',
+        visualType: 'tables',
+        measureLabel: 'Cadeiras (T)',
+        description: 'Em um refeitório, n mesas quadradas são enfileiradas lado a lado. Cada mesa acomoda 1 cadeira em cima e 1 embaixo, além de 2 cadeiras fixas nas pontas.',
+        op1Options: [
+          { label: 'A = n × 2', fn: n => n * 2 },
+          { label: 'A = n × 4', fn: n => n * 4 },
+          { label: 'A = n × 3', fn: n => n * 3 }
+        ],
+        op2Options: [
+          { label: 'T = A + 1', fn: a => a + 1 },
+          { label: 'T = A + 2', fn: a => a + 2 },
+          { label: 'T = A + 4', fn: a => a + 4 }
+        ],
+        correctOp1Idx: 0,
+        correctOp2Idx: 1,
+        evalFn: n => 2 * n + 2,
+        formulaText: 'T(n) = 2n + 2',
+        targetN1: 7,
+        targetN2: 15,
+        hints: [
+          'Cada uma das n mesas contribui com 2 cadeiras (uma acima e uma abaixo): A = n × 2.',
+          'Nas duas extremidades esquerda e direita há sempre 2 cadeiras fixas: T = A + 2 (2n + 2).'
+        ]
+      },
+      {
+        id: 4,
+        title: 'Núcleo Quadrado + 2 Pontas',
+        visualType: 'squareCore',
+        measureLabel: 'Pontos (T)',
+        description: 'O padrão forma um quadrado central de lado n (n × n pontos) acompanhado de 2 pontos extras fixos no topo. Monte o fluxograma não recursivo!',
+        op1Options: [
+          { label: 'A = n × 4', fn: n => n * 4 },
+          { label: 'A = n²', fn: n => n * n },
+          { label: 'A = n × 3', fn: n => n * 3 }
+        ],
+        op2Options: [
+          { label: 'T = A + 0', fn: a => a },
+          { label: 'T = A + 1', fn: a => a + 1 },
+          { label: 'T = A + 2', fn: a => a + 2 }
+        ],
+        correctOp1Idx: 1,
+        correctOp2Idx: 2,
+        evalFn: n => n * n + 2,
+        formulaText: 'T(n) = n² + 2',
+        targetN1: 5,
+        targetN2: 8,
+        hints: [
+          'Veja a tabela: 3, 6, 11, 18... Subtraindo 2 de cada termo, surgem os quadrados perfeitos 1, 4, 9, 16 (n²)!',
+          'Use A = n² no primeiro bloco e T = A + 2 no segundo bloco (T = n² + 2).'
+        ]
+      },
+      {
+        id: 5,
+        title: 'Cantoneiras em Formato de L',
+        visualType: 'Lshape',
+        measureLabel: 'Quadrados (T)',
+        description: 'Cada cantoneira em L possui uma haste vertical de n quadrados e uma horizontal de n quadrados que compartilham o vértice do canto (sem contar duas vezes!).',
+        op1Options: [
+          { label: 'A = n × 2', fn: n => n * 2 },
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n²', fn: n => n * n }
+        ],
+        op2Options: [
+          { label: 'T = A + 1', fn: a => a + 1 },
+          { label: 'T = A + 0', fn: a => a },
+          { label: 'T = A − 1', fn: a => a - 1 }
+        ],
+        correctOp1Idx: 0,
+        correctOp2Idx: 2,
+        evalFn: n => 2 * n - 1,
+        formulaText: 'T(n) = 2n − 1',
+        targetN1: 8,
+        targetN2: 20,
+        hints: [
+          'Se somarmos n da haste vertical com n da haste horizontal (A = n × 2), o quadrado do canto foi contado 2 vezes.',
+          'Subtraia 1 para descontar a sobreposição do canto: T = A − 1 (ou 2n − 1).'
+        ]
+      },
+      {
+        id: 6,
+        title: 'Sequência Numérica Linear',
+        visualType: 'numericBoxes',
+        measureLabel: 'Termo (T)',
+        description: 'Analise a sequência numérica não recursiva: 5, 8, 11, 14, ... Construa o fluxograma que calcula diretamente o n-ésimo termo sem precisar dos anteriores.',
+        op1Options: [
+          { label: 'A = n × 2', fn: n => n * 2 },
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n × 5', fn: n => n * 5 }
+        ],
+        op2Options: [
+          { label: 'T = A + 2', fn: a => a + 2 },
+          { label: 'T = A + 3', fn: a => a + 3 },
+          { label: 'T = A − 1', fn: a => a - 1 }
+        ],
+        correctOp1Idx: 1,
+        correctOp2Idx: 0,
+        evalFn: n => 3 * n + 2,
+        formulaText: 'T(n) = 3n + 2',
+        targetN1: 6,
+        targetN2: 11,
+        hints: [
+          'Os termos aumentam de 3 em 3 (5 → 8 → 11 → 14), o que indica multiplicação por 3: A = n × 3.',
+          'Para n = 1, 3 × 1 = 3. Como o 1º termo é 5, falta somar 2: T = A + 2 (3n + 2).'
+        ]
+      },
+      {
+        id: 7,
+        title: 'Molduras Quadradas Vazadas',
+        visualType: 'frame',
+        measureLabel: 'Azulejos (T)',
+        description: 'Uma moldura quadrada de lado (n + 1) tem 4 lados que se encontram nos 4 cantos. Observe a tabela: n=1➔4, n=2➔8, n=3➔12, n=4➔16.',
+        op1Options: [
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n × 4', fn: n => n * 4 },
+          { label: 'A = n²', fn: n => n * n }
+        ],
+        op2Options: [
+          { label: 'T = A + 0', fn: a => a },
+          { label: 'T = A + 4', fn: a => a + 4 },
+          { label: 'T = A − 4', fn: a => a - 4 }
+        ],
+        correctOp1Idx: 1,
+        correctOp2Idx: 0,
+        evalFn: n => 4 * n,
+        formulaText: 'T(n) = 4n',
+        targetN1: 7,
+        targetN2: 15,
+        hints: [
+          'Cada figura pode ser dividida em 4 faixas idênticas de n azulejos girando ao redor do centro!',
+          'Portanto A = n × 4 e o ajuste constante é zero: T = A + 0 (4n).'
+        ]
+      },
+      {
+        id: 8,
+        title: 'Triângulo Equilátero de Pontos (Perímetro)',
+        visualType: 'triangleDots',
+        measureLabel: 'Pontos (T)',
+        description: 'Os pontos formam a borda de um triângulo com (n + 1) pontos em cada lado. Como os 3 vértices são compartilhados, observe: 3, 6, 9, 12...',
+        op1Options: [
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n × 4', fn: n => n * 4 },
+          { label: 'A = n × 2', fn: n => n * 2 }
+        ],
+        op2Options: [
+          { label: 'T = A + 3', fn: a => a + 3 },
+          { label: 'T = A + 0', fn: a => a },
+          { label: 'T = A − 3', fn: a => a - 3 }
+        ],
+        correctOp1Idx: 0,
+        correctOp2Idx: 1,
+        evalFn: n => 3 * n,
+        formulaText: 'T(n) = 3n',
+        targetN1: 9,
+        targetN2: 16,
+        hints: [
+          'Note que 3(n + 1) − 3 vértices repetidos simplifica para 3n + 3 − 3 = 3n!',
+          'Selecione A = n × 3 e T = A + 0.'
+        ]
+      },
+      {
+        id: 9,
+        title: 'Sequência Quadrática Decrescida',
+        visualType: 'numericBoxes',
+        measureLabel: 'Termo (T)',
+        description: 'Observe a sequência numérica: 0, 3, 8, 15, ... Compare cada termo com a área de um quadrado de lado n (1, 4, 9, 16).',
+        op1Options: [
+          { label: 'A = n × 3', fn: n => n * 3 },
+          { label: 'A = n²', fn: n => n * n },
+          { label: 'A = n × 4', fn: n => n * 4 }
+        ],
+        op2Options: [
+          { label: 'T = A + 1', fn: a => a + 1 },
+          { label: 'T = A − 1', fn: a => a - 1 },
+          { label: 'T = A − 2', fn: a => a - 2 }
+        ],
+        correctOp1Idx: 1,
+        correctOp2Idx: 1,
+        evalFn: n => n * n - 1,
+        formulaText: 'T(n) = n² − 1',
+        targetN1: 6,
+        targetN2: 10,
+        hints: [
+          'Para n=1 temos 1² − 1 = 0; para n=2 temos 2² − 1 = 3; para n=3 temos 3² − 1 = 8!',
+          'Escolha A = n² no primeiro bloco e T = A − 1 no segundo bloco (T = n² − 1).'
+        ]
+      },
+      {
+        id: 10,
+        title: 'Desafio Final • Escada Dupla com Patamar',
+        visualType: 'stairs',
+        measureLabel: 'Degraus (T)',
+        description: 'Uma passarela simétrica tem um patamar central fixo de 3 blocos e 2 rampas laterais onde cada lado possui 2n blocos. Monte o algoritmo final!',
+        op1Options: [
+          { label: 'A = n × 2', fn: n => n * 2 },
+          { label: 'A = n × 4', fn: n => n * 4 },
+          { label: 'A = n × 5', fn: n => n * 5 }
+        ],
+        op2Options: [
+          { label: 'T = A + 2', fn: a => a + 2 },
+          { label: 'T = A + 3', fn: a => a + 3 },
+          { label: 'T = A + 4', fn: a => a + 4 }
+        ],
+        correctOp1Idx: 1,
+        correctOp2Idx: 1,
+        evalFn: n => 4 * n + 3,
+        formulaText: 'T(n) = 4n + 3',
+        targetN1: 5,
+        targetN2: 10,
+        hints: [
+          'As 2 rampas laterais de 2n blocos cada somam 2n + 2n = 4n blocos (A = n × 4).',
+          'Juntando os 3 blocos fixos do patamar central, obtemos T = A + 3 (4n + 3)!'
+        ]
+      }
+    ];
+
+    /**
+     * ============================================================================
+     * ESTADO GLOBAL DO JOGO
+     * ============================================================================
+     */
+    const gameState = {
+      idx: 0,
+      completed: Array(CHALLENGES.length).fill(false),
+      hits: 0,
+      errors: 0,
+      hintsUsed: 0,
+      decomposeMode: false,
+
+      step: 1, // 1 = Montar/Executar Fluxograma | 2 = Prever Termos Seguintes
+      op1Idx: 0,
+      op2Idx: 0,
+      isSimulating: false
+    };
+
+    const canvas = document.getElementById('patternCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizePatternCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawPatternScene();
+    }
+
+    window.addEventListener('resize', resizePatternCanvas);
+
+    /**
+     * ============================================================================
+     * CARREGAMENTO DO DESAFIO E CONTROLE DAS ETAPAS
+     * ============================================================================
+     */
+    function loadChallenge(index) {
+      gameState.idx = index;
+      const ch = CHALLENGES[index];
+
+      gameState.step = 1;
+      gameState.op1Idx = 0;
+      gameState.op2Idx = 0;
+      gameState.hintsUsed = 0;
+      gameState.isSimulating = false;
+
+      document.getElementById('hintBanner').classList.add('hidden');
+      document.getElementById('hintCounterBadge').textContent = `0/${ch.hints.length}`;
+      document.getElementById('challengeBadge').textContent = `Desafio ${ch.id} / ${CHALLENGES.length}`;
+      document.getElementById('patternCategoryLabel').textContent = ch.title;
+      document.getElementById('challengeDescription').textContent = ch.description;
+      document.getElementById('tableMeasureLabel').textContent = ch.measureLabel;
+
+      // Preenche tabela n = 1, 2, 3, 4
+      for (let n = 1; n <= 4; n++) {
+        document.getElementById(`tabT${n}`).textContent = ch.evalFn(n);
+      }
+
+      updateFlowBlocksDisplay();
+      configureStepUI();
+
+      document.getElementById('btnPrev').disabled = (index === 0);
+      document.getElementById('btnNext').disabled = (index === CHALLENGES.length - 1);
+
+      drawPatternScene();
+    }
+
+    function updateFlowBlocksDisplay() {
+      const ch = CHALLENGES[gameState.idx];
+      const op1 = ch.op1Options[gameState.op1Idx];
+      const op2 = ch.op2Options[gameState.op2Idx];
+
+      document.getElementById('btnFlowOp1').textContent = `${op1.label} ▾`;
+      document.getElementById('btnFlowOp2').textContent = `${op2.label} ▾`;
+
+      const cleanA = op1.label.replace('A = ', '');
+      const cleanAdj = op2.label.replace('T = A', '');
+      document.getElementById('liveFormulaDisplay').textContent = `T(n) = (${cleanA})${cleanAdj}`;
+
+      document.getElementById('flowTraceLog').textContent = 'Clique em "▶ Executar Fluxograma" para testar n=1, 2, 3';
+    }
+
+    function cycleOp1() {
+      if (gameState.step !== 1 || gameState.isSimulating) return;
+      playSynthSound('click');
+      const ch = CHALLENGES[gameState.idx];
+      gameState.op1Idx = (gameState.op1Idx + 1) % ch.op1Options.length;
+      updateFlowBlocksDisplay();
+    }
+
+    function cycleOp2() {
+      if (gameState.step !== 1 || gameState.isSimulating) return;
+      playSynthSound('click');
+      const ch = CHALLENGES[gameState.idx];
+      gameState.op2Idx = (gameState.op2Idx + 1) % ch.op2Options.length;
+      updateFlowBlocksDisplay();
+    }
+
+    function configureStepUI() {
+      const ch = CHALLENGES[gameState.idx];
+      const s1 = document.getElementById('step1Box');
+      const s2 = document.getElementById('step2Box');
+
+      if (gameState.step === 1) {
+        s1.className = 'bg-[#0b111b] border-2 border-emerald-500/70 rounded-xl p-2.5 flex flex-col justify-between transition-all shrink-0 opacity-100';
+        document.getElementById('step1StatusTag').textContent = 'Clique nos blocos para editar';
+        document.getElementById('step1StatusTag').className = 'text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        document.getElementById('btnFlowOp1').disabled = false;
+        document.getElementById('btnFlowOp2').disabled = false;
+        document.getElementById('btnRunFlow').disabled = false;
+
+        s2.className = 'bg-[#0b111b] border-2 border-slate-800 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-45';
+        document.getElementById('step2StatusTag').textContent = 'Bloqueado';
+        document.getElementById('step2StatusTag').className = 'text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-400';
+        document.getElementById('predictionInstructionText').textContent =
+          'Valide primeiro o fluxograma na Etapa 1 para calcular os termos seguintes sem precisar desenhar.';
+
+        document.getElementById('labelTermA').textContent = `n = ${ch.targetN1} ➔`;
+        document.getElementById('labelTermB').textContent = `n = ${ch.targetN2} ➔`;
+        document.getElementById('inputTermA').value = '';
+        document.getElementById('inputTermB').value = '';
+        document.getElementById('inputTermA').disabled = true;
+        document.getElementById('inputTermB').disabled = true;
+        document.getElementById('btnVerifyTerms').disabled = true;
+      } else {
+        s1.className = 'bg-[#0b111b] border-2 border-emerald-500/45 rounded-xl p-2.5 flex flex-col justify-between transition-all shrink-0 opacity-85';
+        document.getElementById('step1StatusTag').textContent = 'Fluxograma Validado ✔';
+        document.getElementById('btnFlowOp1').disabled = true;
+        document.getElementById('btnFlowOp2').disabled = true;
+        document.getElementById('btnRunFlow').disabled = true;
+
+        s2.className = 'bg-[#0b111b] border-2 border-cyan-400/75 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-100';
+        document.getElementById('step2StatusTag').textContent = 'Algoritmo Liberado';
+        document.getElementById('step2StatusTag').className = 'text-[11px] font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40';
+        document.getElementById('predictionInstructionText').textContent =
+          `Use a regra ${ch.formulaText} para indicar diretamente os valores nas posições n = ${ch.targetN1} e n = ${ch.targetN2}:`;
+
+        document.getElementById('inputTermA').disabled = false;
+        document.getElementById('inputTermB').disabled = false;
+        document.getElementById('btnVerifyTerms').disabled = false;
+        document.getElementById('inputTermA').focus();
+      }
+    }
+
+    /**
+     * ============================================================================
+     * EXECUÇÃO ANIMADA DO FLUXOGRAMA ALGORÍTMICO (ETAPA 1)
+     * ============================================================================
+     */
+    function runFlowchartSimulation() {
+      if (gameState.step !== 1 || gameState.isSimulating) return;
+      gameState.isSimulating = true;
+
+      const ch = CHALLENGES[gameState.idx];
+      const op1 = ch.op1Options[gameState.op1Idx];
+      const op2 = ch.op2Options[gameState.op2Idx];
+
+      const nodes = ['nodeStart', 'nodeInput', 'btnFlowOp1', 'btnFlowOp2', 'nodeOutput', 'nodeEnd'];
+      let stepIdx = 0;
+
+      const traceLog = document.getElementById('flowTraceLog');
+      traceLog.textContent = 'Executando algoritmo...';
+
+      const timer = setInterval(() => {
+        nodes.forEach(id => document.getElementById(id).classList.remove('flow-active-pulse'));
+
+        if (stepIdx < nodes.length) {
+          document.getElementById(nodes[stepIdx]).classList.add('flow-active-pulse');
+          playSynthSound('step');
+          stepIdx++;
+        } else {
+          clearInterval(timer);
+          gameState.isSimulating = false;
+
+          // Calcula saídas geradas pelo algoritmo para n = 1, 2, 3
+          const g1 = op2.fn(op1.fn(1));
+          const g2 = op2.fn(op1.fn(2));
+          const g3 = op2.fn(op1.fn(3));
+
+          const e1 = ch.evalFn(1);
+          const e2 = ch.evalFn(2);
+          const e3 = ch.evalFn(3);
+
+          const isCorrect = (g1 === e1 && g2 === e2 && g3 === e3);
+
+          if (isCorrect) {
+            playSynthSound('valid');
+            traceLog.textContent = `✔ Gerado: n=1➔${g1} | n=2➔${g2} | n=3➔${g3} (Bate com a tabela!)`;
+            traceLog.className = 'font-code-math text-[11px] font-bold text-emerald-300 bg-emerald-950/60 px-2.5 py-1.5 rounded-lg border border-emerald-500/50 flex-1 truncate';
+            gameState.step = 2;
+            configureStepUI();
+          } else {
+            playSynthSound('error');
+            registerError();
+            traceLog.textContent = `✕ Gerou (${g1}, ${g2}, ${g3}), mas o padrão é (${e1}, ${e2}, ${e3})!`;
+            traceLog.className = 'font-code-math text-[11px] font-bold text-rose-300 bg-rose-950/60 px-2.5 py-1.5 rounded-lg border border-rose-500/50 flex-1 truncate';
+
+            const s1 = document.getElementById('step1Box');
+            s1.classList.remove('shake-card');
+            void s1.offsetWidth;
+            s1.classList.add('shake-card');
+          }
+        }
+      }, 150);
+    }
+
+    /**
+     * ============================================================================
+     * VERIFICAÇÃO DOS TERMOS SEGUINTES PREVISTOS PELO ALGORITMO (ETAPA 2)
+     * ============================================================================
+     */
+    function verifyFutureTerms() {
+      if (gameState.step !== 2) return;
+      const ch = CHALLENGES[gameState.idx];
+
+      const valA = parseInt(document.getElementById('inputTermA').value, 10);
+      const valB = parseInt(document.getElementById('inputTermB').value, 10);
+
+      const expA = ch.evalFn(ch.targetN1);
+      const expB = ch.evalFn(ch.targetN2);
+
+      if (valA === expA && valB === expB) {
+        playSynthSound('success');
+        if (!gameState.completed[gameState.idx]) {
+          gameState.completed[gameState.idx] = true;
+          gameState.hits++;
+          document.getElementById('hitsCounter').textContent = gameState.hits;
+        }
+
+        document.getElementById('modalSuccessTitle').textContent = `Desafio ${ch.id} Concluído!`;
+        document.getElementById('modalSuccessDesc').textContent =
+          `Com o fluxograma não recursivo, você previu instantaneamente os termos das posições n = ${ch.targetN1} e n = ${ch.targetN2}!`;
+        document.getElementById('modalFormulaSummary').textContent =
+          `${ch.formulaText}   ➔   T(${ch.targetN1}) = ${expA}   |   T(${ch.targetN2}) = ${expB}`;
+
+        const allDone = gameState.completed.every(Boolean);
+        document.getElementById('btnModalContinue').textContent = allDone
+          ? 'Ver Certificado Final 🏆'
+          : 'Próximo Desafio ➡';
+
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        playSynthSound('error');
+        registerError();
+        const s2 = document.getElementById('step2Box');
+        s2.classList.remove('shake-card');
+        void s2.offsetWidth;
+        s2.classList.add('shake-card');
+      }
+    }
+
+    function registerError() {
+      gameState.errors++;
+      document.getElementById('errorsCounter').textContent = gameState.errors;
+    }
+
+    // Permitir pressionar Enter nos inputs da Etapa 2
+    ['inputTermA', 'inputTermB'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') verifyFutureTerms();
+      });
+    });
+
+    /**
+     * ============================================================================
+     * DICAS PROGRESSIVAS, DECOMPOSIÇÃO VISUAL E NAVEGAÇÃO
+     * ============================================================================
+     */
+    function toggleDecomposeMode() {
+      playSynthSound('click');
+      gameState.decomposeMode = !gameState.decomposeMode;
+      const btn = document.getElementById('btnDecompose');
+      btn.className = gameState.decomposeMode
+        ? 'btn-tech btn-amber px-2.5 py-1 text-[11px] shrink-0'
+        : 'btn-tech btn-slate px-2.5 py-1 text-[11px] shrink-0 border-cyan-500/40 text-cyan-300';
+      drawPatternScene();
+    }
+
+    function showNextHint() {
+      playSynthSound('click');
+      const ch = CHALLENGES[gameState.idx];
+      if (gameState.hintsUsed < ch.hints.length) {
+        gameState.hintsUsed++;
+      } else {
+        gameState.hintsUsed = 1;
+      }
+      document.getElementById('hintCounterBadge').textContent = `${gameState.hintsUsed}/${ch.hints.length}`;
+      const banner = document.getElementById('hintBanner');
+      banner.textContent = `💡 Pista ${gameState.hintsUsed}: ${ch.hints[gameState.hintsUsed - 1]}`;
+      banner.classList.remove('hidden');
+    }
+
+    function prevChallenge() {
+      if (gameState.idx > 0) {
+        playSynthSound('click');
+        loadChallenge(gameState.idx - 1);
+      }
+    }
+
+    function nextChallenge() {
+      if (gameState.idx < CHALLENGES.length - 1) {
+        playSynthSound('click');
+        loadChallenge(gameState.idx + 1);
+      }
+    }
+
+    function skipChallenge() {
+      playSynthSound('click');
+      if (gameState.idx < CHALLENGES.length - 1) {
+        loadChallenge(gameState.idx + 1);
+      } else {
+        const pending = gameState.completed.findIndex(v => !v);
+        loadChallenge(pending !== -1 ? pending : 0);
+      }
+    }
+
+    function advanceAfterSuccess() {
+      const modal = document.getElementById('successModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      if (gameState.completed.every(Boolean)) {
+        showFinalVictory();
+        return;
+      }
+
+      if (gameState.idx < CHALLENGES.length - 1) {
+        loadChallenge(gameState.idx + 1);
+      } else {
+        const pending = gameState.completed.findIndex(v => !v);
+        loadChallenge(pending !== -1 ? pending : 0);
+      }
+    }
+
+    function showFinalVictory() {
+      const done = gameState.completed.filter(Boolean).length;
+      document.getElementById('finalStatsBox').innerHTML = `
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Acertos (★)</div>
+          <div class="font-code-math text-xl font-bold text-amber-400">${gameState.hits} / ${CHALLENGES.length}</div>
+        </div>
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Erros (✕)</div>
+          <div class="font-code-math text-xl font-bold text-rose-400">${gameState.errors}</div>
+        </div>
+      `;
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function restartAllChallenges() {
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      gameState.completed = Array(CHALLENGES.length).fill(false);
+      gameState.hits = 0;
+      gameState.errors = 0;
+      document.getElementById('hitsCounter').textContent = '0';
+      document.getElementById('errorsCounter').textContent = '0';
+      loadChallenge(0);
+    }
+
+    function openChallengesModal() {
+      playSynthSound('click');
+      const grid = document.getElementById('challengesGrid');
+      grid.innerHTML = '';
+
+      CHALLENGES.forEach((ch, idx) => {
+        const done = gameState.completed[idx];
+        const isCurr = idx === gameState.idx;
+        const btn = document.createElement('button');
+        btn.className = `text-left p-3 rounded-xl border-2 transition cursor-pointer flex items-center justify-between ${
+          done
+            ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-100'
+            : isCurr
+              ? 'bg-cyan-950/70 border-cyan-400 text-white'
+              : 'bg-[#080d16] border-slate-800 hover:border-slate-600 text-slate-200'
+        }`;
+        btn.onclick = () => {
+          closeChallengesModal();
+          loadChallenge(idx);
+        };
+        btn.innerHTML = `
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-wider ${done ? 'text-emerald-400' : 'text-cyan-400'}">
+              Desafio ${ch.id} • ${ch.title}
+            </div>
+            <div class="font-code-math text-xs font-bold mt-0.5 text-slate-300">
+              ${done ? ch.formulaText : `Seq: ${ch.evalFn(1)}, ${ch.evalFn(2)}, ${ch.evalFn(3)}, ...`}
+            </div>
+          </div>
+          <span class="text-lg">${done ? '★' : isCurr ? '▶' : '⚙️'}</span>
+        `;
+        grid.appendChild(btn);
+      });
+
+      const doneCount = gameState.completed.filter(Boolean).length;
+      document.getElementById('modalProgressText').textContent = `${doneCount} de ${CHALLENGES.length} concluídos`;
+
+      const modal = document.getElementById('challengesModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeChallengesModal() {
+      const modal = document.getElementById('challengesModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /**
+     * ============================================================================
+     * RENDERIZAÇÃO DAS SEQUÊNCIAS FIGURAIS E NUMÉRICAS EM CANVAS
+     * ============================================================================
+     */
+    function drawPatternScene() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w <= 0 || h <= 0) return;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const ch = CHALLENGES[gameState.idx];
+      const cols = 4;
+      const cellW = w / cols;
+
+      // Legenda de cores no topo do canvas
+      ctx.font = '700 10px "Space Grotesk", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillText('■ Parte Fixa (Constante)', 12, 16);
+      ctx.fillStyle = '#10b981';
+      ctx.fillText('■ Parte Variável (Cresce com n)', 155, 16);
+
+      for (let n = 1; n <= 4; n++) {
+        const cx = cellW * (n - 0.5);
+        const cy = h * 0.53;
+
+        // Divisória vertical entre figuras
+        if (n < 4) {
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.14)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(cellW * n, 24);
+          ctx.lineTo(cellW * n, h - 10);
+          ctx.stroke();
+        }
+
+        drawSingleFigure(ch.visualType, n, cx, cy, cellW, h);
+
+        // Rótulo inferior Fig n
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '700 11px "IBM Plex Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Fig. ${n}`, cx, h - 8);
+      }
+    }
+
+    function drawTile(x, y, size, isFixed) {
+      ctx.fillStyle = isFixed ? '#f59e0b' : '#10b981';
+      ctx.beginPath();
+      ctx.roundRect(x - size / 2, y - size / 2, size - 2, size - 2, 3);
+      ctx.fill();
+    }
+
+    function drawSingleFigure(type, n, cx, cy, cellW, h) {
+      const s = Math.min(13, Math.floor(cellW / 8.5));
+      const gap = gameState.decomposeMode ? 3 : 0;
+
+      if (type === 'tower') {
+        // 1 bloco fixo na base + 2 colunas de n blocos
+        const baseY = cy + (n * s) / 2;
+        drawTile(cx, baseY, s, true);
+        for (let i = 0; i < n; i++) {
+          drawTile(cx - s * 0.6 - gap, baseY - s - gap - i * s, s, false);
+          drawTile(cx + s * 0.6 + gap, baseY - s - gap - i * s, s, false);
+        }
+      } else if (type === 'cross') {
+        // 1 centro fixo + 4 braços de tamanho n
+        drawTile(cx, cy, s, true);
+        for (let i = 1; i <= n; i++) {
+          drawTile(cx, cy - i * s - gap, s, false);
+          drawTile(cx, cy + i * s + gap, s, false);
+          drawTile(cx - i * s - gap, cy, s, false);
+          drawTile(cx + i * s + gap, cy, s, false);
+        }
+      } else if (type === 'tables') {
+        // n mesas no meio + 2n cadeiras cima/baixo + 2 cadeiras pontas fixas
+        const startX = cx - ((n - 1) * s) / 2;
+        drawTile(startX - s - gap, cy, s * 0.85, true);
+        drawTile(startX + n * s + gap, cy, s * 0.85, true);
+        for (let i = 0; i < n; i++) {
+          const mx = startX + i * s;
+          ctx.fillStyle = '#334155';
+          ctx.fillRect(mx - s / 2 + 1, cy - s / 2 + 1, s - 2, s - 2);
+          drawTile(mx, cy - s - gap, s * 0.85, false);
+          drawTile(mx, cy + s + gap, s * 0.85, false);
+        }
+      } else if (type === 'squareCore') {
+        // Quadrado n x n variável + 2 pontos fixos no topo
+        const startX = cx - ((n - 1) * s) / 2;
+        const startY = cy - ((n - 1) * s) / 2 + 6;
+        drawTile(cx - s * 0.6, startY - s - gap, s * 0.9, true);
+        drawTile(cx + s * 0.6, startY - s - gap, s * 0.9, true);
+        for (let r = 0; r < n; r++) {
+          for (let c = 0; c < n; c++) {
+            drawTile(startX + c * s, startY + r * s, s, false);
+          }
+        }
+      } else if (type === 'Lshape') {
+        // L com n na vertical e n na horizontal (canto compartilhado)
+        const ox = cx - ((n - 1) * s) / 2;
+        const oy = cy + ((n - 1) * s) / 2;
+        for (let i = 0; i < n; i++) {
+          drawTile(ox, oy - i * s, s, i === 0);
+          if (i > 0) drawTile(ox + i * s, oy, s, false);
+        }
+      } else if (type === 'frame') {
+        // Moldura vazada de lado (n+1) -> 4n azulejos
+        const side = n + 1;
+        const ox = cx - ((side - 1) * s) / 2;
+        const oy = cy - ((side - 1) * s) / 2;
+        for (let r = 0; r < side; r++) {
+          for (let c = 0; c < side; c++) {
+            if (r === 0 || r === side - 1 || c === 0 || c === side - 1) {
+              drawTile(ox + c * s, oy + r * s, s, false);
+            }
+          }
+        }
+      } else if (type === 'triangleDots') {
+        // Borda de triângulo equilátero com (n+1) pontos por lado
+        const side = n + 1;
+        const radius = Math.min(cellW * 0.34, h * 0.25);
+        const pts = [
+          { x: cx, y: cy - radius },
+          { x: cx - radius * 0.92, y: cy + radius * 0.72 },
+          { x: cx + radius * 0.92, y: cy + radius * 0.72 }
+        ];
+        for (let edge = 0; edge < 3; edge++) {
+          const p1 = pts[edge];
+          const p2 = pts[(edge + 1) % 3];
+          for (let k = 0; k < side - 1; k++) {
+            const t = k / (side - 1);
+            const px = p1.x + (p2.x - p1.x) * t;
+            const py = p1.y + (p2.y - p1.y) * t;
+            drawTile(px, py, s * 0.85, k === 0);
+          }
+        }
+      } else if (type === 'stairs') {
+        // Patamar central fixo de 3 blocos + 2 rampas laterais de 2n
+        drawTile(cx - s, cy, s, true);
+        drawTile(cx, cy, s, true);
+        drawTile(cx + s, cy, s, true);
+        for (let i = 1; i <= n; i++) {
+          drawTile(cx - s - i * s - gap, cy, s, false);
+          drawTile(cx - s - i * s - gap, cy + s, s, false);
+          drawTile(cx + s + i * s + gap, cy, s, false);
+          drawTile(cx + s + i * s + gap, cy + s, s, false);
+        }
+      } else {
+        // Cartão numérico estilizado para sequências puramente numéricas
+        const ch = CHALLENGES[gameState.idx];
+        const val = ch.evalFn(n);
+        ctx.fillStyle = '#132238';
+        ctx.beginPath();
+        ctx.roundRect(cx - 26, cy - 22, 52, 44, 10);
+        ctx.fill();
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 18px "IBM Plex Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(String(val), cx, cy + 6);
+      }
+    }
+
+    window.onload = function () {
+      resizePatternCanvas();
+      loadChallenge(0);
+    };
+  </script>
+</body>
+</html>

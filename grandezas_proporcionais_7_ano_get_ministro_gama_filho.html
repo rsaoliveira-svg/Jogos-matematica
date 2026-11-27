@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Grandezas Proporcionais 7º Ano - GET Ministro Gama Filho</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: preserva as fontes do logotipo + tipografia moderna 7º ano -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #070d1f;
+      --cyan-glow: #06b6d4;
+      --emerald-glow: #10b981;
+      --violet-glow: #8b5cf6;
+      --amber-glow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 15%, #172554 0%, #0b1120 55%, #050814 100%);
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Grade cibernética de fundo estilo 7º Ano Engenharia / Lab */
+    .cyber-grid-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(6, 182, 212, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.08) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    .cyber-glow-orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.28;
+    }
+
+    /* Fontes do Cabeçalho Preservado */
+    .font-logo-get { font-family: 'Fredoka', sans-serif; }
+    .font-logo-ministro { font-family: 'Fredoka', sans-serif; font-style: italic; }
+    .font-logo-gamafilho { font-family: 'Caveat', cursive; }
+    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+
+    /* Pílula Branca do Cabeçalho (Cores e Marca Preservadas) */
+    .header-pill {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 3px solid #06b6d4;
+      box-shadow: 0 0 22px rgba(6, 182, 212, 0.35), 0 6px 16px rgba(0, 0, 0, 0.45);
+      border-radius: 9999px;
+    }
+
+    /* Chassi Principal Glassmorphism Dark 7º Ano */
+    .lab-chassis {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(9, 14, 29, 0.96) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.32);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Botões Modernos Estilo Console Sci-Fi */
+    .btn-lab {
+      border-radius: 12px;
+      font-weight: 800;
+      transition: all 0.14s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .btn-lab:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.12);
+    }
+    .btn-lab:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .btn-lab:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .btn-cyan {
+      background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+    }
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+    }
+    .btn-violet {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+    }
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #090d16;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+    .btn-slate {
+      background: rgba(30, 41, 59, 0.9);
+      color: #e2e8f0;
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    @keyframes popScale {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popScale 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .shake-box {
+      animation: shakeError 0.36s ease-in-out;
+    }
+
+    #propCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body class="px-2.5 sm:px-5 py-2 sm:py-2.5 justify-between">
+
+  <!-- Fundo Cibernético 7º Ano -->
+  <div class="cyber-grid-bg" aria-hidden="true"></div>
+  <div class="cyber-glow-orb w-80 h-80 bg-cyan-500 -top-20 -left-16" aria-hidden="true"></div>
+  <div class="cyber-glow-orb w-96 h-96 bg-violet-600 -bottom-24 -right-16" aria-hidden="true"></div>
+
+  <!-- CABEÇALHO SUPERIOR (MARCA E CORES PRESERVADAS + BADGE 7º ANO) -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between gap-2 shrink-0 mb-2" style="height: clamp(50px, 8vh, 68px);">
+    <!-- Tag Esquerda 7º Ano -->
+    <div class="hidden lg:flex items-center gap-2 bg-slate-900/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full shadow-lg">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-xs font-extrabold tracking-wider text-cyan-300 uppercase">7º Ano • Proporcionalidade</span>
+    </div>
+
+    <!-- Pílula Branca Central com GET Ministro Gama Filho | Professor Rafael -->
+    <div class="header-pill h-full px-4 sm:px-7 mx-auto flex items-center justify-center gap-3 sm:gap-5">
+      <!-- Logotipo GET Ministro Gama Filho (Cores Originais Preservadas) -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#081844] flex items-center justify-center shadow border border-[#102a6e]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">G</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#ffe600] flex items-center justify-center shadow border border-[#f5d000]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">E</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00d2ff] flex items-center justify-center shadow border border-[#00b8e6]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">T</span>
+          </div>
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="font-logo-ministro text-sm sm:text-base font-extrabold text-[#ff6a1a] tracking-wide">MINISTRO</span>
+          <span class="font-logo-gamafilho text-xl sm:text-2xl font-bold text-[#111827] -mt-1 ml-1">Gama Filho</span>
+        </div>
+      </div>
+
+      <!-- Divisor vertical -->
+      <div class="w-0.5 sm:w-1 h-7 sm:h-8 bg-[#081844] rounded-full opacity-90"></div>
+
+      <!-- Professor Rafael -->
+      <span class="text-base sm:text-xl font-extrabold text-[#081844] tracking-tight whitespace-nowrap">
+        Professor Rafael
+      </span>
+    </div>
+
+    <!-- Controles Rápidos Direita (Som + Tela Cheia) -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <button onclick="toggleSound()" id="btnSound" class="btn-lab btn-slate px-2.5 py-2 text-xs sm:text-sm" title="Ativar/Desativar Áudio">
+        🔊
+      </button>
+      <button onclick="toggleFullscreen()" id="btnFullscreen" class="btn-lab btn-cyan px-3 py-2 text-xs sm:text-sm" title="Expandir para Tela Cheia">
+        <span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONSOLE PRINCIPAL DO LABORATÓRIO (100% DA ALTURA RESTANTE, ZERO SCROLL) -->
+  <main id="labChassis" class="relative z-10 w-full max-w-6xl mx-auto lab-chassis">
+
+    <!-- Barra Superior de Telemetria da Missão -->
+    <div class="bg-slate-950/90 border-b border-slate-800 px-3 sm:px-5 py-2 flex flex-wrap items-center justify-between gap-2 shrink-0">
+      <!-- Seletor de Missão e Categoria -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openMissionModal()" class="btn-lab btn-violet px-3 py-1 text-xs sm:text-sm">
+          <span>☰</span> <span id="missionBadge">Caso 1 de 10</span>
+        </button>
+        <span id="scenarioThemeTag" class="hidden sm:inline-block bg-cyan-950 text-cyan-300 border border-cyan-700/60 text-xs font-extrabold px-2.5 py-0.5 rounded-full">
+          Velocidade × Tempo
+        </span>
+      </div>
+
+      <!-- Indicador de Status do Experimento -->
+      <div class="flex items-center gap-2 bg-slate-900 border border-slate-700/80 px-3.5 py-1 rounded-xl">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 hidden md:inline">Status:</span>
+        <span id="statusSummaryDisplay" class="font-mono-tech text-xs sm:text-sm font-extrabold text-amber-400">
+          Etapa 1: Classifique a Proporção
+        </span>
+      </div>
+
+      <!-- Indicadores de Pontuação e Sequência -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="flex items-center gap-1" title="Sequência de acertos">
+          <span class="text-sm">🔥</span>
+          <span id="streakText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-orange-400">0x</span>
+        </div>
+        <div class="flex items-center gap-1" title="Casos concluídos">
+          <span class="text-sm">✅</span>
+          <span id="completedText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-emerald-400">0/10</span>
+        </div>
+        <div class="bg-cyan-950/80 border border-cyan-600/40 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+          <span class="text-[11px] font-bold text-cyan-300">PTS</span>
+          <span id="scoreText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-white">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORPO CENTRAL DIVIDIDO: SIMULADOR EXPERIMENTAL (ESQUERDA) + CONSOLE DE ANÁLISE (DIREITA) -->
+    <div class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3 p-2.5 sm:p-3.5 overflow-hidden">
+
+      <!-- COLUNA ESQUERDA (7 cols): SITUAÇÃO + LABORATÓRIO INTERATIVO DE GRANDEZAS -->
+      <div class="lg:col-span-7 flex flex-col min-h-0 bg-slate-950/75 border border-slate-800 rounded-2xl p-2.5 sm:p-3 relative overflow-hidden">
+        <!-- Cabeçalho da Situação Experimental -->
+        <div class="bg-slate-900/90 border border-cyan-500/30 rounded-xl p-2.5 mb-2 shrink-0">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span id="scenarioTitleLabel" class="text-[11px] font-extrabold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+              <span>🔬</span> Bancada Experimental
+            </span>
+            <button onclick="toggleHint()" id="btnHint" class="btn-lab btn-amber px-2.5 py-0.5 text-xs shrink-0">
+              💡 Dica
+            </button>
+          </div>
+          <p id="scenarioStatementText" class="text-xs sm:text-sm text-slate-100 font-bold leading-snug">
+            Carregando situação experimental...
+          </p>
+        </div>
+
+        <!-- Banner de Dica (Exibido ao clicar em Dica) -->
+        <div id="hintBanner" class="hidden mb-2 bg-amber-950/90 border border-amber-500/60 text-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 animate-pop">
+          💡 Dica carregando...
+        </div>
+
+        <!-- Canvas Interativo da Simulação Física/Matemática -->
+        <div class="relative flex-1 min-h-0 w-full rounded-xl overflow-hidden border border-slate-800/90 bg-[#060b19]">
+          <canvas id="propCanvas"></canvas>
+        </div>
+
+        <!-- Controlador Experimental para Testar Variável Independente (Grandeza X) -->
+        <div class="mt-2 bg-slate-900/95 border border-slate-800 rounded-xl px-3 py-1.5 flex items-center justify-between gap-3 shrink-0">
+          <span id="testSliderLabel" class="text-xs font-extrabold text-cyan-300 whitespace-nowrap">
+            Testar Grandeza A:
+          </span>
+          <div class="flex items-center gap-2 flex-1 max-w-xs">
+            <button onclick="stepTestMultiplier(-1)" class="btn-lab btn-slate w-7 h-7 text-xs font-black">÷2</button>
+            <div class="flex-1 text-center font-mono-tech text-xs sm:text-sm font-extrabold text-white bg-slate-950 py-1 px-2 rounded-lg border border-slate-700" id="liveTelemetryReadout">
+              40 km/h ➔ 6 h
+            </div>
+            <button onclick="stepTestMultiplier(1)" class="btn-lab btn-slate w-7 h-7 text-xs font-black">×2</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA (5 cols): CONSOLE DE CLASSIFICAÇÃO E PREVISÃO -->
+      <div class="lg:col-span-5 flex flex-col justify-between min-h-0 bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-3.5 gap-2 overflow-hidden">
+
+        <!-- ETAPA 1: IDENTIFICAR O COMPORTAMENTO DAS GRANDEZAS (DIRETA OU INVERSA) -->
+        <div id="step1Box" class="bg-slate-950/90 border-2 border-cyan-500/70 rounded-xl p-2.5 sm:p-3 transition-all shrink-0">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-cyan-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">1</span>
+              Classificar Grandezas
+            </span>
+            <span id="step1Badge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              Análise
+            </span>
+          </div>
+
+          <p id="questionClassifyText" class="text-xs text-slate-300 font-semibold mb-2 leading-snug">
+            Teste os botões ÷2 e ×2 na bancada. Essas grandezas são:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button onclick="classifyProportion('direct')" id="btnDirect" class="btn-lab btn-slate py-2 px-2.5 text-xs font-extrabold flex-col leading-tight">
+              <span class="text-sm text-emerald-400">⬆⬆ Diretas</span>
+              <span class="text-[10px] text-slate-400 font-semibold">Dobra A ➔ Dobra B</span>
+            </button>
+            <button onclick="classifyProportion('inverse')" id="btnInverse" class="btn-lab btn-slate py-2 px-2.5 text-xs font-extrabold flex-col leading-tight">
+              <span class="text-sm text-amber-400">⬆⬇ Inversas</span>
+              <span class="text-[10px] text-slate-400 font-semibold">Dobra A ➔ Metade B</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: CALCULAR VALOR PROPORCIONAL NA SITUAÇÃO-PROBLEMA -->
+        <div id="step2Box" class="bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 sm:p-3 flex-1 flex flex-col justify-between transition-all opacity-50">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">2</span>
+              Previsão Proporcional
+            </span>
+            <span id="step2Badge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+              Bloqueado
+            </span>
+          </div>
+
+          <p id="predictionPromptText" class="text-xs text-slate-200 font-bold leading-snug">
+            Classifique primeiro as grandezas na Etapa 1 para liberar a previsão.
+          </p>
+
+          <!-- Seletor Numérico do Resultado -->
+          <div class="flex items-center justify-center gap-3 my-auto py-1">
+            <button onclick="adjustUserAnswer(-1)" id="btnAnsMinus" disabled class="btn-lab btn-slate w-9 h-9 text-lg font-black">−</button>
+            <div class="flex items-center gap-2 bg-slate-900 border-2 border-emerald-500/60 px-4 py-1.5 rounded-xl">
+              <span id="userAnswerDisplay" class="font-mono-tech text-xl sm:text-2xl font-extrabold text-emerald-300">
+                1
+              </span>
+              <span id="answerUnitLabel" class="text-xs font-extrabold text-slate-400">
+                horas
+              </span>
+            </div>
+            <button onclick="adjustUserAnswer(1)" id="btnAnsPlus" disabled class="btn-lab btn-slate w-9 h-9 text-lg font-black">+</button>
+          </div>
+
+          <!-- Botão Principal: Confirmar Previsão -->
+          <button onclick="verifyPrediction()" id="btnVerify" disabled class="btn-lab btn-emerald w-full py-2 text-xs sm:text-sm mt-1">
+            ⚡ VALIDAR CLASSIFICAÇÃO E CÁLCULO
+          </button>
+        </div>
+
+        <!-- Barra Inferior Limpa (Apenas os 4 Botões de Navegação) -->
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="prevMission()" id="btnPrev" class="btn-lab btn-slate py-1.5 px-2 text-xs" title="Voltar">
+            ⬅ Voltar
+          </button>
+          <button onclick="openMissionModal()" class="btn-lab btn-violet py-1.5 px-2 text-xs truncate" title="Ver todas as fases">
+            📋 Fases
+          </button>
+          <button onclick="skipMission()" id="btnSkip" class="btn-lab btn-slate py-1.5 px-2 text-xs truncate" title="Pular fase">
+            ⏭ Pular
+          </button>
+          <button onclick="nextMission()" id="btnNext" class="btn-lab btn-cyan py-1.5 px-2 text-xs truncate" title="Avançar">
+            Avançar ➡
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL DE SUCESSO DA MISSÃO -->
+  <div id="successModal" class="hidden fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-emerald-400 rounded-3xl max-w-md w-full p-5 sm:p-6 text-center shadow-2xl animate-pop">
+      <div id="modalEmojiIcon" class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-3xl flex items-center justify-center mx-auto mb-3">
+        ⚖️
+      </div>
+      <h3 id="modalSuccessTitle" class="text-xl sm:text-2xl font-extrabold text-white mb-1">
+        Análise Confirmada!
+      </h3>
+      <p id="modalSuccessDesc" class="text-xs sm:text-sm text-slate-300 font-semibold mb-3 leading-relaxed">
+        Explicação da relação de proporcionalidade.
+      </p>
+      <div id="modalFormulaCard" class="font-mono-tech bg-slate-950 border border-cyan-500/40 rounded-xl py-2.5 px-3 mb-4 text-xs sm:text-sm font-extrabold text-emerald-300">
+        40 km/h × 6 h = 80 km/h × 3 h = 240 km
+      </div>
+      <button onclick="advanceFromModal()" id="btnModalContinue" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base">
+        Próximo Caso ➡
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: MAPA DOS 10 CASOS DE PROPORCIONALIDADE -->
+  <div id="missionsModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-cyan-500/50 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
+      <div class="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="text-base sm:text-lg font-extrabold text-white">⚖️ Grandezas Proporcionais — 7º Ano</h3>
+          <p class="text-xs text-cyan-300 font-semibold">Classificação em Diretamente e Inversamente Proporcionais</p>
+        </div>
+        <button onclick="closeMissionModal()" class="btn-lab btn-slate w-8 h-8 text-sm">✕</button>
+      </div>
+      <div id="missionsGrid" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 overflow-y-auto">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="px-5 py-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+        <span id="modalProgressSummary" class="text-xs sm:text-sm font-bold text-slate-300">0 de 10 concluídos</span>
+        <button onclick="closeMissionModal()" class="btn-lab btn-cyan px-4 py-1.5 text-xs sm:text-sm">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONCLUSÃO FINAL (10/10 CASOS) -->
+  <div id="finalVictoryModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl animate-pop">
+      <div class="text-5xl mb-2">🏆</div>
+      <h2 class="text-2xl font-extrabold text-white mb-1">Analista de Proporções — 7º Ano!</h2>
+      <p class="text-xs sm:text-sm text-slate-300 font-semibold mb-4">
+        Você classificou e resolveu todos os 10 casos de grandezas diretas e inversas do <strong>GET Ministro Gama Filho</strong>!
+      </p>
+      <div id="finalStatsSummary" class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 mb-4 grid grid-cols-2 gap-3">
+        <!-- Preenchido via JS -->
+      </div>
+      <button onclick="restartWholeLab()" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base">
+        🔄 Reiniciar Experimento
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * SISTEMA DE ÁUDIO SINTETIZADO (WEB AUDIO API - SEM ARQUIVOS EXTERNOS)
+     * ============================================================================
+     */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playLabSound(type) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          gain.gain.setValueAtTime(0.07, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        } else if (type === 'lock') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(480, now);
+          osc.frequency.setValueAtTime(720, now + 0.08);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (type === 'success') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(554.37, now + 0.09);
+          osc.frequency.setValueAtTime(659.25, now + 0.18);
+          osc.frequency.setValueAtTime(880, now + 0.27);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.52);
+          osc.start(now);
+          osc.stop(now + 0.52);
+        } else if (type === 'error') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(185, now);
+          osc.frequency.linearRampToValueAtTime(130, now + 0.24);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+          osc.start(now);
+          osc.stop(now + 0.26);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('btnSound').textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    /**
+     * ============================================================================
+     * TELA CHEIA (FULLSCREEN API)
+     * ============================================================================
+     */
+    function toggleFullscreen() {
+      const el = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('btnFullscreen');
+      btn.innerHTML = document.fullscreenElement
+        ? '<span>🗗</span><span class="hidden sm:inline">Sair Tela Cheia</span>'
+        : '<span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>';
+      setTimeout(resizePropCanvas, 60);
+    });
+
+    /**
+     * ============================================================================
+     * BANCO DOS 10 CASOS EXPERIMENTAIS (GRANDEZAS DIRETAS E INVERSAS - 7º ANO)
+     * ============================================================================
+     * Cada caso possui:
+     * - theme: par de grandezas analisadas
+     * - simType: tipo de simulação visual no canvas ('car', 'pump', 'workers', 'gears', 'scale')
+     * - propType: 'direct' | 'inverse'
+     * - baseA, unitA: valor inicial da grandeza independente A
+     * - baseB, unitB: valor inicial da grandeza dependente B
+     * - statement: situação contextualizada
+     * - targetPrompt: pergunta da Etapa 2
+     * - targetAnswer: resposta numérica esperada
+     * - stepAns: incremento nos botões −/+ da Etapa 2
+     * - hint: dica explicativa
+     * - summaryFormula: resumo matemático exibido na aprovação
+     */
+    const MISSIONS = [
+      {
+        id: 1,
+        theme: 'Velocidade × Tempo (Mesma Distância)',
+        simType: 'car',
+        propType: 'inverse',
+        baseA: 40, unitA: 'km/h',
+        baseB: 6, unitB: 'horas',
+        statement: 'Um ônibus escolar faz uma viagem fixa de 240 km. A 40 km/h, ele leva 6 horas.',
+        targetPrompt: 'Se a velocidade dobrar para 80 km/h na mesma viagem, em quantas horas ele chegará?',
+        targetAnswer: 3,
+        initGuess: 6,
+        stepAns: 1,
+        hint: 'Ao DOBRAR a velocidade (×2), o tempo de viagem cai pela METADE (÷2). Como variam em sentidos opostos, são Inversamente Proporcionais!',
+        summaryFormula: 'Inversa (⬆⬇): 40 km/h × 6 h = 80 km/h × 3 h = 240 km'
+      },
+      {
+        id: 2,
+        theme: 'Quantidade × Valor Total',
+        simType: 'scale',
+        propType: 'direct',
+        baseA: 2, unitA: 'cadernos',
+        baseB: 18, unitB: 'reais',
+        statement: 'Na papelaria do bairro, 2 cadernos universitários idênticos custam R$ 18.',
+        targetPrompt: 'Quanto custarão 6 desses mesmos cadernos (o triplo da quantidade)?',
+        targetAnswer: 54,
+        initGuess: 36,
+        stepAns: 6,
+        hint: 'Se a quantidade de cadernos TRIPLICA (×3), o valor a pagar também TRIPLICA (×3): 18 × 3 = 54 reais. São Diretamente Proporcionais!',
+        summaryFormula: 'Direta (⬆⬆): 2 cadernos / R$ 18 = 6 cadernos / R$ 54'
+      },
+      {
+        id: 3,
+        theme: 'Nº de Torneiras × Tempo para Encher',
+        simType: 'pump',
+        propType: 'inverse',
+        baseA: 2, unitA: 'torneiras',
+        baseB: 12, unitB: 'minutos',
+        statement: 'Duas torneiras iguais abertas juntas enchem um reservatório do GET em 12 minutos.',
+        targetPrompt: 'Abrindo 4 torneiras iguais juntas (o dobro), em quantos minutos o tanque encherá?',
+        targetAnswer: 6,
+        initGuess: 12,
+        stepAns: 1,
+        hint: 'Com o DOBRO de torneiras jogando água (×2), o tempo necessário cai pela METADE (÷2): 12 ÷ 2 = 6 minutos. Grandezas Inversamente Proporcionais!',
+        summaryFormula: 'Inversa (⬆⬇): 2 torneiras × 12 min = 4 torneiras × 6 min'
+      },
+      {
+        id: 4,
+        theme: 'Tempo × Distância (Velocidade Constante)',
+        simType: 'car',
+        propType: 'direct',
+        baseA: 2, unitA: 'horas',
+        baseB: 120, unitB: 'km',
+        statement: 'Mantendo velocidade constante de 60 km/h, um carro percorre 120 km em 2 horas.',
+        targetPrompt: 'Mantendo essa mesma velocidade por 5 horas, quantos quilômetros ele percorrerá?',
+        targetAnswer: 300,
+        initGuess: 240,
+        stepAns: 30,
+        hint: 'A velocidade é fixa (60 km/h): quanto MAIOR o tempo viajando, MAIOR a distância percorrida (60 × 5 = 300 km). São Diretamente Proporcionais!',
+        summaryFormula: 'Direta (⬆⬆): 120 km / 2 h = 300 km / 5 h = 60 km/h'
+      },
+      {
+        id: 5,
+        theme: 'Operários × Dias de Trabalho',
+        simType: 'workers',
+        propType: 'inverse',
+        baseA: 3, unitA: 'pintores',
+        baseB: 10, unitB: 'dias',
+        statement: 'Três pintores com o mesmo ritmo pintam a quadra da escola em 10 dias.',
+        targetPrompt: 'Contratando 6 pintores no mesmo ritmo (o dobro da equipe), em quantos dias terminam?',
+        targetAnswer: 5,
+        initGuess: 10,
+        stepAns: 1,
+        hint: 'Dobrando o número de trabalhadores (×2), o prazo da obra cai pela METADE (÷2): 10 ÷ 2 = 5 dias. São Inversamente Proporcionais!',
+        summaryFormula: 'Inversa (⬆⬇): 3 pintores × 10 dias = 6 pintores × 5 dias'
+      },
+      {
+        id: 6,
+        theme: 'Ingredientes × Porções da Receita',
+        simType: 'scale',
+        propType: 'direct',
+        baseA: 4, unitA: 'pessoas',
+        baseB: 200, unitB: 'gramas',
+        statement: 'Uma receita de bolo para 4 pessoas usa 200 gramas de farinha de trigo.',
+        targetPrompt: 'Para preparar esse bolo para 12 pessoas (o triplo), quantos gramas de farinha serão usados?',
+        targetAnswer: 600,
+        initGuess: 400,
+        stepAns: 50,
+        hint: 'Triplicando o número de pessoas (4 → 12, ou seja, ×3), a farinha também triplica: 200 × 3 = 600 g. Grandezas Diretamente Proporcionais!',
+        summaryFormula: 'Direta (⬆⬆): 4 pessoas / 200 g = 12 pessoas / 600 g'
+      },
+      {
+        id: 7,
+        theme: 'Dentes da Engrenagem × Voltas por Minuto',
+        simType: 'gears',
+        propType: 'inverse',
+        baseA: 12, unitA: 'dentes',
+        baseB: 20, unitB: 'voltas',
+        statement: 'Duas engrenagens acopladas: a menor tem 12 dentes e dá 20 voltas enquanto a maior gira.',
+        targetPrompt: 'Se a engrenagem maior tem 24 dentes (o dobro de dentes), quantas voltas ela dá no mesmo tempo?',
+        targetAnswer: 10,
+        initGuess: 20,
+        stepAns: 2,
+        hint: 'Quanto MAIS dentes uma engrenagem tem, MENOS voltas ela precisa dar para passar o mesmo número de dentes (12 × 20 = 240 dentes → 240 ÷ 24 = 10 voltas). Inversa!',
+        summaryFormula: 'Inversa (⬆⬇): 12 dentes × 20 voltas = 24 dentes × 10 voltas'
+      },
+      {
+        id: 8,
+        theme: 'Vazão Constante × Volume Enchido',
+        simType: 'pump',
+        propType: 'direct',
+        baseA: 3, unitA: 'minutos',
+        baseB: 45, unitB: 'litros',
+        statement: 'Uma bomba d’água despeja 45 litros em uma caixa d’água a cada 3 minutos.',
+        targetPrompt: 'Deixando essa bomba ligada por 9 minutos (o triplo do tempo), quantos litros ela despejará?',
+        targetAnswer: 135,
+        initGuess: 90,
+        stepAns: 15,
+        hint: 'Com a mesma bomba ligada pelo TRIPLO do tempo (3 → 9 min), o volume de água também TRIPLICA: 45 × 3 = 135 litros. Diretamente Proporcionais!',
+        summaryFormula: 'Direta (⬆⬆): 45 L / 3 min = 135 L / 9 min = 15 L/min'
+      },
+      {
+        id: 9,
+        theme: 'Comprimento × Largura (Área Fixa)',
+        simType: 'workers',
+        propType: 'inverse',
+        baseA: 6, unitA: 'm (comp.)',
+        baseB: 4, unitB: 'm (larg.)',
+        statement: 'Um canteiro retangular tem área fixa de 24 m², medindo 6 m de comprimento por 4 m de largura.',
+        targetPrompt: 'Se aumentarmos o comprimento para 12 m (o dobro), qual deve ser a largura para manter 24 m²?',
+        targetAnswer: 2,
+        initGuess: 4,
+        stepAns: 1,
+        hint: 'Para a área continuar igual a 24 m², ao DOBRAR o comprimento (6 → 12 m), a largura deve cair pela METADE (4 → 2 m). São Inversamente Proporcionais!',
+        summaryFormula: 'Inversa (⬆⬇): 6 m × 4 m = 12 m × 2 m = 24 m²'
+      },
+      {
+        id: 10,
+        theme: 'Desafio Final • Produção × Máquinas',
+        simType: 'gears',
+        propType: 'direct',
+        baseA: 2, unitA: 'impressoras',
+        baseB: 80, unitB: 'provas',
+        statement: 'Em 10 minutos, 2 impressoras iguais da secretaria imprimem 80 folhas de prova.',
+        targetPrompt: 'No mesmo tempo de 10 minutos, quantas folhas 5 impressoras iguais imprimirão?',
+        targetAnswer: 200,
+        initGuess: 160,
+        stepAns: 20,
+        hint: 'Cada impressora imprime 40 folhas em 10 min (80 ÷ 2). Com 5 impressoras, produzimos 5 × 40 = 200 folhas! Mais máquinas = mais produção (Direta).',
+        summaryFormula: 'Direta (⬆⬆): 80 folhas / 2 imp. = 200 folhas / 5 imp. = 40/imp.'
+      }
+    ];
+
+    /**
+     * ============================================================================
+     * ESTADO DO LABORATÓRIO E CONTROLE DAS ETAPAS
+     * ============================================================================
+     */
+    const labState = {
+      missionIdx: 0,
+      completed: Array(MISSIONS.length).fill(false),
+      score: 0,
+      streak: 0,
+      hintVisible: false,
+
+      // Fator de teste interativo na bancada (0.5 = metade, 1 = base, 2 = dobro)
+      testFactor: 1,
+
+      // Etapas da missão: 1 (Classificar Direta/Inversa) -> 2 (Calcular Valor)
+      step: 1,
+      chosenType: null,
+      userAnswer: 1,
+
+      // Animação contínua no Canvas
+      animPhase: 0,
+      lastTime: 0
+    };
+
+    const canvas = document.getElementById('propCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizePropCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener('resize', resizePropCanvas);
+
+    /**
+     * Calcula os valores atuais exibidos na bancada conforme o fator de teste (0.5x, 1x, 2x)
+     */
+    function getSimulatedPair() {
+      const m = MISSIONS[labState.missionIdx];
+      const valA = Number((m.baseA * labState.testFactor).toFixed(1));
+      const valB = m.propType === 'direct'
+        ? Number((m.baseB * labState.testFactor).toFixed(1))
+        : Number((m.baseB / labState.testFactor).toFixed(1));
+      return { valA, valB };
+    }
+
+    /**
+     * ============================================================================
+     * CARREGAMENTO DE MISSÃO E TRANSIÇÃO ENTRE ETAPAS
+     * ============================================================================
+     */
+    function loadMission(idx) {
+      labState.missionIdx = idx;
+      const m = MISSIONS[idx];
+
+      labState.hintVisible = false;
+      document.getElementById('hintBanner').classList.add('hidden');
+
+      labState.testFactor = 1;
+      labState.step = 1;
+      labState.chosenType = null;
+      labState.userAnswer = m.initGuess;
+
+      document.getElementById('missionBadge').textContent = `Caso ${m.id} de ${MISSIONS.length}`;
+      document.getElementById('scenarioThemeTag').textContent = m.theme;
+      document.getElementById('scenarioTitleLabel').innerHTML = `<span>🔬</span> ${m.theme}`;
+      document.getElementById('scenarioStatementText').textContent = m.statement;
+      document.getElementById('answerUnitLabel').textContent = m.unitB;
+
+      updateTelemetryReadout();
+      updateScoreHud();
+      updateUserAnswerDisplay();
+      configureStepUI();
+
+      document.getElementById('btnPrev').disabled = (idx === 0);
+      document.getElementById('btnNext').disabled = (idx === MISSIONS.length - 1);
+    }
+
+    function stepTestMultiplier(dir) {
+      playLabSound('click');
+      const factors = [0.5, 1, 2];
+      const currIdx = factors.indexOf(labState.testFactor);
+      const nextIdx = Math.max(0, Math.min(factors.length - 1, currIdx + dir));
+      labState.testFactor = factors[nextIdx];
+      updateTelemetryReadout();
+    }
+
+    function updateTelemetryReadout() {
+      const m = MISSIONS[labState.missionIdx];
+      const { valA, valB } = getSimulatedPair();
+      const tag = labState.testFactor === 1 ? '(Inicial)' : labState.testFactor === 2 ? '(Dobro ×2)' : '(Metade ÷2)';
+      document.getElementById('liveTelemetryReadout').textContent =
+        `${valA} ${m.unitA} ➔ ${valB} ${m.unitB} ${tag}`;
+    }
+
+    function configureStepUI() {
+      const m = MISSIONS[labState.missionIdx];
+      const s1 = document.getElementById('step1Box');
+      const s2 = document.getElementById('step2Box');
+      const statusDisp = document.getElementById('statusSummaryDisplay');
+
+      const btnDir = document.getElementById('btnDirect');
+      const btnInv = document.getElementById('btnInverse');
+      btnDir.className = 'btn-lab btn-slate py-2 px-2.5 text-xs font-extrabold flex-col leading-tight';
+      btnInv.className = 'btn-lab btn-slate py-2 px-2.5 text-xs font-extrabold flex-col leading-tight';
+
+      if (labState.step === 1) {
+        statusDisp.textContent = 'Etapa 1: Classifique a Proporção';
+        s1.className = 'bg-slate-950/90 border-2 border-cyan-500/70 rounded-xl p-2.5 sm:p-3 transition-all shrink-0 opacity-100';
+        document.getElementById('step1Badge').textContent = 'Análise';
+        document.getElementById('step1Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40';
+        btnDir.disabled = false;
+        btnInv.disabled = false;
+
+        s2.className = 'bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 sm:p-3 flex-1 flex flex-col justify-between transition-all opacity-50';
+        document.getElementById('step2Badge').textContent = 'Bloqueado';
+        document.getElementById('step2Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400';
+        document.getElementById('predictionPromptText').textContent = 'Classifique primeiro as grandezas na Etapa 1 para liberar a previsão.';
+        toggleStep2Controls(false);
+      } else {
+        const isDir = m.propType === 'direct';
+        statusDisp.textContent = isDir ? 'Grandezas Diretas ✔ • Calcule o Valor' : 'Grandezas Inversas ✔ • Calcule o Valor';
+
+        s1.className = 'bg-slate-950/90 border-2 border-emerald-500/50 rounded-xl p-2.5 sm:p-3 transition-all shrink-0 opacity-85';
+        document.getElementById('step1Badge').textContent = isDir ? 'Diretas ✔' : 'Inversas ✔';
+        document.getElementById('step1Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        btnDir.disabled = true;
+        btnInv.disabled = true;
+
+        if (isDir) {
+          btnDir.className = 'btn-lab btn-emerald py-2 px-2.5 text-xs font-extrabold flex-col leading-tight';
+        } else {
+          btnInv.className = 'btn-lab btn-emerald py-2 px-2.5 text-xs font-extrabold flex-col leading-tight';
+        }
+
+        s2.className = 'bg-slate-950/90 border-2 border-emerald-500/70 rounded-xl p-2.5 sm:p-3 flex-1 flex flex-col justify-between transition-all opacity-100';
+        document.getElementById('step2Badge').textContent = 'Liberado';
+        document.getElementById('step2Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        document.getElementById('predictionPromptText').textContent = m.targetPrompt;
+        toggleStep2Controls(true);
+      }
+    }
+
+    function toggleStep2Controls(enabled) {
+      ['btnAnsMinus', 'btnAnsPlus', 'btnVerify'].forEach(id => {
+        document.getElementById(id).disabled = !enabled;
+      });
+    }
+
+    /**
+     * ============================================================================
+     * ETAPA 1: CLASSIFICAÇÃO EM DIRETAMENTE OU INVERSAMENTE PROPORCIONAL
+     * ============================================================================
+     */
+    function classifyProportion(chosen) {
+      if (labState.step !== 1) return;
+      const m = MISSIONS[labState.missionIdx];
+
+      if (chosen === m.propType) {
+        playLabSound('lock');
+        labState.chosenType = chosen;
+        labState.step = 2;
+        configureStepUI();
+      } else {
+        playLabSound('error');
+        const box = document.getElementById('step1Box');
+        box.classList.remove('shake-box');
+        void box.offsetWidth;
+        box.classList.add('shake-box');
+        document.getElementById('statusSummaryDisplay').textContent =
+          chosen === 'direct'
+            ? '⚠️ Observe na bancada: ao dobrar A (×2), B diminuiu pela metade (÷2)!'
+            : '⚠️ Observe na bancada: ao dobrar A (×2), B também dobrou (×2)!';
+      }
+    }
+
+    /**
+     * ============================================================================
+     * ETAPA 2: PREVISÃO NUMÉRICA E VALIDAÇÃO
+     * ============================================================================
+     */
+    function adjustUserAnswer(dir) {
+      if (labState.step !== 2) return;
+      const m = MISSIONS[labState.missionIdx];
+      playLabSound('click');
+      labState.userAnswer = Math.max(1, labState.userAnswer + dir * m.stepAns);
+      updateUserAnswerDisplay();
+    }
+
+    function updateUserAnswerDisplay() {
+      document.getElementById('userAnswerDisplay').textContent = labState.userAnswer;
+    }
+
+    function verifyPrediction() {
+      if (labState.step !== 2) return;
+      const m = MISSIONS[labState.missionIdx];
+
+      if (labState.userAnswer === m.targetAnswer) {
+        playLabSound('success');
+
+        if (!labState.completed[labState.missionIdx]) {
+          labState.completed[labState.missionIdx] = true;
+          labState.streak++;
+          labState.score += 100 + labState.streak * 20;
+          updateScoreHud();
+        }
+
+        const isDirect = m.propType === 'direct';
+        document.getElementById('modalEmojiIcon').textContent = isDirect ? '📈' : '⚖️';
+        document.getElementById('modalSuccessTitle').textContent =
+          isDirect ? 'Diretamente Proporcionais!' : 'Inversamente Proporcionais!';
+        document.getElementById('modalSuccessDesc').textContent =
+          isDirect
+            ? 'As duas grandezas variam no mesmo sentido e na mesma razão (quando uma multiplica por k, a outra também multiplica por k).'
+            : 'As duas grandezas variam em sentidos opostos (quando uma multiplica por k, a outra divide por k, mantendo o produto constante).';
+        document.getElementById('modalFormulaCard').textContent = m.summaryFormula;
+
+        const allDone = labState.completed.every(Boolean);
+        document.getElementById('btnModalContinue').textContent = allDone
+          ? 'Ver Certificado Final 🏆'
+          : 'Próximo Caso ➡';
+
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        playLabSound('error');
+        labState.streak = 0;
+        updateScoreHud();
+        const box = document.getElementById('step2Box');
+        box.classList.remove('shake-box');
+        void box.offsetWidth;
+        box.classList.add('shake-box');
+      }
+    }
+
+    /**
+     * ============================================================================
+     * NAVEGAÇÃO ENTRE CASOS E MODAIS
+     * ============================================================================
+     */
+    function prevMission() {
+      if (labState.missionIdx > 0) {
+        playLabSound('click');
+        loadMission(labState.missionIdx - 1);
+      }
+    }
+
+    function nextMission() {
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        playLabSound('click');
+        loadMission(labState.missionIdx + 1);
+      }
+    }
+
+    function skipMission() {
+      playLabSound('click');
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        loadMission(labState.missionIdx + 1);
+      } else {
+        const firstPending = labState.completed.findIndex(v => !v);
+        loadMission(firstPending !== -1 ? firstPending : 0);
+      }
+    }
+
+    function updateScoreHud() {
+      const doneCount = labState.completed.filter(Boolean).length;
+      document.getElementById('completedText').textContent = `${doneCount}/${MISSIONS.length}`;
+      document.getElementById('streakText').textContent = `${labState.streak}x`;
+      document.getElementById('scoreText').textContent = labState.score;
+    }
+
+    function toggleHint() {
+      playLabSound('click');
+      const m = MISSIONS[labState.missionIdx];
+      const banner = document.getElementById('hintBanner');
+      labState.hintVisible = !labState.hintVisible;
+      if (labState.hintVisible) {
+        banner.textContent = `💡 ${m.hint}`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function advanceFromModal() {
+      const modal = document.getElementById('successModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      if (labState.completed.every(Boolean)) {
+        showFinalVictory();
+        return;
+      }
+
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        loadMission(labState.missionIdx + 1);
+      } else {
+        const nextPending = labState.completed.findIndex(v => !v);
+        loadMission(nextPending !== -1 ? nextPending : 0);
+      }
+    }
+
+    function showFinalVictory() {
+      const done = labState.completed.filter(Boolean).length;
+      document.getElementById('finalStatsSummary').innerHTML = `
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Casos</div>
+          <div class="font-mono-tech text-xl font-extrabold text-emerald-400">${done}/${MISSIONS.length}</div>
+        </div>
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Pontuação</div>
+          <div class="font-mono-tech text-xl font-extrabold text-amber-400">${labState.score}</div>
+        </div>
+      `;
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function restartWholeLab() {
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      labState.completed = Array(MISSIONS.length).fill(false);
+      labState.score = 0;
+      labState.streak = 0;
+      loadMission(0);
+    }
+
+    function openMissionModal() {
+      playLabSound('click');
+      const grid = document.getElementById('missionsGrid');
+      grid.innerHTML = '';
+
+      MISSIONS.forEach((m, idx) => {
+        const done = labState.completed[idx];
+        const isCurrent = idx === labState.missionIdx;
+        const btn = document.createElement('button');
+        btn.className = `text-left p-3 rounded-2xl border-2 transition cursor-pointer flex items-center justify-between ${
+          done
+            ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-100'
+            : isCurrent
+              ? 'bg-cyan-950/70 border-cyan-400 text-white'
+              : 'bg-slate-950/80 border-slate-800 hover:border-slate-600 text-slate-200'
+        }`;
+        btn.onclick = () => {
+          closeMissionModal();
+          loadMission(idx);
+        };
+        btn.innerHTML = `
+          <div>
+            <div class="text-[11px] font-extrabold uppercase tracking-wider ${done ? 'text-emerald-400' : 'text-cyan-400'}">
+              Caso ${m.id} • ${m.theme}
+            </div>
+            <div class="font-mono-tech text-xs font-bold mt-0.5 text-slate-300">
+              ${m.baseA} ${m.unitA} ↔ ${m.baseB} ${m.unitB}
+            </div>
+          </div>
+          <span class="text-lg">${done ? '✅' : isCurrent ? '▶' : '⚖️'}</span>
+        `;
+        grid.appendChild(btn);
+      });
+
+      const doneCount = labState.completed.filter(Boolean).length;
+      document.getElementById('modalProgressSummary').textContent = `${doneCount} de ${MISSIONS.length} concluídos`;
+
+      const modal = document.getElementById('missionsModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMissionModal() {
+      const modal = document.getElementById('missionsModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /**
+     * ============================================================================
+     * RENDERIZAÇÃO DA BANCADA EXPERIMENTAL EM HTML5 CANVAS (BARRAS E SIMULAÇÃO)
+     * ============================================================================
+     */
+    function renderPropBench(timestamp) {
+      if (!labState.lastTime) labState.lastTime = timestamp;
+      const dt = Math.min(0.05, (timestamp - labState.lastTime) / 1000);
+      labState.lastTime = timestamp;
+      labState.animPhase += dt * labState.testFactor * 2.2;
+
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w > 0 && h > 0) {
+        ctx.clearRect(0, 0, w, h);
+
+        // Grade sutil
+        ctx.strokeStyle = 'rgba(6, 182, 212, 0.06)';
+        ctx.lineWidth = 1;
+        for (let gx = 0; gx < w; gx += 28) {
+          ctx.beginPath();
+          ctx.moveTo(gx, 0);
+          ctx.lineTo(gx, h);
+          ctx.stroke();
+        }
+        for (let gy = 0; gy < h; gy += 28) {
+          ctx.beginPath();
+          ctx.moveTo(0, gy);
+          ctx.lineTo(w, gy);
+          ctx.stroke();
+        }
+
+        const m = MISSIONS[labState.missionIdx];
+        const { valA, valB } = getSimulatedPair();
+
+        // Lado Esquerdo: Simulação Física Animada (pista, tanques, engrenagens ou blocos)
+        const simAreaW = w * 0.46;
+        drawMiniPhysicsPreview(simAreaW, h, m, valA, valB);
+
+        // Divisor vertical
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(simAreaW, 14);
+        ctx.lineTo(simAreaW, h - 14);
+        ctx.stroke();
+
+        // Lado Direito: Medidores Comparativos das Duas Grandezas (Barras Dinâmicas)
+        const barAreaX = simAreaW + 22;
+        const barAreaW = w - barAreaX - 20;
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '800 11px "Plus Jakarta Sans", sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('COMPARAÇÃO EM TEMPO REAL', barAreaX, 22);
+
+        // Proporção visual das barras (0.5x -> 25%, 1x -> 50%, 2x -> 100%)
+        const ratioA = labState.testFactor / 2;
+        const ratioB = m.propType === 'direct'
+          ? (labState.testFactor / 2)
+          : ((1 / labState.testFactor) / 2);
+
+        drawMagnitudeMeter(
+          barAreaX,
+          h * 0.24,
+          barAreaW,
+          30,
+          `GRANDEZA A (${m.unitA})`,
+          `${valA} ${m.unitA}`,
+          ratioA,
+          '#06b6d4'
+        );
+
+        drawMagnitudeMeter(
+          barAreaX,
+          h * 0.58,
+          barAreaW,
+          30,
+          `GRANDEZA B (${m.unitB})`,
+          `${valB} ${m.unitB}`,
+          ratioB,
+          m.propType === 'direct' ? '#10b981' : '#f59e0b'
+        );
+
+        // Seta indicadora de sentido (⬆ ou ⬇) quando testFactor != 1
+        if (labState.testFactor !== 1) {
+          const arrowA = labState.testFactor > 1 ? '⬆ DOBROU (×2)' : '⬇ METADE (÷2)';
+          const arrowB = m.propType === 'direct'
+            ? (labState.testFactor > 1 ? '⬆ DOBROU (×2)' : '⬇ METADE (÷2)')
+            : (labState.testFactor > 1 ? '⬇ METADE (÷2)' : '⬆ DOBROU (×2)');
+
+          ctx.font = '800 11px "JetBrains Mono", monospace';
+          ctx.textAlign = 'right';
+          ctx.fillStyle = '#38bdf8';
+          ctx.fillText(arrowA, barAreaX + barAreaW, h * 0.24 - 6);
+
+          ctx.fillStyle = m.propType === 'direct' ? '#34d399' : '#fbbf24';
+          ctx.fillText(arrowB, barAreaX + barAreaW, h * 0.58 - 6);
+        }
+      }
+
+      requestAnimationFrame(renderPropBench);
+    }
+
+    function drawMagnitudeMeter(x, y, w, h, title, valueText, fillRatio, color) {
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '800 11px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(title, x, y - 6);
+
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, 8);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      const fillW = Math.max(8, (w - 4) * Math.min(1, fillRatio));
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(x + 2, y + 2, fillW, h - 4, 6);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(valueText, x + w / 2, y + h / 2 + 4);
+    }
+
+    function drawMiniPhysicsPreview(w, h, m, valA, valB) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '800 11px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SIMULAÇÃO DO FENÔMENO', w / 2, 22);
+
+      if (m.simType === 'car') {
+        // Estrada e veículo movendo-se na velocidade proporcional a testFactor
+        const roadY = h * 0.56;
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(16, roadY - 12, w - 32, 24);
+        ctx.strokeStyle = '#fbbf24';
+        ctx.setLineDash([8, 8]);
+        ctx.beginPath();
+        ctx.moveTo(20, roadY);
+        ctx.lineTo(w - 20, roadY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const span = w - 68;
+        const carX = 24 + ((labState.animPhase * 42) % span);
+        ctx.fillStyle = '#06b6d4';
+        ctx.beginPath();
+        ctx.roundRect(carX, roadY - 14, 34, 16, 5);
+        ctx.fill();
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(carX + 8, roadY + 4, 4, 0, Math.PI * 2);
+        ctx.arc(carX + 26, roadY + 4, 4, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (m.simType === 'pump') {
+        // Reservatório enchendo conforme o número de torneiras/tempo
+        const tankW = Math.min(90, w * 0.45);
+        const tankH = h * 0.52;
+        const tx = (w - tankW) / 2;
+        const ty = h * 0.28;
+
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(tx, ty, tankW, tankH);
+
+        const level = (labState.animPhase * 0.25) % 1;
+        ctx.fillStyle = 'rgba(6, 182, 212, 0.65)';
+        ctx.fillRect(tx + 2, ty + tankH * (1 - level), tankW - 4, tankH * level - 2);
+      } else if (m.simType === 'gears') {
+        // Engrenagem girando
+        const cx = w / 2;
+        const cy = h * 0.52;
+        const r = Math.min(44, w * 0.22);
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(labState.animPhase);
+        ctx.strokeStyle = '#a78bfa';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.stroke();
+        for (let i = 0; i < 8; i++) {
+          const ang = (Math.PI * 2 * i) / 8;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(ang) * (r - 6), Math.sin(ang) * (r - 6));
+          ctx.lineTo(Math.cos(ang) * (r + 7), Math.sin(ang) * (r + 7));
+          ctx.stroke();
+        }
+        ctx.restore();
+      } else {
+        // Blocos/unidades empilhadas representando quantidade proporcional
+        const count = Math.min(8, Math.max(1, Math.round(valA)));
+        const cols = 4;
+        const boxSize = Math.min(26, (w - 48) / cols);
+        const startX = (w - cols * (boxSize + 6)) / 2;
+        const startY = h * 0.36;
+
+        for (let i = 0; i < count; i++) {
+          const bx = startX + (i % cols) * (boxSize + 6);
+          const by = startY + Math.floor(i / cols) * (boxSize + 6);
+          ctx.fillStyle = i % 2 === 0 ? '#06b6d4' : '#8b5cf6';
+          ctx.beginPath();
+          ctx.roundRect(bx, by, boxSize, boxSize, 5);
+          ctx.fill();
+        }
+      }
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '800 12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${valA} ${m.unitA}`, w / 2, h - 14);
+    }
+
+    window.onload = function () {
+      resizePropCanvas();
+      loadMission(0);
+      requestAnimationFrame(renderPropBench);
+    };
+  </script>
+</body>
+</html>
