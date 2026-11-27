@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GET Ministro Gama Filho — Professor Rafael</title>
+<style>
+:root{--navy:#082b68;--blue:#0878e8;--cyan:#16c9ed;--green:#16a34a;--yellow:#ffd83d;--red:#ef4444;--purple:#7137b5}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--navy);background:radial-gradient(circle at 20% 10%,#31d4ff 0 2px,transparent 3px),linear-gradient(135deg,#0066d8,#13b7ed 58%,#0873d9);min-height:100vh;padding:14px;overflow-x:hidden}
+body:before{content:"＋   1     ÷      3      ×      ？";position:fixed;inset:0;color:#8beaff;opacity:.18;font-size:clamp(25px,4vw,54px);font-weight:900;letter-spacing:32px;pointer-events:none;z-index:-1}
+.app{max-width:1500px;margin:auto}
+.header{min-height:132px;background:linear-gradient(100deg,#fff,#f7fbff);border:7px solid #0874df;border-radius:90px;box-shadow:0 7px 0 #034da8,0 0 0 4px #69ddff inset;display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,30px);padding:12px 28px;margin:0 auto 16px;position:relative}
+.logo{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.letter{width:clamp(52px,7vw,90px);height:clamp(58px,8vw,98px);border-radius:22px;display:grid;place-items:center;font-size:clamp(42px,6vw,76px);font-weight:1000;text-shadow:1px 3px 0 #fff8;box-shadow:inset 0 -7px 0 #0002}
+.letter.g{background:#09165c;color:#ff4055}.letter.e{background:#ffda24;color:#f33c4e}.letter.t{background:#0ac5db;color:#ef3347}
+.school{font-size:clamp(18px,3vw,38px);line-height:.95;font-weight:1000;font-style:italic;color:#f36b1b;text-shadow:1px 2px #ffd0a3;white-space:nowrap}
+.school span{display:block;text-align:right;color:#111;font-family:Georgia,serif;font-size:.76em}
+.separator{height:82px;width:5px;border-radius:5px;background:#0878e8}
+.teacher{font-size:clamp(20px,3vw,38px);font-weight:1000;white-space:nowrap;color:#091d63}
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.panel{border:7px solid #0874df;border-radius:42px;background:linear-gradient(145deg,#fff,#eaf7ff);box-shadow:0 7px 0 #034da8,0 0 0 4px #9beaff inset;overflow:hidden}
+.topbar{background:linear-gradient(90deg,#06265a,#084b91);color:white;padding:15px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:clamp(18px,2.2vw,28px);font-weight:900}
+.stats{display:flex;gap:clamp(12px,2vw,32px);flex-wrap:wrap}.stat{white-space:nowrap}.stat.good{color:#ffe43b}.stat.bad{color:#ff6262}
+.content{padding:clamp(18px,3vw,42px);min-height:430px;display:flex;flex-direction:column;justify-content:center}
+.question-head{display:flex;align-items:center;gap:20px;margin-bottom:22px}
+.op-icon{width:100px;height:100px;flex:0 0 100px;border-radius:28px;display:grid;place-items:center;font-size:60px;background:linear-gradient(145deg,#b9f2ff,#e9fbff);box-shadow:inset 0 0 0 3px #9de7ff}
+.tag{display:inline-block;padding:7px 16px;border-radius:30px;background:#e2f2ff;color:#0753a6;font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.prompt{font-size:clamp(22px,2.45vw,34px);line-height:1.35;font-weight:800;color:#08265f}
+.subprompt{font-size:16px;color:#42618e;margin-top:7px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.answer{border:3px solid #9bc5ee;border-radius:20px;background:linear-gradient(#fff,#eff7ff);padding:17px 18px;text-align:left;font-size:clamp(17px,1.8vw,23px);font-weight:800;color:#0b3475;cursor:pointer;min-height:76px;transition:.15s;box-shadow:0 4px 0 #b7d8f5}
+.answer:hover:not(:disabled){transform:translateY(-2px);border-color:#0878e8;background:#e5f5ff}
+.answer .letterkey{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#0878e8;color:#fff;margin-right:10px;font-size:17px}
+.answer.correct{background:#d8fbe5;border-color:#20a65b;color:#126b38;box-shadow:0 4px 0 #9be7b7}
+.answer.wrong{background:#ffe0e0;border-color:#ef5555;color:#9e2020;box-shadow:0 4px 0 #ffc0c0}
+.answer:disabled{cursor:default}
+.feedback{margin-top:18px;padding:15px 20px;border-radius:18px;font-size:20px;font-weight:900;text-align:center;display:none}
+.feedback.show{display:block}.feedback.ok{background:#fff3b8;border:2px solid #ffdc56;color:#14733d}.feedback.no{background:#ffe1e1;border:2px solid #ff9292;color:#a52323}
+.explanation{font-size:16px;font-weight:600;margin-top:5px;color:#244a76}
+.controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:18px 0 5px}
+.btn{border:4px solid #fff;border-radius:25px;padding:15px 23px;min-width:155px;font-size:clamp(16px,1.6vw,21px);font-weight:1000;color:white;cursor:pointer;box-shadow:0 5px 0 #063e8e,0 0 0 3px #0b6fd3;transition:.15s}
+.btn:hover{filter:brightness(1.08);transform:translateY(-2px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.back{background:linear-gradient(#a66be2,#602a9e)}.btn.list{background:linear-gradient(#23a9ff,#0756c5)}.btn.skip,.btn.next{background:linear-gradient(#50d52d,#15920d)}
+.progress-wrap{height:13px;background:#c9e7ff;border-radius:20px;margin:0 28px 20px;overflow:hidden}.progress{height:100%;width:0;background:linear-gradient(90deg,#11c4ec,#24c85b);border-radius:20px;transition:width .3s}
+.list-view{display:none;padding:24px}.list-view.show{display:block}.question-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.qjump{border:2px solid #a8ccee;background:#fff;border-radius:13px;padding:12px 8px;font-weight:900;color:#0a3475;cursor:pointer}.qjump.done{background:#dcfce7;border-color:#53c987}.qjump.current{background:#d9efff;border-color:#0878e8}
+.result{display:none;text-align:center;padding:35px 15px}.result.show{display:block}.result .trophy{font-size:76px}.result h2{font-size:clamp(28px,4vw,46px);margin:8px}.result p{font-size:21px}.result-score{font-size:clamp(32px,5vw,60px);font-weight:1000;color:#0878e8}
+.footer{text-align:center;color:#e7faff;font-weight:700;text-shadow:0 2px #034b9e;margin-top:16px;font-size:13px}
+@media(max-width:760px){body{padding:7px}.header{border-radius:35px;flex-wrap:wrap;padding:12px;gap:10px}.separator{height:40px}.school{font-size:18px}.teacher{font-size:19px}.letter{width:44px;height:50px;border-radius:13px;font-size:38px}.panel{border-radius:26px;border-width:5px}.topbar{padding:13px 16px;flex-wrap:wrap}.content{padding:18px;min-height:0}.question-head{align-items:flex-start;gap:12px}.op-icon{width:65px;height:65px;flex-basis:65px;font-size:39px}.answers{grid-template-columns:1fr;gap:10px}.answer{min-height:62px;padding:12px}.btn{min-width:130px;padding:12px 15px}.question-grid{grid-template-columns:repeat(3,1fr)}.progress-wrap{margin:0 16px 15px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <div class="logo" aria-label="GET"><div class="letter g">G</div><div class="letter e">E</div><div class="letter t">T</div></div>
+  <div class="school">MINISTRO<span>Gama Filho</span></div>
+  <div class="separator"></div>
+  <div class="teacher">Professor Rafael</div>
+</header>
+<main class="main">
+<section class="panel" id="gamePanel">
+  <div class="topbar"><div id="counter">Questão 1 de 20</div><div class="stats"><span class="stat good">★ <span id="hits">0</span> acertos</span><span class="stat bad">✖ <span id="misses">0</span> erros</span></div></div>
+  <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  <div class="content" id="questionView">
+    <div class="question-head"><div class="op-icon" id="opIcon">＋</div><div><div class="tag" id="opTag">Adição • Juntar</div><div class="prompt" id="prompt"></div><div class="subprompt" id="subprompt">Leia com atenção e escolha uma alternativa.</div></div></div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"><div id="feedbackTitle"></div><div class="explanation" id="explanation"></div></div>
+  </div>
+  <div class="list-view" id="listView"><h2>Mapa das questões</h2><p>Escolha uma questão para acessá-la.</p><div class="question-grid" id="questionGrid"></div></div>
+  <div class="result" id="resultView"><div class="trophy">🏆</div><h2>Desafio concluído!</h2><div class="result-score" id="finalScore"></div><p id="finalText"></p><button class="btn next" onclick="restart()">↻ Jogar novamente</button></div>
+  <div class="controls" id="controls">
+    <button class="btn back" id="backBtn" onclick="previous()">⬅ Voltar</button>
+    <button class="btn list" id="listBtn" onclick="toggleList()">☷ Ver questões</button>
+    <button class="btn skip" id="skipBtn" onclick="skip()">» Pular questão</button>
+    <button class="btn next" id="nextBtn" onclick="next()">➜ Avançar</button>
+  </div>
+</section>
+</main>
+<div class="footer">GET MINISTRO GAMA FILHO • MATEMÁTICA • 6º ANO</div>
+</div>
+<script>
+const questions = [
+{op:"Adição",meaning:"Juntar",icon:"＋",q:"A turma está organizando uma campanha de arrecadação. Na segunda-feira, recebeu 138 kg de alimentos; na terça, 167 kg; e na quarta, 95 kg. Quantos quilogramas foram arrecadados nos três dias?",a:["390 kg","400 kg","410 kg","420 kg"],c:1,why:"138 + 167 + 95 = 400 kg. Somamos as quantidades arrecadadas em cada dia."},
+{op:"Adição",meaning:"Acrescentar",icon:"＋",q:"Um clube de leitura tinha 246 livros no início do ano. A escola recebeu uma doação de 178 livros e, depois, comprou mais 86. Com quantos livros o clube ficou?",a:["410 livros","500 livros","510 livros","520 livros"],c:2,why:"246 + 178 + 86 = 510 livros. As duas entradas foram acrescentadas ao acervo inicial."},
+{op:"Adição",meaning:"Juntar",icon:"＋",q:"Para uma feira, três turmas produziram 48, 56 e 39 marcadores de página. Cada marcador será colocado à venda. Quantos marcadores foram produzidos ao todo?",a:["133","139","143","153"],c:2,why:"48 + 56 + 39 = 143 marcadores."},
+{op:"Adição",meaning:"Acrescentar",icon:"＋",q:"Uma biblioteca registrou 1.275 empréstimos até junho. No segundo semestre, foram feitos mais 968 empréstimos. Qual foi o total anual?",a:["2.143","2.233","2.243","2.343"],c:2,why:"1.275 + 968 = 2.243 empréstimos."},
+{op:"Adição",meaning:"Pensamento funcional",icon:"＋",q:"Uma excursão cobra R$ 28 por estudante. Além disso, a turma precisa pagar R$ 350 pelo ônibus. Se 32 estudantes participarem, qual será o custo total da excursão?",a:["R$ 896","R$ 1.146","R$ 1.246","R$ 1.296"],c:1,why:"32 × 28 = 896. Depois, 896 + 350 = R$ 1.246. Atenção: a alternativa correta é R$ 1.246.",fix:2},
+{op:"Subtração",meaning:"Retirar",icon:"−",q:"Uma escola tinha 850 folhas de papel para as atividades. Durante a semana, utilizou 276 folhas. Quantas folhas restaram?",a:["564","574","584","594"],c:1,why:"850 − 276 = 574 folhas."},
+{op:"Subtração",meaning:"Comparar",icon:"−",q:"Na gincana, a equipe azul fez 1.248 pontos e a equipe amarela fez 975. Quantos pontos a equipe azul fez a mais?",a:["263","273","283","293"],c:1,why:"1.248 − 975 = 273 pontos. A diferença compara as pontuações."},
+{op:"Subtração",meaning:"Completar",icon:"−",q:"Uma estudante quer comprar um tênis de R$ 189. Ela já guardou R$ 127. Quanto ainda falta economizar para conseguir comprar o tênis?",a:["R$ 52","R$ 62","R$ 72","R$ 82"],c:1,why:"189 − 127 = R$ 62. Calculamos quanto falta para completar o preço."},
+{op:"Subtração",meaning:"Comparar",icon:"−",q:"Uma caixa-d'água comporta 2.000 litros. No momento, ela contém 1.365 litros. Quantos litros faltam para atingir a capacidade máxima?",a:["535 L","625 L","635 L","645 L"],c:2,why:"2.000 − 1.365 = 635 litros."},
+{op:"Subtração",meaning:"Pensamento funcional",icon:"−",q:"Um aplicativo de transporte mostra uma corrida de R$ 42. Com um cupom, o valor cai para R$ 34. Se o cupom for usado em 5 corridas iguais, quanto será economizado no total?",a:["R$ 8","R$ 32","R$ 40","R$ 170"],c:2,why:"A economia por corrida é 42 − 34 = R$ 8. Em 5 corridas: 5 × 8 = R$ 40."},
+{op:"Multiplicação",meaning:"Parcelas iguais",icon:"×",q:"Uma papelaria monta 18 kits. Cada kit contém 7 canetas, 3 lápis e 2 borrachas. Quantas peças serão separadas ao todo para montar os kits?",a:["126","180","216","236"],c:2,why:"Cada kit tem 7 + 3 + 2 = 12 peças. Para 18 kits: 18 × 12 = 216 peças."},
+{op:"Multiplicação",meaning:"Retangular",icon:"▦",q:"O pátio receberá um mosaico com 14 fileiras de placas. Cada fileira terá 16 placas. Quantas placas serão necessárias para preencher o retângulo?",a:["204","214","224","234"],c:2,why:"14 × 16 = 224 placas, como uma organização retangular de fileiras e colunas."},
+{op:"Multiplicação",meaning:"Combinatória",icon:"✦",q:"Para montar o uniforme da equipe, cada estudante pode escolher entre 4 camisetas e 3 bermudas diferentes. Quantas combinações de uniforme são possíveis?",a:["7","10","12","16"],c:2,why:"Cada uma das 4 camisetas pode combinar com 3 bermudas: 4 × 3 = 12 combinações."},
+{op:"Multiplicação",meaning:"Parcelas iguais",icon:"×",q:"Uma horta escolar tem 9 canteiros. Em cada canteiro serão plantadas 24 mudas, distribuídas igualmente. Quantas mudas serão plantadas?",a:["196","206","216","226"],c:2,why:"9 grupos de 24 mudas: 9 × 24 = 216 mudas."},
+{op:"Multiplicação",meaning:"Pensamento funcional",icon:"×",q:"Uma gráfica cobra R$ 6 para preparar um cartaz e mais R$ 2 por cópia impressa. Quanto custará encomendar 15 cópias, incluindo a preparação?",a:["R$ 30","R$ 36","R$ 90","R$ 120"],c:1,why:"15 × 2 = R$ 30 pelas cópias; 30 + 6 = R$ 36 no total."},
+{op:"Divisão",meaning:"Distribuição",icon:"÷",q:"A escola recebeu 288 livros para distribuir igualmente entre 12 turmas. Quantos livros cada turma receberá?",a:["22","23","24","26"],c:2,why:"288 ÷ 12 = 24 livros para cada turma."},
+{op:"Divisão",meaning:"Medida (quantos grupos?)",icon:"÷",q:"Uma equipe tem 156 metros de fita. Para decorar os espaços, serão usados pedaços de 12 metros. Quantos pedaços completos podem ser cortados?",a:["11","12","13","14"],c:2,why:"156 ÷ 12 = 13 pedaços de 12 metros."},
+{op:"Divisão",meaning:"Distribuição",icon:"÷",q:"Em uma visita, 143 estudantes serão organizados em grupos com 8 estudantes. Quantos grupos completos serão formados e quantos estudantes ficarão no grupo incompleto?",a:["17 grupos e 7 estudantes","18 grupos e 1 estudante","17 grupos e 8 estudantes","16 grupos e 7 estudantes"],c:0,why:"143 ÷ 8 = 17, resto 7. São 17 grupos completos e sobram 7 estudantes."},
+{op:"Divisão",meaning:"Medida (quantos grupos?)",icon:"÷",q:"Uma escola tem 420 copos descartáveis. Em cada atividade são utilizados 35 copos. Para quantas atividades completas o estoque é suficiente?",a:["10","11","12","13"],c:2,why:"420 ÷ 35 = 12 atividades completas."},
+{op:"Divisão",meaning:"Pensamento funcional",icon:"÷",q:"Uma van percorre 180 km com 15 litros de combustível, mantendo o mesmo consumo. Quantos quilômetros ela percorre por litro? E quantos quilômetros percorrerá com 24 litros?",a:["10 km/L e 240 km","12 km/L e 288 km","12 km/L e 300 km","15 km/L e 288 km"],c:1,why:"180 ÷ 15 = 12 km por litro. Com 24 litros: 24 × 12 = 288 km."}
+];
+// Corrige a questão 5: 32 x 28 + 350 = 1.246.
+questions[4].c=2;
+let index=0, answers=Array(questions.length).fill(null), listOpen=false;
+const $=id=>document.getElementById(id);
+function render(){
+  const q=questions[index]; $('counter').textContent=`Questão ${index+1} de ${questions.length}`;
+  $('hits').textContent=answers.filter((v,i)=>v!==null&&v===questions[i].c).length;
+  $('misses').textContent=answers.filter((v,i)=>v!==null&&v!==questions[i].c).length;
+  $('progress').style.width=((index+1)/questions.length*100)+'%';
+  $('opIcon').textContent=q.icon;$('opTag').textContent=q.op+' • '+q.meaning;$('prompt').textContent=q.q;
+  $('subprompt').textContent='Leia com atenção e escolha uma alternativa.';
+  $('answers').innerHTML=''; q.a.forEach((a,i)=>{const b=document.createElement('button');b.className='answer';b.innerHTML=`<span class="letterkey">${'ABCD'[i]}</span>${a}`;b.onclick=()=>choose(i);if(answers[index]!==null){b.disabled=true;if(i===q.c)b.classList.add('correct');else if(i===answers[index])b.classList.add('wrong')}$('answers').appendChild(b)});
+  const f=$('feedback');f.className='feedback';if(answers[index]!==null){const ok=answers[index]===q.c;f.classList.add('show',ok?'ok':'no');$('feedbackTitle').textContent=ok?'✓ Resposta correta!':'✕ Não foi dessa vez!';$('explanation').textContent=q.why}
+  $('backBtn').disabled=index===0;$('nextBtn').textContent=index===19?'Ver resultado ➜':'➜ Avançar';
+  $('skipBtn').disabled=answers[index]!==null;
+  if(listOpen)renderList();
+}
+function choose(i){if(answers[index]!==null)return;answers[index]=i;render()}
+function next(){if(index===19){finish();return}index++;listOpen=false;showQuestion()}
+function previous(){if(index>0){index--;listOpen=false;showQuestion()}}
+function skip(){if(answers[index]===null){index=index===19?0:index+1;showQuestion()}}
+function showQuestion(){$('questionView').style.display='flex';$('listView').classList.remove('show');$('resultView').classList.remove('show');$('controls').style.display='flex';render()}
+function toggleList(){listOpen=!listOpen;$('questionView').style.display=listOpen?'none':'flex';$('listView').classList.toggle('show',listOpen);if(listOpen)renderList()}
+function renderList(){const g=$('questionGrid');g.innerHTML='';questions.forEach((q,i)=>{const b=document.createElement('button');b.className='qjump'+(answers[i]!==null?' done':'')+(i===index?' current':'');b.textContent=`${i+1}. ${q.op}`;b.onclick=()=>{index=i;listOpen=false;showQuestion()};g.appendChild(b)})}
+function finish(){const hit=answers.filter((v,i)=>v!==null&&v===questions[i].c).length;const miss=answers.filter((v,i)=>v!==null&&v!==questions[i].c).length;const blank=20-hit-miss;$('questionView').style.display='none';$('listView').classList.remove('show');$('resultView').classList.add('show');$('controls').style.display='none';$('finalScore').textContent=`${hit} / 20 acertos`;$('finalText').textContent=`Você acertou ${hit}, errou ${miss} e deixou ${blank} questão(ões) sem resposta. ${hit>=16?'Excelente trabalho!':hit>=10?'Bom esforço! Continue praticando.':'A prática ajuda a aprender. Tente novamente!'}`}
+function restart(){index=0;answers=Array(20).fill(null);listOpen=false;showQuestion()}
+render();
+</script>
+</body>
+</html>

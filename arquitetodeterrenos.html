@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Arquiteto de Terrenos 7º Ano - GET Ministro Gama Filho</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: preserva as fontes do logotipo + tipografia moderna 7º ano -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #070d1f;
+      --cyan-glow: #06b6d4;
+      --emerald-glow: #10b981;
+      --violet-glow: #8b5cf6;
+      --amber-glow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 15%, #172554 0%, #0b1120 55%, #050814 100%);
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Grade cibernética de fundo estilo 7º Ano Engenharia / Lab */
+    .cyber-grid-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(6, 182, 212, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.08) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    .cyber-glow-orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.28;
+    }
+
+    /* Fontes do Cabeçalho Preservado */
+    .font-logo-get { font-family: 'Fredoka', sans-serif; }
+    .font-logo-ministro { font-family: 'Fredoka', sans-serif; font-style: italic; }
+    .font-logo-gamafilho { font-family: 'Caveat', cursive; }
+    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+
+    /* Pílula Branca do Cabeçalho (Cores e Marca Preservadas) */
+    .header-pill {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 3px solid #06b6d4;
+      box-shadow: 0 0 22px rgba(6, 182, 212, 0.35), 0 6px 16px rgba(0, 0, 0, 0.45);
+      border-radius: 9999px;
+    }
+
+    /* Chassi Principal Glassmorphism Dark 7º Ano */
+    .lab-chassis {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(9, 14, 29, 0.96) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.32);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Botões Modernos Estilo Console Sci-Fi */
+    .btn-lab {
+      border-radius: 12px;
+      font-weight: 800;
+      transition: all 0.14s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .btn-lab:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.12);
+    }
+    .btn-lab:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .btn-lab:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .btn-cyan {
+      background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+    }
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+    }
+    .btn-violet {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+    }
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #090d16;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+    .btn-slate {
+      background: rgba(30, 41, 59, 0.9);
+      color: #e2e8f0;
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    @keyframes popScale {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popScale 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .shake-box {
+      animation: shakeError 0.36s ease-in-out;
+    }
+
+    #blueprintCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="px-2.5 sm:px-5 py-2 sm:py-2.5 justify-between">
+
+  <!-- Fundo Cibernético 7º Ano -->
+  <div class="cyber-grid-bg" aria-hidden="true"></div>
+  <div class="cyber-glow-orb w-80 h-80 bg-cyan-500 -top-20 -left-16" aria-hidden="true"></div>
+  <div class="cyber-glow-orb w-96 h-96 bg-violet-600 -bottom-24 -right-16" aria-hidden="true"></div>
+
+  <!-- CABEÇALHO SUPERIOR (MARCA E CORES PRESERVADAS + BADGE 7º ANO) -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between gap-2 shrink-0 mb-2" style="height: clamp(50px, 8vh, 68px);">
+    <!-- Tag Esquerda 7º Ano -->
+    <div class="hidden lg:flex items-center gap-2 bg-slate-900/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full shadow-lg">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-xs font-extrabold tracking-wider text-cyan-300 uppercase">7º Ano • Área & Perímetro</span>
+    </div>
+
+    <!-- Pílula Branca Central com GET Ministro Gama Filho | Professor Rafael -->
+    <div class="header-pill h-full px-4 sm:px-7 mx-auto flex items-center justify-center gap-3 sm:gap-5">
+      <!-- Logotipo GET Ministro Gama Filho (Cores Originais Preservadas) -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#081844] flex items-center justify-center shadow border border-[#102a6e]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">G</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#ffe600] flex items-center justify-center shadow border border-[#f5d000]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">E</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00d2ff] flex items-center justify-center shadow border border-[#00b8e6]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">T</span>
+          </div>
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="font-logo-ministro text-sm sm:text-base font-extrabold text-[#ff6a1a] tracking-wide">MINISTRO</span>
+          <span class="font-logo-gamafilho text-xl sm:text-2xl font-bold text-[#111827] -mt-1 ml-1">Gama Filho</span>
+        </div>
+      </div>
+
+      <!-- Divisor vertical -->
+      <div class="w-0.5 sm:w-1 h-7 sm:h-8 bg-[#081844] rounded-full opacity-90"></div>
+
+      <!-- Professor Rafael -->
+      <span class="text-base sm:text-xl font-extrabold text-[#081844] tracking-tight whitespace-nowrap">
+        Professor Rafael
+      </span>
+    </div>
+
+    <!-- Controles Rápidos Direita (Som + Tela Cheia) -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <button onclick="toggleSound()" id="btnSound" class="btn-lab btn-slate px-2.5 py-2 text-xs sm:text-sm" title="Ativar/Desativar Áudio">
+        🔊
+      </button>
+      <button onclick="toggleFullscreen()" id="btnFullscreen" class="btn-lab btn-cyan px-3 py-2 text-xs sm:text-sm" title="Expandir para Tela Cheia">
+        <span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONSOLE PRINCIPAL DO LABORATÓRIO (100% DA ALTURA RESTANTE, ZERO SCROLL) -->
+  <main id="labChassis" class="relative z-10 w-full max-w-6xl mx-auto lab-chassis">
+
+    <!-- Barra Superior de Telemetria da Missão -->
+    <div class="bg-slate-950/90 border-b border-slate-800 px-3 sm:px-5 py-2 flex flex-wrap items-center justify-between gap-2 shrink-0">
+      <!-- Seletor de Missão e Categoria -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openMissionModal()" class="btn-lab btn-violet px-3 py-1 text-xs sm:text-sm">
+          <span>☰</span> <span id="missionBadge">Projeto 1 de 10</span>
+        </button>
+        <span id="shapeCategoryTag" class="hidden sm:inline-block bg-cyan-950 text-cyan-300 border border-cyan-700/60 text-xs font-extrabold px-2.5 py-0.5 rounded-full">
+          Quadrado / Retângulo
+        </span>
+      </div>
+
+      <!-- Meta do Projeto Atual em Destaque -->
+      <div class="flex items-center gap-2 bg-slate-900 border border-slate-700/80 px-3.5 py-1 rounded-xl">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 hidden md:inline">Meta:</span>
+        <span id="targetGoalDisplay" class="font-mono-tech text-xs sm:text-sm md:text-base font-extrabold text-amber-400">
+          Área = 16 m² • Perímetro = 16 m
+        </span>
+      </div>
+
+      <!-- Indicadores de Pontuação e Sequência -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="flex items-center gap-1" title="Sequência de acertos">
+          <span class="text-sm">🔥</span>
+          <span id="streakText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-orange-400">0x</span>
+        </div>
+        <div class="flex items-center gap-1" title="Projetos aprovados">
+          <span class="text-sm">✅</span>
+          <span id="completedText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-emerald-400">0/10</span>
+        </div>
+        <div class="bg-cyan-950/80 border border-cyan-600/40 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+          <span class="text-[11px] font-bold text-cyan-300">PTS</span>
+          <span id="scoreText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-white">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORPO CENTRAL DIVIDIDO: PLANTA INTERATIVA (ESQUERDA) + CONSOLE DE PROJETO (DIREITA) -->
+    <div class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3 p-2.5 sm:p-3.5 overflow-hidden">
+
+      <!-- COLUNA ESQUERDA (7 cols): MALHA QUADRANGULAR INTERATIVA (BLUEPRINT) -->
+      <div class="lg:col-span-7 flex flex-col min-h-0 bg-slate-950/75 border border-slate-800 rounded-2xl p-2 sm:p-3 relative overflow-hidden">
+        <!-- Cabeçalho da Planta -->
+        <div class="flex items-center justify-between gap-2 mb-1.5 shrink-0">
+          <div class="flex items-center gap-2 min-w-0">
+            <span id="blueprintStatusDot" class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
+            <span id="simInstruction" class="text-xs sm:text-sm font-bold text-slate-200 truncate">
+              Ajuste as dimensões ou clique/arraste nos vértices da planta!
+            </span>
+          </div>
+          <button onclick="toggleHint()" id="btnHint" class="btn-lab btn-amber px-2.5 py-1 text-xs shrink-0">
+            💡 Dica
+          </button>
+        </div>
+
+        <!-- Banner de Dica (Exibido ao clicar em Dica) -->
+        <div id="hintBanner" class="hidden mb-1.5 bg-amber-950/90 border border-amber-500/60 text-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 animate-pop">
+          💡 Dica carregando...
+        </div>
+
+        <!-- Canvas da Planta Baixa -->
+        <div class="relative flex-1 min-h-0 w-full rounded-xl overflow-hidden border border-slate-800/90 bg-[#060b19]">
+          <canvas id="blueprintCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA (5 cols): CONSOLE DE DIMENSIONAMENTO E CÁLCULO -->
+      <div class="lg:col-span-5 flex flex-col justify-between min-h-0 bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-3.5 gap-2 overflow-hidden">
+
+        <!-- ETAPA 1: DIMENSIONADOR DA FIGURA PLANA -->
+        <div id="step1Box" class="bg-slate-950/90 border-2 border-cyan-500/60 rounded-xl p-2.5 sm:p-3 transition-all shrink-0">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-cyan-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">1</span>
+              <span id="shapeNameHeader">Dimensões do Retângulo (1 quad = 1 m)</span>
+            </span>
+            <span id="step1Badge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              Planta Ativa
+            </span>
+          </div>
+
+          <p id="missionBriefing" class="text-xs text-slate-300 font-semibold mb-2 leading-snug">
+            Construa um terreno com Área = 16 m² e Perímetro = 16 m.
+          </p>
+
+          <!-- Controles de Largura (Base) e Altura -->
+          <div class="grid grid-cols-2 gap-2">
+            <!-- Controle Base / Largura -->
+            <div class="bg-slate-900 p-2 rounded-xl border border-slate-800 flex flex-col items-center">
+              <span id="dimALabel" class="text-[10px] font-bold uppercase text-cyan-300 mb-1">Base (b)</span>
+              <div class="flex items-center gap-2">
+                <button onclick="changeDimA(-1)" id="btnAMinus" class="btn-lab btn-slate w-8 h-8 text-base font-black">−</button>
+                <span id="dimAValue" class="font-mono-tech text-lg sm:text-xl font-extrabold text-white w-9 text-center">4m</span>
+                <button onclick="changeDimA(1)" id="btnAPlus" class="btn-lab btn-slate w-8 h-8 text-base font-black">+</button>
+              </div>
+            </div>
+
+            <!-- Controle Altura / Lado 2 -->
+            <div class="bg-slate-900 p-2 rounded-xl border border-slate-800 flex flex-col items-center">
+              <span id="dimBLabel" class="text-[10px] font-bold uppercase text-violet-300 mb-1">Altura (h)</span>
+              <div class="flex items-center gap-2">
+                <button onclick="changeDimB(-1)" id="btnBMinus" class="btn-lab btn-slate w-8 h-8 text-base font-black">−</button>
+                <span id="dimBValue" class="font-mono-tech text-lg sm:text-xl font-extrabold text-white w-9 text-center">3m</span>
+                <button onclick="changeDimB(1)" id="btnBPlus" class="btn-lab btn-slate w-8 h-8 text-base font-black">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Painel de Fórmula de Referência -->
+          <div id="formulaRefBox" class="mt-2 flex items-center justify-center gap-2 text-[11px] font-mono-tech font-bold text-slate-300 bg-slate-900/75 py-1 px-2 rounded-lg border border-slate-800/80">
+            <span>A = b × h</span>
+            <span class="text-slate-600">|</span>
+            <span>P = 2·(b + h)</span>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: MEDIÇÃO E APROVAÇÃO DO PROJETO (ÁREA E PERÍMETRO) -->
+        <div id="step2Box" class="bg-slate-950/90 border-2 border-emerald-500/60 rounded-xl p-2.5 sm:p-3 flex-1 flex flex-col justify-between transition-all">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">2</span>
+              Registrar Área e Perímetro
+            </span>
+            <span id="step2Badge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              Medição
+            </span>
+          </div>
+
+          <!-- Seletores Numéricos de Área (m²) e Perímetro (m) -->
+          <div class="grid grid-cols-2 gap-2.5 my-auto py-1">
+            <!-- Input Área -->
+            <div class="flex flex-col items-center bg-slate-900/90 border border-slate-800 rounded-xl p-1.5">
+              <span class="text-[10px] font-extrabold text-emerald-300 uppercase mb-1">Área (m²)</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="adjustUserArea(-1)" class="btn-lab btn-slate w-7 h-8 text-sm font-black">−</button>
+                <div id="userAreaDisplay" class="font-mono-tech w-12 h-8 rounded-lg bg-slate-950 border-2 border-emerald-500/60 flex items-center justify-center text-base sm:text-lg font-extrabold text-emerald-300">
+                  12
+                </div>
+                <button onclick="adjustUserArea(1)" class="btn-lab btn-slate w-7 h-8 text-sm font-black">+</button>
+              </div>
+            </div>
+
+            <!-- Input Perímetro -->
+            <div class="flex flex-col items-center bg-slate-900/90 border border-slate-800 rounded-xl p-1.5">
+              <span class="text-[10px] font-extrabold text-amber-300 uppercase mb-1">Perímetro (m)</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="adjustUserPerim(-1)" class="btn-lab btn-slate w-7 h-8 text-sm font-black">−</button>
+                <div id="userPerimDisplay" class="font-mono-tech w-12 h-8 rounded-lg bg-slate-950 border-2 border-amber-500/60 flex items-center justify-center text-base sm:text-lg font-extrabold text-amber-300">
+                  14
+                </div>
+                <button onclick="adjustUserPerim(1)" class="btn-lab btn-slate w-7 h-8 text-sm font-black">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Principal: Validar Projeto -->
+          <button onclick="validateBlueprint()" id="btnValidate" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base mt-1">
+            📐 VALIDAR PLANTA E MEDIDAS
+          </button>
+        </div>
+
+        <!-- Barra Inferior Limpa (Apenas os 4 Botões de Navegação) -->
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="prevMission()" id="btnPrev" class="btn-lab btn-slate py-1.5 px-2 text-xs" title="Voltar">
+            ⬅ Voltar
+          </button>
+          <button onclick="openMissionModal()" class="btn-lab btn-violet py-1.5 px-2 text-xs truncate" title="Ver todas as fases">
+            📋 Fases
+          </button>
+          <button onclick="skipMission()" id="btnSkip" class="btn-lab btn-slate py-1.5 px-2 text-xs truncate" title="Pular fase">
+            ⏭ Pular
+          </button>
+          <button onclick="nextMission()" id="btnNext" class="btn-lab btn-cyan py-1.5 px-2 text-xs truncate" title="Avançar">
+            Avançar ➡
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL DE SUCESSO DA MISSÃO -->
+  <div id="successModal" class="hidden fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-emerald-400 rounded-3xl max-w-md w-full p-5 sm:p-6 text-center shadow-2xl animate-pop">
+      <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-3xl flex items-center justify-center mx-auto mb-3">
+        🏗️
+      </div>
+      <h3 id="modalSuccessTitle" class="text-xl sm:text-2xl font-extrabold text-white mb-1">
+        Projeto Aprovado!
+      </h3>
+      <p id="modalSuccessDesc" class="text-xs sm:text-sm text-slate-300 font-semibold mb-3 leading-relaxed">
+        Explicação geométrica do projeto.
+      </p>
+      <div id="modalFormulaCard" class="font-mono-tech bg-slate-950 border border-cyan-500/40 rounded-xl py-2.5 px-3 mb-4 text-xs sm:text-sm font-extrabold text-emerald-300">
+        Área = 4 × 4 = 16 m² | Perímetro = 4 × 4 = 16 m
+      </div>
+      <button onclick="advanceFromModal()" id="btnModalContinue" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base">
+        Próximo Projeto ➡
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: MAPA DOS 10 PROJETOS -->
+  <div id="missionsModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-cyan-500/50 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
+      <div class="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="text-base sm:text-lg font-extrabold text-white">📐 Projetos de Engenharia — 7º Ano</h3>
+          <p class="text-xs text-cyan-300 font-semibold">Área e Perímetro de Quadrados, Retângulos, Triângulos e Figuras Compostas</p>
+        </div>
+        <button onclick="closeMissionModal()" class="btn-lab btn-slate w-8 h-8 text-sm">✕</button>
+      </div>
+      <div id="missionsGrid" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 overflow-y-auto">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="px-5 py-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+        <span id="modalProgressSummary" class="text-xs sm:text-sm font-bold text-slate-300">0 de 10 concluídos</span>
+        <button onclick="closeMissionModal()" class="btn-lab btn-cyan px-4 py-1.5 text-xs sm:text-sm">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONCLUSÃO FINAL (10/10 PROJETOS) -->
+  <div id="finalVictoryModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl animate-pop">
+      <div class="text-5xl mb-2">🏆</div>
+      <h2 class="text-2xl font-extrabold text-white mb-1">Arquiteto(a) Mestre do 7º Ano!</h2>
+      <p class="text-xs sm:text-sm text-slate-300 font-semibold mb-4">
+        Você concluiu todos os 10 projetos de área e perímetro do <strong>GET Ministro Gama Filho</strong>!
+      </p>
+      <div id="finalStatsSummary" class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 mb-4 grid grid-cols-2 gap-3">
+        <!-- Preenchido via JS -->
+      </div>
+      <button onclick="restartWholeLab()" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base">
+        🔄 Reiniciar Projetos
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * SISTEMA DE ÁUDIO SINTETIZADO (WEB AUDIO API - SEM ARQUIVOS EXTERNOS)
+     * ============================================================================
+     */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playLabSound(type) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          gain.gain.setValueAtTime(0.07, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        } else if (type === 'success') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(554.37, now + 0.09);
+          osc.frequency.setValueAtTime(659.25, now + 0.18);
+          osc.frequency.setValueAtTime(880, now + 0.27);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.52);
+          osc.start(now);
+          osc.stop(now + 0.52);
+        } else if (type === 'error') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(185, now);
+          osc.frequency.linearRampToValueAtTime(130, now + 0.24);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+          osc.start(now);
+          osc.stop(now + 0.26);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('btnSound').textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    /**
+     * ============================================================================
+     * TELA CHEIA (FULLSCREEN API)
+     * ============================================================================
+     */
+    function toggleFullscreen() {
+      const el = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('btnFullscreen');
+      btn.innerHTML = document.fullscreenElement
+        ? '<span>🗗</span><span class="hidden sm:inline">Sair Tela Cheia</span>'
+        : '<span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>';
+      setTimeout(resizeBlueprintCanvas, 60);
+    });
+
+    /**
+     * ============================================================================
+     * BANCO DOS 10 PROJETOS GEOMÉTRICOS (7º ANO: ÁREA E PERÍMETRO DE FIGURAS PLANAS)
+     * ============================================================================
+     * Tipos de figuras:
+     * - 'rect': Retângulo ou Quadrado (Base b, Altura h)
+     * - 'right_tri': Triângulo Retângulo Pitagórico (Base b, Altura h, Hipotenusa c)
+     * - 'l_shape': Figura Composta em "L" (Retângulo maior b×h menos recorte fixo de 2×2)
+     */
+    const MISSIONS = [
+      {
+        id: 1,
+        category: 'Quadrado',
+        shape: 'rect',
+        briefing: 'Projete uma praça quadrada com Área = 16 m² e Perímetro = 16 m.',
+        targetArea: 16,
+        targetPerim: 16,
+        initA: 3, initB: 2,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = b × h  |  P = 2·(b + h)',
+        hint: 'Para um quadrado de Área 16 m², cada lado deve medir 4 m (pois 4 × 4 = 16 e 4 + 4 + 4 + 4 = 16 m).'
+      },
+      {
+        id: 2,
+        category: 'Retângulo',
+        shape: 'rect',
+        briefing: 'Construa uma quadra retangular com Área = 24 m² e Perímetro = 20 m.',
+        targetArea: 24,
+        targetPerim: 20,
+        initA: 4, initB: 3,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = b × h  |  P = 2·(b + h)',
+        hint: 'Procure dois números que multiplicados deem 24 e somados deem 10 (metade do perímetro 20): tente 6 m e 4 m!'
+      },
+      {
+        id: 3,
+        category: 'Mesma Área, Outro Perímetro',
+        shape: 'rect',
+        briefing: 'Mesma área de 24 m², mas agora mais alongada: Área = 24 m² e Perímetro = 22 m.',
+        targetArea: 24,
+        targetPerim: 22,
+        initA: 6, initB: 4,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = b × h  |  P = 2·(b + h)',
+        hint: 'Dois números cujo produto é 24 e a soma é 11 (22 ÷ 2): ajuste para 8 m de base por 3 m de altura!'
+      },
+      {
+        id: 4,
+        category: 'Mesmo Perímetro, Outra Área',
+        shape: 'rect',
+        briefing: 'Com exatamente 24 m de cerca (Perímetro = 24 m), obtenha Área = 35 m².',
+        targetArea: 35,
+        targetPerim: 24,
+        initA: 6, initB: 6,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = b × h  |  P = 2·(b + h)',
+        hint: 'Como b + h = 12 (metade de 24) e b × h = 35, ajuste as dimensões para 7 m e 5 m.'
+      },
+      {
+        id: 5,
+        category: 'Otimização Máxima',
+        shape: 'rect',
+        briefing: 'Maximize o terreno com 24 m de cerca: Perímetro = 24 m e Área máxima = 36 m².',
+        targetArea: 36,
+        targetPerim: 24,
+        initA: 8, initB: 4,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = l²  |  P = 4 × l',
+        hint: 'Entre todos os retângulos de mesmo perímetro, o quadrado tem a maior área! Faça 6 m × 6 m.'
+      },
+      {
+        id: 6,
+        category: 'Triângulo Retângulo',
+        shape: 'right_tri',
+        briefing: 'Jardim triangular: construa um triângulo retângulo com Área = 6 m² e Perímetro = 12 m.',
+        targetArea: 6,
+        targetPerim: 12,
+        initA: 4, initB: 4,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = (b × h) / 2  |  P = b + h + c',
+        hint: 'Lembre-se do triângulo clássico 3-4-5! Com base 4 m e altura 3 m, a hipotenusa mede 5 m: Área = (4×3)/2 = 6 m² e P = 3+4+5 = 12 m.'
+      },
+      {
+        id: 7,
+        category: 'Triângulo Retângulo',
+        shape: 'right_tri',
+        briefing: 'Rampa triangular ampliada: obtenha Área = 24 m² e Perímetro = 24 m.',
+        targetArea: 24,
+        targetPerim: 24,
+        initA: 6, initB: 4,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = (b × h) / 2  |  P = b + h + c',
+        hint: 'Dobre os lados do triângulo 3-4-5! Use base 8 m e altura 6 m (hipotenusa = 10 m): Área = (8×6)/2 = 24 m² e P = 6+8+10 = 24 m.'
+      },
+      {
+        id: 8,
+        category: 'Triângulo Retângulo',
+        shape: 'right_tri',
+        briefing: 'Canteiro triangular estreito: construa um triângulo com Área = 30 m² e Perímetro = 30 m.',
+        targetArea: 30,
+        targetPerim: 30,
+        initA: 8, initB: 5,
+        dimALabel: 'Base (b)', dimBLabel: 'Altura (h)',
+        formulaRef: 'A = (b × h) / 2  |  P = b + h + c',
+        hint: 'Use o triângulo pitagórico 5-12-13! Ajuste base = 12 m e altura = 5 m: Área = (12×5)/2 = 30 m² e P = 5+12+13 = 30 m.'
+      },
+      {
+        id: 9,
+        category: 'Figura Composta (Em L)',
+        shape: 'l_shape',
+        briefing: 'Terreno em L (recorte de 2m×2m no canto): obtenha Área = 26 m² e Perímetro = 22 m.',
+        targetArea: 26,
+        targetPerim: 22,
+        initA: 5, initB: 4,
+        dimALabel: 'Largura Total', dimBLabel: 'Altura Total',
+        formulaRef: 'A = (L × H) − 4  |  P = 2·(L + H)',
+        hint: 'O recorte de 2×2 tira 4 m² da área total, mas mantém o perímetro igual ao do retângulo externo! Ajuste para 6 m × 5 m (30 − 4 = 26 m²).'
+      },
+      {
+        id: 10,
+        category: 'Desafio Final • Figura em L',
+        shape: 'l_shape',
+        briefing: 'Projeto final em L (recorte 2m×2m): obtenha Área = 44 m² e Perímetro = 28 m.',
+        targetArea: 44,
+        targetPerim: 28,
+        initA: 7, initB: 5,
+        dimALabel: 'Largura Total', dimBLabel: 'Altura Total',
+        formulaRef: 'A = (L × H) − 4  |  P = 2·(L + H)',
+        hint: 'Para Área = 44 m² após tirar 4 m², o retângulo completo precisa ter 48 m² com L + H = 14: ajuste para 8 m × 6 m!'
+      }
+    ];
+
+    /**
+     * ============================================================================
+     * ESTADO DO LABORATÓRIO E GEOMETRIA INTERATIVA
+     * ============================================================================
+     */
+    const labState = {
+      missionIdx: 0,
+      completed: Array(MISSIONS.length).fill(false),
+      score: 0,
+      streak: 0,
+      hintVisible: false,
+
+      // Dimensões atuais na planta (em metros / quadradinhos)
+      dimA: 4,
+      dimB: 3,
+
+      // Valores registrados pelo aluno na Etapa 2
+      userArea: 12,
+      userPerim: 14,
+
+      // Arraste direto na malha
+      draggingHandle: null, // 'A' (largura) | 'B' (altura) | 'corner'
+      gridMetrics: null
+    };
+
+    const canvas = document.getElementById('blueprintCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeBlueprintCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      renderBlueprint();
+    }
+
+    window.addEventListener('resize', resizeBlueprintCanvas);
+
+    /**
+     * Calcula a Área e o Perímetro reais da figura atualmente desenhada na malha
+     */
+    function getActualGeometry() {
+      const m = MISSIONS[labState.missionIdx];
+      const a = labState.dimA;
+      const b = labState.dimB;
+
+      if (m.shape === 'rect') {
+        return {
+          area: a * b,
+          perim: 2 * (a + b),
+          hyp: null
+        };
+      } else if (m.shape === 'right_tri') {
+        const hyp = Math.hypot(a, b);
+        const hypDisplay = Number.isInteger(hyp) ? hyp : Number(hyp.toFixed(1));
+        return {
+          area: (a * b) / 2,
+          perim: Number((a + b + hyp).toFixed(1)),
+          hyp: hypDisplay
+        };
+      } else {
+        // 'l_shape': retângulo a x b com recorte de 2x2 no canto superior direito
+        return {
+          area: a * b - 4,
+          perim: 2 * (a + b),
+          hyp: null
+        };
+      }
+    }
+
+    /**
+     * ============================================================================
+     * CARREGAMENTO DE MISSÃO E CONTROLES
+     * ============================================================================
+     */
+    function loadMission(idx) {
+      labState.missionIdx = idx;
+      const m = MISSIONS[idx];
+
+      labState.hintVisible = false;
+      document.getElementById('hintBanner').classList.add('hidden');
+
+      labState.dimA = m.initA;
+      labState.dimB = m.initB;
+
+      // Inicializa os contadores do aluno com um valor neutro para ele calcular e ajustar
+      labState.userArea = 10;
+      labState.userPerim = 14;
+
+      document.getElementById('missionBadge').textContent = `Projeto ${m.id} de ${MISSIONS.length}`;
+      document.getElementById('shapeCategoryTag').textContent = m.category;
+      document.getElementById('targetGoalDisplay').textContent = `Área = ${m.targetArea} m² • Perímetro = ${m.targetPerim} m`;
+      document.getElementById('shapeNameHeader').textContent = `${m.category} (1 quad = 1 m)`;
+      document.getElementById('missionBriefing').textContent = m.briefing;
+      document.getElementById('dimALabel').textContent = m.dimALabel;
+      document.getElementById('dimBLabel').textContent = m.dimBLabel;
+      document.getElementById('formulaRefBox').textContent = m.formulaRef;
+
+      updateDimensionDisplays();
+      updateUserMeasureDisplays();
+      updateScoreHud();
+
+      document.getElementById('btnPrev').disabled = (idx === 0);
+      document.getElementById('btnNext').disabled = (idx === MISSIONS.length - 1);
+
+      renderBlueprint();
+    }
+
+    function prevMission() {
+      if (labState.missionIdx > 0) {
+        playLabSound('click');
+        loadMission(labState.missionIdx - 1);
+      }
+    }
+
+    function nextMission() {
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        playLabSound('click');
+        loadMission(labState.missionIdx + 1);
+      }
+    }
+
+    function skipMission() {
+      playLabSound('click');
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        loadMission(labState.missionIdx + 1);
+      } else {
+        const firstPending = labState.completed.findIndex(v => !v);
+        loadMission(firstPending !== -1 ? firstPending : 0);
+      }
+    }
+
+    function updateScoreHud() {
+      const doneCount = labState.completed.filter(Boolean).length;
+      document.getElementById('completedText').textContent = `${doneCount}/${MISSIONS.length}`;
+      document.getElementById('streakText').textContent = `${labState.streak}x`;
+      document.getElementById('scoreText').textContent = labState.score;
+    }
+
+    function changeDimA(delta) {
+      const m = MISSIONS[labState.missionIdx];
+      const minA = m.shape === 'l_shape' ? 4 : 1;
+      playLabSound('click');
+      labState.dimA = Math.max(minA, Math.min(13, labState.dimA + delta));
+      updateDimensionDisplays();
+      renderBlueprint();
+    }
+
+    function changeDimB(delta) {
+      const m = MISSIONS[labState.missionIdx];
+      const minB = m.shape === 'l_shape' ? 4 : 1;
+      playLabSound('click');
+      labState.dimB = Math.max(minB, Math.min(8, labState.dimB + delta));
+      updateDimensionDisplays();
+      renderBlueprint();
+    }
+
+    function updateDimensionDisplays() {
+      document.getElementById('dimAValue').textContent = `${labState.dimA}m`;
+      document.getElementById('dimBValue').textContent = `${labState.dimB}m`;
+    }
+
+    function adjustUserArea(delta) {
+      playLabSound('click');
+      labState.userArea = Math.max(1, Math.min(120, labState.userArea + delta));
+      updateUserMeasureDisplays();
+    }
+
+    function adjustUserPerim(delta) {
+      playLabSound('click');
+      labState.userPerim = Math.max(2, Math.min(80, labState.userPerim + delta));
+      updateUserMeasureDisplays();
+    }
+
+    function updateUserMeasureDisplays() {
+      document.getElementById('userAreaDisplay').textContent = labState.userArea;
+      document.getElementById('userPerimDisplay').textContent = labState.userPerim;
+    }
+
+    function toggleHint() {
+      playLabSound('click');
+      const m = MISSIONS[labState.missionIdx];
+      const banner = document.getElementById('hintBanner');
+      labState.hintVisible = !labState.hintVisible;
+      if (labState.hintVisible) {
+        banner.textContent = `💡 ${m.hint}`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    /**
+     * ============================================================================
+     * VALIDAÇÃO DA PLANTA DESENHADA E DOS VALORES CALCULADOS
+     * ============================================================================
+     */
+    function validateBlueprint() {
+      const m = MISSIONS[labState.missionIdx];
+      const actual = getActualGeometry();
+
+      const shapeMatchesGoal = (actual.area === m.targetArea) && (actual.perim === m.targetPerim);
+      const calcMatchesGoal = (labState.userArea === m.targetArea) && (labState.userPerim === m.targetPerim);
+
+      if (shapeMatchesGoal && calcMatchesGoal) {
+        playLabSound('success');
+
+        if (!labState.completed[labState.missionIdx]) {
+          labState.completed[labState.missionIdx] = true;
+          labState.streak++;
+          labState.score += 100 + labState.streak * 20;
+          updateScoreHud();
+        }
+
+        let summaryFormula = '';
+        if (m.shape === 'rect') {
+          summaryFormula = `Área = ${labState.dimA} × ${labState.dimB} = ${actual.area} m²  |  Perímetro = 2·(${labState.dimA} + ${labState.dimB}) = ${actual.perim} m`;
+        } else if (m.shape === 'right_tri') {
+          summaryFormula = `Área = (${labState.dimA} × ${labState.dimB}) ÷ 2 = ${actual.area} m²  |  Perímetro = ${labState.dimA} + ${labState.dimB} + ${actual.hyp} = ${actual.perim} m`;
+        } else {
+          summaryFormula = `Área = (${labState.dimA} × ${labState.dimB}) − 4 = ${actual.area} m²  |  Perímetro = 2·(${labState.dimA} + ${labState.dimB}) = ${actual.perim} m`;
+        }
+
+        document.getElementById('modalSuccessTitle').textContent = `Projeto ${m.id} Aprovado!`;
+        document.getElementById('modalSuccessDesc').textContent =
+          `Excelente! Você desenhou a figura na malha e registrou corretamente a Área (${actual.area} m²) e o Perímetro (${actual.perim} m).`;
+        document.getElementById('modalFormulaCard').textContent = summaryFormula;
+
+        const allDone = labState.completed.every(Boolean);
+        document.getElementById('btnModalContinue').textContent = allDone
+          ? 'Ver Certificado Final 🏆'
+          : 'Próximo Projeto ➡';
+
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        playLabSound('error');
+        labState.streak = 0;
+        updateScoreHud();
+
+        const box = document.getElementById('step2Box');
+        box.classList.remove('shake-box');
+        void box.offsetWidth;
+        box.classList.add('shake-box');
+
+        const instr = document.getElementById('simInstruction');
+        if (!shapeMatchesGoal) {
+          instr.textContent = `⚠️ A figura na planta ainda não tem Área = ${m.targetArea} m² e Perímetro = ${m.targetPerim} m! Ajuste as dimensões.`;
+        } else {
+          instr.textContent = `⚠️ A planta está certa! Agora corrija os números de Área (${m.targetArea}) e Perímetro (${m.targetPerim}) na Etapa 2.`;
+        }
+      }
+    }
+
+    function advanceFromModal() {
+      const modal = document.getElementById('successModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      if (labState.completed.every(Boolean)) {
+        showFinalVictory();
+        return;
+      }
+
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        loadMission(labState.missionIdx + 1);
+      } else {
+        const nextPending = labState.completed.findIndex(v => !v);
+        loadMission(nextPending !== -1 ? nextPending : 0);
+      }
+    }
+
+    function showFinalVictory() {
+      const done = labState.completed.filter(Boolean).length;
+      document.getElementById('finalStatsSummary').innerHTML = `
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Projetos</div>
+          <div class="font-mono-tech text-xl font-extrabold text-emerald-400">${done}/${MISSIONS.length}</div>
+        </div>
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Pontuação</div>
+          <div class="font-mono-tech text-xl font-extrabold text-amber-400">${labState.score}</div>
+        </div>
+      `;
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function restartWholeLab() {
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      labState.completed = Array(MISSIONS.length).fill(false);
+      labState.score = 0;
+      labState.streak = 0;
+      loadMission(0);
+    }
+
+    /**
+     * ============================================================================
+     * MODAL DE SELEÇÃO DOS 10 PROJETOS
+     * ============================================================================
+     */
+    function openMissionModal() {
+      playLabSound('click');
+      const grid = document.getElementById('missionsGrid');
+      grid.innerHTML = '';
+
+      MISSIONS.forEach((m, idx) => {
+        const done = labState.completed[idx];
+        const isCurrent = idx === labState.missionIdx;
+        const btn = document.createElement('button');
+        btn.className = `text-left p-3 rounded-2xl border-2 transition cursor-pointer flex items-center justify-between ${
+          done
+            ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-100'
+            : isCurrent
+              ? 'bg-cyan-950/70 border-cyan-400 text-white'
+              : 'bg-slate-950/80 border-slate-800 hover:border-slate-600 text-slate-200'
+        }`;
+        btn.onclick = () => {
+          closeMissionModal();
+          loadMission(idx);
+        };
+        btn.innerHTML = `
+          <div>
+            <div class="text-[11px] font-extrabold uppercase tracking-wider ${done ? 'text-emerald-400' : 'text-cyan-400'}">
+              Projeto ${m.id} • ${m.category}
+            </div>
+            <div class="font-mono-tech text-xs sm:text-sm font-extrabold mt-0.5">
+              Área = ${m.targetArea} m² • Perímetro = ${m.targetPerim} m
+            </div>
+          </div>
+          <span class="text-lg">${done ? '✅' : isCurrent ? '▶' : '📐'}</span>
+        `;
+        grid.appendChild(btn);
+      });
+
+      const doneCount = labState.completed.filter(Boolean).length;
+      document.getElementById('modalProgressSummary').textContent = `${doneCount} de ${MISSIONS.length} concluídos`;
+
+      const modal = document.getElementById('missionsModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMissionModal() {
+      const modal = document.getElementById('missionsModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /**
+     * ============================================================================
+     * INTERAÇÃO DIRETA POR ARRASTE NA MALHA QUADRANGULAR (MOUSE E TOUCH)
+     * ============================================================================
+     */
+    function getCanvasPointer(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function handleGridPointerDown(e) {
+      if (!labState.gridMetrics) return;
+      const pos = getCanvasPointer(e);
+      const gm = labState.gridMetrics;
+
+      const handleX = gm.originX + labState.dimA * gm.cell;
+      const handleY = gm.originY - labState.dimB * gm.cell;
+
+      if (Math.hypot(pos.x - handleX, pos.y - handleY) <= 24) {
+        labState.draggingHandle = 'corner';
+      } else if (Math.hypot(pos.x - handleX, pos.y - gm.originY) <= 22) {
+        labState.draggingHandle = 'A';
+      } else if (Math.hypot(pos.x - gm.originX, pos.y - handleY) <= 22) {
+        labState.draggingHandle = 'B';
+      }
+    }
+
+    function handleGridPointerMove(e) {
+      if (!labState.draggingHandle || !labState.gridMetrics) return;
+      e.preventDefault();
+      const pos = getCanvasPointer(e);
+      const gm = labState.gridMetrics;
+      const m = MISSIONS[labState.missionIdx];
+      const minVal = m.shape === 'l_shape' ? 4 : 1;
+
+      let changed = false;
+      if (labState.draggingHandle === 'A' || labState.draggingHandle === 'corner') {
+        const newA = Math.max(minVal, Math.min(13, Math.round((pos.x - gm.originX) / gm.cell)));
+        if (newA !== labState.dimA) {
+          labState.dimA = newA;
+          changed = true;
+        }
+      }
+      if (labState.draggingHandle === 'B' || labState.draggingHandle === 'corner') {
+        const newB = Math.max(minVal, Math.min(8, Math.round((gm.originY - pos.y) / gm.cell)));
+        if (newB !== labState.dimB) {
+          labState.dimB = newB;
+          changed = true;
+        }
+      }
+
+      if (changed) {
+        playLabSound('click');
+        updateDimensionDisplays();
+        renderBlueprint();
+      }
+    }
+
+    function handleGridPointerUp() {
+      labState.draggingHandle = null;
+    }
+
+    canvas.addEventListener('mousedown', handleGridPointerDown);
+    window.addEventListener('mousemove', handleGridPointerMove);
+    window.addEventListener('mouseup', handleGridPointerUp);
+
+    canvas.addEventListener('touchstart', handleGridPointerDown, { passive: false });
+    window.addEventListener('touchmove', handleGridPointerMove, { passive: false });
+    window.addEventListener('touchend', handleGridPointerUp);
+
+    /**
+     * ============================================================================
+     * RENDERIZAÇÃO DA MALHA QUADRANGULAR E FIGURAS PLANAS EM CANVAS
+     * ============================================================================
+     */
+    function renderBlueprint() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w <= 0 || h <= 0) return;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const cols = 14;
+      const rows = 9;
+      const padLeft = 38;
+      const padRight = 28;
+      const padTop = 26;
+      const padBot = 34;
+
+      const cell = Math.floor(Math.min((w - padLeft - padRight) / cols, (h - padTop - padBot) / rows));
+      const gridW = cell * cols;
+      const gridH = cell * rows;
+      const originX = Math.floor((w - gridW) / 2) + 6;
+      const originY = Math.floor((h + gridH) / 2) - 4;
+
+      labState.gridMetrics = { originX, originY, cell, cols, rows };
+
+      // Desenha a malha quadrangular 1m x 1m
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.14)';
+      ctx.lineWidth = 1;
+      for (let c = 0; c <= cols; c++) {
+        const gx = originX + c * cell;
+        ctx.beginPath();
+        ctx.moveTo(gx, originY - gridH);
+        ctx.lineTo(gx, originY);
+        ctx.stroke();
+      }
+      for (let r = 0; r <= rows; r++) {
+        const gy = originY - r * cell;
+        ctx.beginPath();
+        ctx.moveTo(originX, gy);
+        ctx.lineTo(originX + gridW, gy);
+        ctx.stroke();
+      }
+
+      // Eixos principais (Base e Altura)
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(originX, originY - gridH);
+      ctx.lineTo(originX, originY);
+      ctx.lineTo(originX + gridW, originY);
+      ctx.stroke();
+
+      const m = MISSIONS[labState.missionIdx];
+      const a = labState.dimA;
+      const b = labState.dimB;
+      const actual = getActualGeometry();
+
+      const figW = a * cell;
+      const figH = b * cell;
+      const topY = originY - figH;
+      const rightX = originX + figW;
+
+      // Desenha a figura plana conforme o tipo da missão
+      ctx.save();
+      ctx.fillStyle = 'rgba(6, 182, 212, 0.28)';
+      ctx.strokeStyle = '#22d3ee';
+      ctx.lineWidth = 3;
+
+      if (m.shape === 'rect') {
+        ctx.beginPath();
+        ctx.rect(originX, topY, figW, figH);
+        ctx.fill();
+        ctx.stroke();
+
+        // Grade interna destacada dos quadradinhos de 1 m²
+        ctx.strokeStyle = 'rgba(34, 211, 238, 0.35)';
+        ctx.lineWidth = 1;
+        for (let i = 1; i < a; i++) {
+          ctx.beginPath();
+          ctx.moveTo(originX + i * cell, topY);
+          ctx.lineTo(originX + i * cell, originY);
+          ctx.stroke();
+        }
+        for (let j = 1; j < b; j++) {
+          ctx.beginPath();
+          ctx.moveTo(originX, originY - j * cell);
+          ctx.lineTo(rightX, originY - j * cell);
+          ctx.stroke();
+        }
+      } else if (m.shape === 'right_tri') {
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(rightX, originY);
+        ctx.lineTo(originX, topY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Símbolo de ângulo reto no vértice inferior esquerdo
+        const sq = Math.min(14, cell * 0.45);
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(originX, originY - sq, sq, sq);
+
+        // Etiqueta da hipotenusa no meio da diagonal
+        const midHypX = (originX + rightX) / 2 + 16;
+        const midHypY = (originY + topY) / 2 - 8;
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 12px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(`c = ${actual.hyp} m`, midHypX, midHypY);
+      } else {
+        // Figura composta em "L": retângulo a x b com recorte de 2x2 no canto superior direito
+        const cut = 2 * cell;
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(rightX, originY);
+        ctx.lineTo(rightX, topY + cut);
+        ctx.lineTo(rightX - cut, topY + cut);
+        ctx.lineTo(rightX - cut, topY);
+        ctx.lineTo(originX, topY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Tracejado mostrando o recorte de 2m x 2m
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = 'rgba(248, 113, 113, 0.7)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(rightX - cut, topY, cut, cut);
+        ctx.fillStyle = '#fca5a5';
+        ctx.font = '700 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('−4m²', rightX - cut / 2, topY + cut / 2 + 3);
+        ctx.restore();
+      }
+      ctx.restore();
+
+      // Cotas numéricas (Base e Altura)
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '800 13px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${a} m`, originX + figW / 2, originY + 20);
+
+      ctx.save();
+      ctx.fillStyle = '#c084fc';
+      ctx.textAlign = 'right';
+      ctx.fillText(`${b} m`, originX - 8, originY - figH / 2 + 4);
+      ctx.restore();
+
+      // Puxadores interativos nos vértices para arrastar
+      drawDragHandle(rightX, originY, '#38bdf8');
+      drawDragHandle(originX, topY, '#c084fc');
+      if (m.shape === 'rect') {
+        drawDragHandle(rightX, topY, '#10b981');
+      }
+
+      // Legenda de escala no canto superior direito
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.beginPath();
+      ctx.roundRect(w - 118, 8, 110, 24, 8);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '700 11px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('1 quad = 1 m²', w - 63, 24);
+    }
+
+    function drawDragHandle(x, y, color) {
+      ctx.beginPath();
+      ctx.arc(x, y, 7, 0, Math.PI * 2);
+      ctx.fillStyle = '#0f172a';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+    }
+
+    window.onload = function () {
+      resizeBlueprintCanvas();
+      loadMission(0);
+    };
+  </script>
+</body>
+</html>

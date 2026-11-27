@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Desafio das Frações - GET Ministro Gama Filho</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts fiéis à identidade visual -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-dark: #081844;
+      --sky-main: #0088ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+
+    input {
+      user-select: text;
+      -webkit-user-select: text;
+      touch-action: auto;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden !important;
+      font-family: 'Nunito', sans-serif;
+      background: radial-gradient(circle at 50% 25%, #2bb8ff 0%, #0088ff 55%, #0066cc 100%);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Padrões matemáticos sutis no fundo */
+    .math-bg-pattern {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .font-logo-get { font-family: 'Fredoka', sans-serif; }
+    .font-logo-ministro { font-family: 'Fredoka', sans-serif; font-style: italic; }
+    .font-logo-gamafilho { font-family: 'Caveat', cursive; }
+
+    /* Cabeçalho Pílula Branca */
+    .header-pill {
+      background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+      border: 3px solid #38a8ff;
+      box-shadow: 0 5px 0 rgba(4, 34, 92, 0.35), 0 8px 16px rgba(0, 0, 0, 0.22);
+      border-radius: 9999px;
+    }
+
+    .burst-ray {
+      background: linear-gradient(90deg, #ffe600, #ffcc00);
+      border-radius: 999px;
+      box-shadow: 0 2px 0 rgba(0, 60, 140, 0.3);
+    }
+
+    /* Card Principal que ocupa exatamente o espaço restante da viewport */
+    .main-card {
+      background: #ffffff;
+      border: 4px solid #081844;
+      border-radius: 24px;
+      box-shadow: 0 8px 0 rgba(8, 24, 68, 0.35), 0 14px 28px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Botões 3D */
+    .btn-3d {
+      border-radius: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      transition: transform 0.1s ease, filter 0.15s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+    .btn-3d:hover:not(:disabled) {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(2px);
+    }
+    .btn-3d:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-green {
+      background: linear-gradient(180deg, #5cd629 0%, #2e9e0b 100%);
+      box-shadow: 0 4px 0 #1b6604;
+    }
+    .btn-blue {
+      background: linear-gradient(180deg, #1e88e5 0%, #0d47a1 100%);
+      box-shadow: 0 4px 0 #072a66;
+    }
+    .btn-amber {
+      background: linear-gradient(180deg, #ffca28 0%, #f57f17 100%);
+      color: #081844;
+      text-shadow: none;
+      border-color: #fff59d;
+      box-shadow: 0 4px 0 #bf360c;
+    }
+    .btn-purple {
+      background: linear-gradient(180deg, #7c4dff 0%, #512da8 100%);
+      box-shadow: 0 4px 0 #311b92;
+    }
+
+    /* Onda amarela decorativa no rodapé */
+    .footer-wave-bg {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 11vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Animação de tremor na explosão ou colisão */
+    @keyframes shakeScreen {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-8px, 5px); }
+      40% { transform: translate(8px, -5px); }
+      60% { transform: translate(-6px, -4px); }
+      80% { transform: translate(6px, 4px); }
+    }
+    .shake-effect {
+      animation: shakeScreen 0.42s ease-in-out;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    #arenaCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #arenaCanvas:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body class="px-2 sm:px-4 py-1.5 sm:py-2.5 justify-between">
+
+  <!-- Símbolos matemáticos de fundo -->
+  <div class="math-bg-pattern" aria-hidden="true">
+    <svg class="w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+      <text x="3%" y="12%" fill="#ffffff" font-size="38" font-weight="900" transform="rotate(-15 40 60)">+</text>
+      <text x="11%" y="22%" fill="#ffffff" font-size="34" font-weight="900" transform="rotate(12 120 120)">7</text>
+      <text x="93%" y="11%" fill="#ffffff" font-size="38" font-weight="900" transform="rotate(15 900 70)">÷</text>
+      <text x="94%" y="23%" fill="#ffffff" font-size="36" font-weight="900" transform="rotate(-10 920 150)">3</text>
+      <text x="2%" y="55%" fill="#ffffff" font-size="40" font-weight="900" transform="rotate(-20 30 350)">×</text>
+      <text x="95%" y="52%" fill="#ffffff" font-size="40" font-weight="900" transform="rotate(18 930 350)">−</text>
+    </svg>
+  </div>
+
+  <!-- Onda amarela inferior -->
+  <div class="footer-wave-bg" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" class="w-full h-full">
+      <path d="M0,45 C240,120 480,15 760,70 C1050,125 1260,35 1440,65 L1440,140 L0,140 Z" fill="#ffca28" opacity="0.92"/>
+      <path d="M0,75 C320,135 640,35 980,95 C1200,130 1350,70 1440,90 L1440,140 L0,140 Z" fill="#ffb300"/>
+    </svg>
+  </div>
+
+  <!-- CABEÇALHO COMPACTO PRESERVANDO "GET MINISTRO GAMA FILHO | PROFESSOR RAFAEL" -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center shrink-0 mb-1.5 sm:mb-2" style="height: clamp(50px, 8.2vh, 72px);">
+    <!-- Raios amarelos esquerda -->
+    <div class="hidden sm:flex flex-col gap-1.5 mr-2.5 items-end" aria-hidden="true">
+      <div class="burst-ray w-7 h-2" style="transform: rotate(25deg);"></div>
+      <div class="burst-ray w-9 h-2"></div>
+      <div class="burst-ray w-7 h-2" style="transform: rotate(-25deg);"></div>
+    </div>
+
+    <!-- Pílula Branca Central -->
+    <div class="header-pill h-full px-4 sm:px-7 flex items-center justify-center gap-3 sm:gap-5">
+      <!-- Bloco Esquerdo: GET Ministro Gama Filho -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#081844] flex items-center justify-center shadow border border-[#102a6e]">
+            <span class="font-logo-get text-xl sm:text-2xl font-bold text-[#ff2e4c] leading-none">G</span>
+          </div>
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#ffe600] flex items-center justify-center shadow border border-[#f5d000]">
+            <span class="font-logo-get text-xl sm:text-2xl font-bold text-[#ff2e4c] leading-none">E</span>
+          </div>
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#00d2ff] flex items-center justify-center shadow border border-[#00b8e6]">
+            <span class="font-logo-get text-xl sm:text-2xl font-bold text-[#ff2e4c] leading-none">T</span>
+          </div>
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="font-logo-ministro text-sm sm:text-lg font-extrabold text-[#ff6a1a] tracking-wide">MINISTRO</span>
+          <span class="font-logo-gamafilho text-xl sm:text-2xl font-bold text-[#111827] -mt-1 ml-1">Gama Filho</span>
+        </div>
+      </div>
+
+      <!-- Divisor vertical -->
+      <div class="w-0.5 sm:w-1 h-7 sm:h-9 bg-[#081844] rounded-full opacity-90"></div>
+
+      <!-- Bloco Direito: Professor Rafael -->
+      <span class="text-base sm:text-xl md:text-2xl font-black text-[#081844] tracking-tight whitespace-nowrap">
+        Professor Rafael
+      </span>
+    </div>
+
+    <!-- Raios amarelos direita -->
+    <div class="hidden sm:flex flex-col gap-1.5 ml-2.5 items-start" aria-hidden="true">
+      <div class="burst-ray w-7 h-2" style="transform: rotate(-25deg);"></div>
+      <div class="burst-ray w-9 h-2"></div>
+      <div class="burst-ray w-7 h-2" style="transform: rotate(25deg);"></div>
+    </div>
+  </header>
+
+  <!-- CARD PRINCIPAL (OCUPA TODO O RESTANTE DA TELA SEM SCROLL) -->
+  <main id="gameContainer" class="relative z-10 w-full max-w-6xl mx-auto main-card">
+
+    <!-- Barra Superior Azul-Marinho do Card (Placar + Timer + Controles) -->
+    <div class="bg-[#081844] text-white px-3 sm:px-5 py-1.5 sm:py-2 flex items-center justify-between gap-2 shrink-0">
+      <!-- Rodada e Modo -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <span id="roundBadge" class="bg-[#0088ff] text-white text-xs sm:text-sm font-black px-2.5 py-0.5 rounded-full">
+          Conta 1 de 10
+        </span>
+        <span id="phaseBadge" class="hidden md:inline-block bg-amber-400 text-[#081844] text-xs font-black px-2.5 py-0.5 rounded-full">
+          FASE 1: INVERTER E ATRAVESSAR
+        </span>
+      </div>
+
+      <!-- Barra de Tempo / Pavio da Bomba -->
+      <div class="flex items-center gap-2 flex-1 max-w-xs sm:max-w-sm mx-2">
+        <span id="bombIcon" class="text-base sm:text-lg leading-none">💣</span>
+        <div class="flex-1 h-3.5 sm:h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-600 p-0.5">
+          <div id="timerBar" class="h-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-500 rounded-full transition-all duration-100" style="width: 100%;"></div>
+        </div>
+        <span id="timerText" class="text-xs sm:text-sm font-black text-[#ffe600] w-9 text-right">30s</span>
+      </div>
+
+      <!-- Placar e Botões Tela Cheia / Som -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5">
+        <div class="flex items-center gap-1" title="Acertos">
+          <span class="text-[#ffe600] text-sm sm:text-base">⭐</span>
+          <span id="hitsText" class="text-[#ffe600] font-black text-xs sm:text-sm">0</span>
+        </div>
+        <div class="flex items-center gap-1" title="Erros / Explosões">
+          <span class="text-[#ff5252] text-sm sm:text-base">✖</span>
+          <span id="errorsText" class="text-[#ff6b6b] font-black text-xs sm:text-sm">0</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-lg" title="Pontuação">
+          <span class="text-xs font-extrabold text-sky-300">PTS:</span>
+          <span id="scoreText" class="text-xs sm:text-sm font-black text-white">0</span>
+        </div>
+
+        <button onclick="toggleSound()" id="btnSound" class="bg-white/15 hover:bg-white/25 text-white px-2 py-1 rounded-lg text-xs sm:text-sm font-bold cursor-pointer" title="Ativar/Desativar Som">
+          🔊
+        </button>
+        <button onclick="toggleFullscreen()" id="btnFullscreen" class="bg-[#0088ff] hover:bg-[#0070d6] text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-extrabold cursor-pointer flex items-center gap-1 shadow" title="Expandir para Tela Cheia">
+          <span>⛶</span><span class="hidden md:inline">Tela Cheia</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ÁREA INTERATIVA CENTRAL (FLEX-1 MIN-HEIGHT-0 PARA CABER EM QUALQUER TELA) -->
+    <div class="relative flex-1 min-h-0 flex flex-col bg-slate-50 overflow-hidden">
+
+      <!-- Barra de Instrução Dinâmica no Topo da Arena -->
+      <div id="instructionStrip" class="bg-sky-100 border-b-2 border-sky-200 px-3 sm:px-5 py-1.5 flex items-center justify-between gap-2 shrink-0">
+        <p id="instructionText" class="text-xs sm:text-sm md:text-base font-extrabold text-[#081844] truncate">
+          Arraste o número com a coroa 👑 até o lugar certo no lado direito SEM BATER nos robôs da Máquina!
+        </p>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="showHint()" id="btnHint" class="btn-3d btn-amber px-2.5 py-1 text-xs">
+            💡 Dica
+          </button>
+        </div>
+      </div>
+
+      <!-- Canvas da Arena de Frações -->
+      <div class="relative flex-1 min-h-0 w-full">
+        <canvas id="arenaCanvas"></canvas>
+
+        <!-- PAINEL FLUTUANTE FASE 2: CALCULAR RESULTADO DA MULTIPLICAÇÃO -->
+        <div id="calcOverlay" class="hidden absolute inset-x-0 bottom-2 sm:bottom-3 flex justify-center px-3 pointer-events-none">
+          <div class="pointer-events-auto bg-white/95 backdrop-blur-xs border-4 border-[#081844] rounded-2xl px-4 sm:px-6 py-2.5 sm:py-3 shadow-2xl flex flex-wrap items-center justify-center gap-3 sm:gap-5 animate-pop">
+            <div class="text-left">
+              <span class="bg-green-100 text-green-800 text-[11px] font-black px-2 py-0.5 rounded-full uppercase">
+                ✔ Travessia Concluída!
+              </span>
+              <p id="calcPromptText" class="text-xs sm:text-sm md:text-base font-black text-[#081844] mt-0.5">
+                Agora calcule o produto das frações:
+              </p>
+            </div>
+
+            <!-- Fração de Resposta (Numerador / Denominador) -->
+            <form id="calcForm" onsubmit="submitFractionResult(event)" class="flex items-center gap-3">
+              <div class="flex flex-col items-center gap-1">
+                <input
+                  type="number"
+                  id="inputNum"
+                  min="1"
+                  max="999"
+                  required
+                  placeholder="?"
+                  class="w-16 sm:w-20 h-9 sm:h-10 text-center text-lg sm:text-xl font-black text-[#081844] border-3 border-[#0088ff] rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 bg-sky-50"
+                />
+                <div class="w-18 sm:w-22 h-1 bg-[#081844] rounded-full"></div>
+                <input
+                  type="number"
+                  id="inputDen"
+                  min="1"
+                  max="999"
+                  required
+                  placeholder="?"
+                  class="w-16 sm:w-20 h-9 sm:h-10 text-center text-lg sm:text-xl font-black text-[#081844] border-3 border-[#0088ff] rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 bg-sky-50"
+                />
+              </div>
+
+              <button type="submit" class="btn-3d btn-green px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base">
+                ✔ Confirmar
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- OVERLAY DE FEEDBACK DA RODADA (ACERTO / COLISÃO / EXPLOSÃO DE TEMPO) -->
+        <div id="roundResultOverlay" class="hidden absolute inset-0 bg-[#081844]/75 backdrop-blur-xs flex items-center justify-center p-4 z-20">
+          <div class="bg-white border-4 border-[#081844] rounded-3xl max-w-md w-full p-5 text-center shadow-2xl animate-pop">
+            <div id="resEmoji" class="text-5xl mb-2">🎉</div>
+            <h3 id="resTitle" class="text-xl sm:text-2xl font-black text-[#081844] mb-1">
+              Excelente!
+            </h3>
+            <p id="resMessage" class="text-xs sm:text-sm font-bold text-slate-700 mb-3 leading-relaxed">
+              Explicação matemática da rodada.
+            </p>
+            <div id="resFormulaBox" class="bg-sky-50 border-2 border-sky-200 rounded-xl py-2 px-3 mb-4 font-black text-base sm:text-lg text-[#081844]">
+              2/3 ÷ 4/5 = 2/3 × 5/4 = 10/12
+            </div>
+            <button id="btnNextRound" onclick="advanceRound()" class="btn-3d btn-green px-6 py-2.5 text-sm sm:text-base w-full">
+              Próxima Conta ➡
+            </button>
+          </div>
+        </div>
+
+        <!-- OVERLAY DE TELA INICIAL (TUTORIAL RÁPIDO SEM SCROLL) -->
+        <div id="startOverlay" class="absolute inset-0 bg-[#081844]/85 backdrop-blur-xs flex items-center justify-center p-3 z-30">
+          <div class="bg-white border-4 border-[#ffe600] rounded-3xl max-w-2xl w-full p-4 sm:p-6 text-center shadow-2xl animate-pop">
+            <span class="bg-[#0088ff] text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+              6º Ano • Multiplicação e Divisão de Frações
+            </span>
+            <h2 class="text-xl sm:text-3xl font-black text-[#081844] mt-2 mb-1">
+              Arena Turbo das Frações!
+            </h2>
+            <p class="text-xs sm:text-sm font-bold text-slate-600 mb-3">
+              Enfrente os 3 robôs da Máquina em 10 desafios contra o relógio!
+            </p>
+
+            <!-- 3 Passos Visuais -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-left mb-4">
+              <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-2.5">
+                <div class="text-xl mb-0.5">🔄 1. Inverta a 2ª</div>
+                <p class="text-xs font-bold text-slate-700">
+                  Na divisão (<span class="text-[#0088ff] font-black">÷</span>), repita a 1ª fração e <strong>inverta</strong> a 2ª ao cruzar o sinal de igual!
+                </p>
+              </div>
+              <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-2.5">
+                <div class="text-xl mb-0.5">💥 2. Não Colida!</div>
+                <p class="text-xs font-bold text-slate-700">
+                  Arraste sua ficha (<span class="text-amber-600 font-black">👑 VOCÊ</span>) até o alvo sem bater nas fichas controladas pela Máquina!
+                </p>
+              </div>
+              <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-2.5">
+                <div class="text-xl mb-0.5">💣 3. Calcule Rápido</div>
+                <p class="text-xs font-bold text-slate-700">
+                  Multiplique numerador por numerador e denominador por denominador antes que o tempo exploda!
+                </p>
+              </div>
+            </div>
+
+            <!-- Escolha de Velocidade dos Robôs -->
+            <div class="flex flex-wrap items-center justify-center gap-2 mb-4">
+              <span class="text-xs sm:text-sm font-black text-[#081844]">Velocidade da Máquina:</span>
+              <button onclick="setDifficulty('normal')" id="diffNormal" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-black border-2 border-[#081844] bg-[#ffe600] text-[#081844] cursor-pointer">
+                🐢 Normal (35s)
+              </button>
+              <button onclick="setDifficulty('turbo')" id="diffTurbo" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-black border-2 border-slate-300 bg-slate-100 text-slate-700 cursor-pointer">
+                🚀 Turbo (25s)
+              </button>
+            </div>
+
+            <button onclick="startGame()" class="btn-3d btn-green px-8 py-3 text-base sm:text-lg shadow-lg">
+              ▶ COMEÇAR DESAFIO (10 CONTAS)
+            </button>
+          </div>
+        </div>
+
+        <!-- OVERLAY FINAL DE PÓDIO (APÓS AS 10 CONTAS) -->
+        <div id="endOverlay" class="hidden absolute inset-0 bg-[#081844]/85 backdrop-blur-xs flex items-center justify-center p-4 z-30">
+          <div class="bg-white border-4 border-[#ffe600] rounded-3xl max-w-lg w-full p-5 sm:p-6 text-center shadow-2xl animate-pop">
+            <div id="medalEmoji" class="text-5xl mb-2">🏆</div>
+            <h2 class="text-2xl sm:text-3xl font-black text-[#081844] mb-1">Desafio Finalizado!</h2>
+            <p class="text-xs sm:text-sm font-bold text-slate-600 mb-4">
+              Você concluiu as 10 contas de frações do <strong>GET Ministro Gama Filho</strong>!
+            </p>
+            <div id="finalStatsBox" class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-3.5 mb-4 grid grid-cols-3 gap-2 text-center">
+              <!-- Preenchido via JS -->
+            </div>
+            <button onclick="restartGame()" class="btn-3d btn-green px-6 py-3 text-sm sm:text-base w-full">
+              🔄 Jogar Novamente
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    /**
+     * ============================================================================
+     * SISTEMA DE ÁUDIO (WEB AUDIO API - SINTETIZADOR DE EFEITOS SEM URLS EXTERNAS)
+     * ============================================================================
+     */
+    let audioCtx = null;
+    let soundOn = true;
+
+    function ensureAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playSfx(type) {
+      if (!soundOn) return;
+      try {
+        ensureAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'snap') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.start(now);
+          osc.stop(now + 0.14);
+        } else if (type === 'win') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.08);
+          osc.frequency.setValueAtTime(783.99, now + 0.16);
+          osc.frequency.setValueAtTime(1046.5, now + 0.24);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
+          osc.start(now);
+          osc.stop(now + 0.48);
+        } else if (type === 'boom') {
+          // Explosão / colisão grave
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(38, now + 0.45);
+          gain.gain.setValueAtTime(0.24, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
+          osc.start(now);
+          osc.stop(now + 0.48);
+        } else if (type === 'tick') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(920, now);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      document.getElementById('btnSound').textContent = soundOn ? '🔊' : '🔇';
+    }
+
+    /**
+     * ============================================================================
+     * CONTROLE DE TELA CHEIA (FULLSCREEN API)
+     * ============================================================================
+     */
+    function toggleFullscreen() {
+      const elem = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen().catch(() => {});
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('btnFullscreen');
+      if (document.fullscreenElement) {
+        btn.innerHTML = '<span>🗗</span><span class="hidden md:inline">Sair Tela Cheia</span>';
+      } else {
+        btn.innerHTML = '<span>⛶</span><span class="hidden md:inline">Tela Cheia</span>';
+      }
+      setTimeout(resizeArenaCanvas, 60);
+    });
+
+    /**
+     * ============================================================================
+     * BANCO DAS 10 CONTAS DE FRAÇÕES (DIVISÃO E MULTIPLICAÇÃO)
+     * ============================================================================
+     * Cada conta tem:
+     * - op: '÷' (precisa inverter a 2ª fração ao cruzar) ou '×' (mantém a ordem)
+     * - a, b: 1ª fração (a/b)
+     * - c, d: 2ª fração (c/d)
+     * - playerIndex: qual das 4 fichas (0=a, 1=b, 2=c, 3=d) o aluno controla!
+     *   Nas divisões, o aluno sempre controla um dos números da 2ª fração (índice 2 ou 3)
+     *   para praticar ativamente a inversão!
+     */
+    const ROUNDS = [
+      { op: '÷', a: 2, b: 3, c: 4, d: 5, playerIndex: 3 }, // 2/3 ÷ 4/5 -> 2/3 × 5/4 = 10/12 (5/6)
+      { op: '÷', a: 3, b: 4, c: 1, d: 2, playerIndex: 2 }, // 3/4 ÷ 1/2 -> 3/4 × 2/1 = 6/4 (3/2)
+      { op: '×', a: 2, b: 5, c: 3, d: 4, playerIndex: 2 }, // 2/5 × 3/4 -> 2/5 × 3/4 = 6/20 (3/10)
+      { op: '÷', a: 5, b: 6, c: 2, d: 3, playerIndex: 3 }, // 5/6 ÷ 2/3 -> 5/6 × 3/2 = 15/12 (5/4)
+      { op: '÷', a: 1, b: 3, c: 2, d: 5, playerIndex: 2 }, // 1/3 ÷ 2/5 -> 1/3 × 5/2 = 5/6
+      { op: '×', a: 4, b: 7, c: 3, d: 5, playerIndex: 3 }, // 4/7 × 3/5 -> 4/7 × 3/5 = 12/35
+      { op: '÷', a: 4, b: 9, c: 2, d: 3, playerIndex: 3 }, // 4/9 ÷ 2/3 -> 4/9 × 3/2 = 12/18 (2/3)
+      { op: '÷', a: 3, b: 5, c: 6, d: 7, playerIndex: 2 }, // 3/5 ÷ 6/7 -> 3/5 × 7/6 = 21/30 (7/10)
+      { op: '×', a: 5, b: 8, c: 2, d: 3, playerIndex: 2 }, // 5/8 × 2/3 -> 5/8 × 2/3 = 10/24 (5/12)
+      { op: '÷', a: 7, b: 8, c: 3, d: 4, playerIndex: 3 }  // 7/8 ÷ 3/4 -> 7/8 × 4/3 = 28/24 (7/6)
+    ];
+
+    /**
+     * ============================================================================
+     * ESTADO GLOBAL DO JOGO E FÍSICA DA ARENA
+     * ============================================================================
+     */
+    const state = {
+      running: false,
+      difficulty: 'normal', // 'normal' (35s) | 'turbo' (25s)
+      roundIdx: 0,
+      phase: 'crossing',    // 'crossing' (Fase 1) | 'calculating' (Fase 2) | 'ended'
+      hits: 0,
+      errors: 0,
+      score: 0,
+      maxTime: 35,
+      timeLeft: 35,
+      lastSecondTick: 35,
+      hintActive: false,
+      tokens: [],           // Os 4 números-personagens (A, B, C, D)
+      slots: [],            // Os 4 alvos no lado direito
+      draggingToken: null,
+      particles: [],        // Partículas de explosão/faíscas/estrelas
+      lastFrameTime: 0
+    };
+
+    const canvas = document.getElementById('arenaCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeArenaCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (state.tokens.length === 4) {
+        repositionLayout(rect.width, rect.height);
+      }
+    }
+
+    window.addEventListener('resize', resizeArenaCanvas);
+
+    function setDifficulty(mode) {
+      state.difficulty = mode;
+      const btnN = document.getElementById('diffNormal');
+      const btnT = document.getElementById('diffTurbo');
+      if (mode === 'normal') {
+        btnN.className = 'px-3 py-1.5 rounded-xl text-xs sm:text-sm font-black border-2 border-[#081844] bg-[#ffe600] text-[#081844] cursor-pointer';
+        btnT.className = 'px-3 py-1.5 rounded-xl text-xs sm:text-sm font-black border-2 border-slate-300 bg-slate-100 text-slate-700 cursor-pointer';
+      } else {
+        btnT.className = 'px-3 py-1.5 rounded-xl text-xs sm:text-sm font-black border-2 border-[#081844] bg-[#ff6a1a] text-white cursor-pointer';
+        btnN.className = 'px-3 py-1.5 rounded-xl text-xs sm:text-sm font-black border-2 border-slate-300 bg-slate-100 text-slate-700 cursor-pointer';
+      }
+    }
+
+    function startGame() {
+      ensureAudio();
+      document.getElementById('startOverlay').classList.add('hidden');
+      state.roundIdx = 0;
+      state.hits = 0;
+      state.errors = 0;
+      state.score = 0;
+      updateHud();
+      setupRound(0);
+      state.running = true;
+    }
+
+    function restartGame() {
+      document.getElementById('endOverlay').classList.add('hidden');
+      startGame();
+    }
+
+    function updateHud() {
+      document.getElementById('roundBadge').textContent = `Conta ${state.roundIdx + 1} de ${ROUNDS.length}`;
+      document.getElementById('hitsText').textContent = state.hits;
+      document.getElementById('errorsText').textContent = state.errors;
+      document.getElementById('scoreText').textContent = state.score;
+    }
+
+    /**
+     * ============================================================================
+     * CONFIGURAÇÃO DE CADA RODADA E TRAJETÓRIAS DOS ROBÔS DA MÁQUINA
+     * ============================================================================
+     */
+    function setupRound(idx) {
+      const r = ROUNDS[idx];
+      state.roundIdx = idx;
+      state.phase = 'crossing';
+      state.maxTime = state.difficulty === 'normal' ? 35 : 25;
+      state.timeLeft = state.maxTime;
+      state.lastSecondTick = Math.ceil(state.timeLeft);
+      state.hintActive = false;
+      state.draggingToken = null;
+      state.particles = [];
+
+      document.getElementById('calcOverlay').classList.add('hidden');
+      document.getElementById('roundResultOverlay').classList.add('hidden');
+      document.getElementById('inputNum').value = '';
+      document.getElementById('inputDen').value = '';
+
+      const phaseBadge = document.getElementById('phaseBadge');
+      phaseBadge.textContent = r.op === '÷'
+        ? 'FASE 1: INVERTER E ATRAVESSAR'
+        : 'FASE 1: ATRAVESSAR SEM BATER';
+      phaseBadge.className = 'hidden md:inline-block bg-amber-400 text-[#081844] text-xs font-black px-2.5 py-0.5 rounded-full';
+
+      const instr = document.getElementById('instructionText');
+      if (r.op === '÷') {
+        instr.innerHTML = `DIVISÃO (<span class="text-red-600">÷</span>): Arraste sua ficha <span class="text-amber-600">👑 VOCÊ</span> invertendo a 2ª fração, <strong>SEM BATER</strong> nos robôs!`;
+      } else {
+        instr.innerHTML = `MULTIPLICAÇÃO (<span class="text-green-700">×</span>): Arraste sua ficha <span class="text-amber-600">👑 VOCÊ</span> mantendo a posição, <strong>SEM BATER</strong> nos robôs!`;
+      }
+
+      updateHud();
+
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+
+      const palette = [
+        { fill: '#0284c7', border: '#081844', name: 'Robô Azul' },
+        { fill: '#16a34a', border: '#081844', name: 'Robô Verde' },
+        { fill: '#9333ea', border: '#081844', name: 'Robô Roxo' },
+        { fill: '#f59e0b', border: '#081844', name: 'Robô Laranja' }
+      ];
+
+      const values = [r.a, r.b, r.c, r.d];
+
+      // Mapeamento de destino no lado direito:
+      // Índices dos slots à direita:
+      // 0: Numerador 1ª fração
+      // 1: Denominador 1ª fração
+      // 2: Numerador 2ª fração
+      // 3: Denominador 2ª fração
+      // Se op === '÷', a 2ª fração INVERTE: token 2 (c) vai para slot 3, token 3 (d) vai para slot 2!
+      const targetSlotMap = r.op === '÷' ? [0, 1, 3, 2] : [0, 1, 2, 3];
+
+      state.tokens = values.map((val, i) => {
+        const isPlayer = (i === r.playerIndex);
+        return {
+          id: i,
+          value: val,
+          isPlayer,
+          targetSlotIdx: targetSlotMap[i],
+          color: isPlayer ? '#ffca28' : palette[i].fill,
+          x: 0,
+          y: 0,
+          startX: 0,
+          startY: 0,
+          radius: 26,
+          arrived: false,
+          // Parâmetros de movimento da Máquina (IA)
+          aiDelay: 0.6 + i * 1.15,
+          aiTimer: 0,
+          aiProgress: 0,
+          aiWaveAmp: (i % 2 === 0 ? 1 : -1) * (24 + i * 7),
+          aiSpeed: state.difficulty === 'normal' ? 0.34 : 0.48
+        };
+      });
+
+      repositionLayout(w, h, true);
+    }
+
+    /**
+     * Calcula coordenadas proporcionais na arena para qualquer resolução (100vw x 100vh)
+     */
+    function repositionLayout(w, h, resetPos = false) {
+      const rRadius = Math.max(21, Math.min(31, Math.min(w, h) * 0.068));
+
+      // Coordenadas X das 4 colunas:
+      // Lado Esquerdo: Fração 1 (x = 15% w), Fração 2 (x = 33% w)
+      // Sinal de Igual no meio (x = 50% w)
+      // Lado Direito: Fração 1 (x = 67% w), Fração 2 (x = 85% w)
+      const leftF1X = w * 0.15;
+      const leftF2X = w * 0.33;
+      const rightF1X = w * 0.67;
+      const rightF2X = w * 0.85;
+
+      const topY = h * 0.31;
+      const botY = h * 0.69;
+
+      const leftPositions = [
+        { x: leftF1X, y: topY },
+        { x: leftF1X, y: botY },
+        { x: leftF2X, y: topY },
+        { x: leftF2X, y: botY }
+      ];
+
+      state.slots = [
+        { x: rightF1X, y: topY, radius: rRadius + 4 },
+        { x: rightF1X, y: botY, radius: rRadius + 4 },
+        { x: rightF2X, y: topY, radius: rRadius + 4 },
+        { x: rightF2X, y: botY, radius: rRadius + 4 }
+      ];
+
+      state.tokens.forEach((t, i) => {
+        t.radius = rRadius;
+        t.startX = leftPositions[i].x;
+        t.startY = leftPositions[i].y;
+
+        if (resetPos) {
+          t.x = t.startX;
+          t.y = t.startY;
+        } else if (t.arrived) {
+          const dest = state.slots[t.targetSlotIdx];
+          t.x = dest.x;
+          t.y = dest.y;
+        }
+      });
+    }
+
+    function showHint() {
+      state.hintActive = true;
+      playSfx('snap');
+    }
+
+    /**
+     * ============================================================================
+     * INTERAÇÃO DE ARRASTAR (MOUSE E TOQUE) PARA A FICHA DO JOGADOR
+     * ============================================================================
+     */
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function onPointerDown(e) {
+      if (!state.running || state.phase !== 'crossing') return;
+      ensureAudio();
+      const pos = getPointerPos(e);
+
+      const playerToken = state.tokens.find(t => t.isPlayer && !t.arrived);
+      if (!playerToken) return;
+
+      const dist = Math.hypot(pos.x - playerToken.x, pos.y - playerToken.y);
+      if (dist <= playerToken.radius * 1.45) {
+        state.draggingToken = playerToken;
+      }
+    }
+
+    function onPointerMove(e) {
+      if (!state.draggingToken || state.phase !== 'crossing') return;
+      e.preventDefault();
+      const pos = getPointerPos(e);
+      const rect = canvas.getBoundingClientRect();
+
+      // Mantém dentro dos limites da arena
+      const pad = state.draggingToken.radius + 6;
+      state.draggingToken.x = Math.max(pad, Math.min(rect.width - pad, pos.x));
+      state.draggingToken.y = Math.max(pad, Math.min(rect.height - pad, pos.y));
+
+      // Verifica se encaixou no slot alvo correto!
+      const dest = state.slots[state.draggingToken.targetSlotIdx];
+      const distToSlot = Math.hypot(state.draggingToken.x - dest.x, state.draggingToken.y - dest.y);
+
+      if (distToSlot <= dest.radius * 1.05) {
+        state.draggingToken.x = dest.x;
+        state.draggingToken.y = dest.y;
+        state.draggingToken.arrived = true;
+        state.draggingToken = null;
+        playSfx('snap');
+        spawnBurst(dest.x, dest.y, '#ffe600', 14);
+        checkAllTokensArrived();
+      }
+    }
+
+    function onPointerUp() {
+      state.draggingToken = null;
+    }
+
+    canvas.addEventListener('mousedown', onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+
+    canvas.addEventListener('touchstart', onPointerDown, { passive: false });
+    window.addEventListener('touchmove', onPointerMove, { passive: false });
+    window.addEventListener('touchend', onPointerUp);
+
+    /**
+     * ============================================================================
+     * ATUALIZAÇÃO DA FÍSICA, MOVIMENTO DA MÁQUINA E COLISÕES
+     * ============================================================================
+     */
+    function updateSimulation(dt) {
+      if (!state.running || state.phase === 'ended') return;
+
+      // Atualiza cronômetro em ambas as fases (travessia + cálculo)
+      state.timeLeft -= dt;
+      const ceilSec = Math.ceil(state.timeLeft);
+      if (ceilSec !== state.lastSecondTick && ceilSec <= 5 && ceilSec > 0) {
+        playSfx('tick');
+      }
+      state.lastSecondTick = ceilSec;
+
+      const pct = Math.max(0, (state.timeLeft / state.maxTime) * 100);
+      document.getElementById('timerBar').style.width = `${pct}%`;
+      document.getElementById('timerText').textContent = `${Math.max(0, ceilSec)}s`;
+
+      // Tempo esgotado -> EXPLOSÃO!
+      if (state.timeLeft <= 0) {
+        triggerRoundFailure('explosion');
+        return;
+      }
+
+      // Movimenta os 3 robôs da Máquina na Fase 1
+      if (state.phase === 'crossing') {
+        state.tokens.forEach((t) => {
+          if (t.isPlayer || t.arrived) return;
+
+          t.aiTimer += dt;
+          if (t.aiTimer < t.aiDelay) return;
+
+          t.aiProgress = Math.min(1, t.aiProgress + dt * t.aiSpeed);
+          const dest = state.slots[t.targetSlotIdx];
+
+          // Interpolação suave com arco senoidal para criar cruzamentos dinâmicos
+          const ease = t.aiProgress < 0.5
+            ? 2 * t.aiProgress * t.aiProgress
+            : 1 - Math.pow(-2 * t.aiProgress + 2, 2) / 2;
+
+          const baseX = t.startX + (dest.x - t.startX) * ease;
+          const baseY = t.startY + (dest.y - t.startY) * ease;
+          const arcY = Math.sin(t.aiProgress * Math.PI) * t.aiWaveAmp;
+
+          t.x = baseX;
+          t.y = baseY + arcY;
+
+          if (t.aiProgress >= 1) {
+            t.x = dest.x;
+            t.y = dest.y;
+            t.arrived = true;
+            checkAllTokensArrived();
+          }
+        });
+
+        // Verifica colisão entre a ficha do Jogador e qualquer ficha da Máquina em trânsito!
+        const player = state.tokens.find(t => t.isPlayer);
+        if (player && !player.arrived) {
+          for (const bot of state.tokens) {
+            if (bot.isPlayer || bot.arrived) continue;
+            // Só colide se o robô já saiu da posição inicial
+            if (bot.aiProgress <= 0.03) continue;
+
+            const dist = Math.hypot(player.x - bot.x, player.y - bot.y);
+            const minDist = (player.radius + bot.radius) * 0.86;
+            if (dist < minDist) {
+              const midX = (player.x + bot.x) / 2;
+              const midY = (player.y + bot.y) / 2;
+              spawnBurst(midX, midY, '#ff3d00', 26);
+              triggerRoundFailure('collision');
+              return;
+            }
+          }
+        }
+      }
+    }
+
+    function checkAllTokensArrived() {
+      if (state.phase !== 'crossing') return;
+      const allInPlace = state.tokens.every(t => t.arrived);
+      if (allInPlace) {
+        state.phase = 'calculating';
+        state.draggingToken = null;
+        playSfx('win');
+
+        const r = ROUNDS[state.roundIdx];
+        const secondNum = r.op === '÷' ? r.d : r.c;
+        const secondDen = r.op === '÷' ? r.c : r.d;
+
+        document.getElementById('phaseBadge').textContent = 'FASE 2: CALCULAR O PRODUTO';
+        document.getElementById('phaseBadge').className = 'hidden md:inline-block bg-green-400 text-[#081844] text-xs font-black px-2.5 py-0.5 rounded-full';
+
+        document.getElementById('instructionText').innerHTML =
+          `Conta transformada: <strong>${r.a}/${r.b} × ${secondNum}/${secondDen}</strong>. Multiplique numerador com numerador e denominador com denominador!`;
+
+        document.getElementById('calcPromptText').innerHTML =
+          `Calcule <span class="text-[#0088ff]">${r.a}/${r.b} × ${secondNum}/${secondDen}</span> antes do tempo acabar:`;
+
+        const overlay = document.getElementById('calcOverlay');
+        overlay.classList.remove('hidden');
+        setTimeout(() => document.getElementById('inputNum').focus(), 60);
+      }
+    }
+
+    /**
+     * ============================================================================
+     * VERIFICAÇÃO DO CÁLCULO FINAL DA FRAÇÃO (FASE 2)
+     * ============================================================================
+     */
+    function gcd(a, b) {
+      return b === 0 ? a : gcd(b, a % b);
+    }
+
+    function submitFractionResult(e) {
+      e.preventDefault();
+      if (state.phase !== 'calculating') return;
+
+      const userNum = parseInt(document.getElementById('inputNum').value, 10);
+      const userDen = parseInt(document.getElementById('inputDen').value, 10);
+      if (!userNum || !userDen || userDen === 0) return;
+
+      const r = ROUNDS[state.roundIdx];
+      const multNum = r.op === '÷' ? r.d : r.c;
+      const multDen = r.op === '÷' ? r.c : r.d;
+
+      const exactNum = r.a * multNum;
+      const exactDen = r.b * multDen;
+
+      // Aceita tanto a fração direta quanto qualquer fração equivalente simplificada!
+      const isEquivalent = (userNum * exactDen === userDen * exactNum);
+
+      if (isEquivalent) {
+        state.phase = 'ended';
+        state.hits++;
+        const timeBonus = Math.ceil(state.timeLeft) * 10;
+        const roundPoints = 100 + timeBonus;
+        state.score += roundPoints;
+        updateHud();
+        playSfx('win');
+
+        const rect = canvas.getBoundingClientRect();
+        spawnBurst(rect.width * 0.5, rect.height * 0.4, '#ffe600', 30);
+
+        const divCommon = gcd(exactNum, exactDen);
+        const simpStr = divCommon > 1
+          ? ` (simplificando por ${divCommon} = ${exactNum / divCommon}/${exactDen / divCommon})`
+          : '';
+
+        const formula = r.op === '÷'
+          ? `${r.a}/${r.b} ÷ ${r.c}/${r.d} = ${r.a}/${r.b} × ${r.d}/${r.c} = ${exactNum}/${exactDen}${simpStr}`
+          : `${r.a}/${r.b} × ${r.c}/${r.d} = ${exactNum}/${exactDen}${simpStr}`;
+
+        showRoundOverlay(
+          '🎉',
+          `Acertou! +${roundPoints} pontos`,
+          'Você desviou dos robôs da Máquina e calculou a fração dentro do tempo!',
+          formula
+        );
+      } else {
+        // Resposta incorreta: avisa rapidamente sem encerrar se ainda houver tempo
+        playSfx('boom');
+        const container = document.getElementById('gameContainer');
+        container.classList.remove('shake-effect');
+        void container.offsetWidth;
+        container.classList.add('shake-effect');
+
+        document.getElementById('calcPromptText').innerHTML =
+          `<span class="text-red-600">Ops! ${userNum}/${userDen} não é o produto de ${r.a}/${r.b} × ${multNum}/${multDen}. Tente de novo!</span>`;
+        document.getElementById('inputNum').select();
+      }
+    }
+
+    /**
+     * ============================================================================
+     * FALHA DA RODADA (COLISÃO ENTRE NÚMEROS OU EXPLOSÃO DO TEMPO)
+     * ============================================================================
+     */
+    function triggerRoundFailure(reason) {
+      state.phase = 'ended';
+      state.draggingToken = null;
+      state.errors++;
+      updateHud();
+      playSfx('boom');
+
+      const container = document.getElementById('gameContainer');
+      container.classList.remove('shake-effect');
+      void container.offsetWidth;
+      container.classList.add('shake-effect');
+
+      document.getElementById('calcOverlay').classList.add('hidden');
+
+      const r = ROUNDS[state.roundIdx];
+      const multNum = r.op === '÷' ? r.d : r.c;
+      const multDen = r.op === '÷' ? r.c : r.d;
+      const exactNum = r.a * multNum;
+      const exactDen = r.b * multDen;
+
+      const formula = r.op === '÷'
+        ? `${r.a}/${r.b} ÷ ${r.c}/${r.d} = ${r.a}/${r.b} × ${r.d}/${r.c} = ${exactNum}/${exactDen}`
+        : `${r.a}/${r.b} × ${r.c}/${r.d} = ${exactNum}/${exactDen}`;
+
+      if (reason === 'collision') {
+        showRoundOverlay(
+          '💥',
+          'Bateu! Colisão na Arena!',
+          'Os números se chocaram durante a travessia! Observe o ritmo dos robôs da Máquina antes de cruzar.',
+          formula
+        );
+      } else {
+        const rect = canvas.getBoundingClientRect();
+        spawnBurst(rect.width * 0.5, rect.height * 0.5, '#ff3d00', 36);
+        showRoundOverlay(
+          '💣',
+          'CABUM! O Tempo Explodiu!',
+          'O pavio chegou ao fim antes de resolver a conta. Lembre-se: repita a 1ª fração e inverta a 2ª na divisão!',
+          formula
+        );
+      }
+    }
+
+    function showRoundOverlay(emoji, title, msg, formula) {
+      document.getElementById('resEmoji').textContent = emoji;
+      document.getElementById('resTitle').textContent = title;
+      document.getElementById('resMessage').textContent = msg;
+      document.getElementById('resFormulaBox').textContent = formula;
+      document.getElementById('btnNextRound').textContent =
+        state.roundIdx + 1 < ROUNDS.length ? 'Próxima Conta ➡' : 'Ver Resultado Final 🏆';
+      document.getElementById('roundResultOverlay').classList.remove('hidden');
+    }
+
+    function advanceRound() {
+      if (state.roundIdx + 1 < ROUNDS.length) {
+        setupRound(state.roundIdx + 1);
+      } else {
+        showFinalPodium();
+      }
+    }
+
+    function showFinalPodium() {
+      state.running = false;
+      document.getElementById('roundResultOverlay').classList.add('hidden');
+
+      let medal = '🥉';
+      if (state.hits >= 9) medal = '🏆';
+      else if (state.hits >= 6) medal = '🥈';
+
+      document.getElementById('medalEmoji').textContent = medal;
+      document.getElementById('finalStatsBox').innerHTML = `
+        <div>
+          <div class="text-xs font-extrabold text-slate-500">ACERTOS</div>
+          <div class="text-xl sm:text-2xl font-black text-green-600">${state.hits}/10</div>
+        </div>
+        <div>
+          <div class="text-xs font-extrabold text-slate-500">EXPLOSÕES</div>
+          <div class="text-xl sm:text-2xl font-black text-red-600">${state.errors}</div>
+        </div>
+        <div>
+          <div class="text-xs font-extrabold text-slate-500">PONTUAÇÃO</div>
+          <div class="text-xl sm:text-2xl font-black text-[#0088ff]">${state.score}</div>
+        </div>
+      `;
+      document.getElementById('endOverlay').classList.remove('hidden');
+      playSfx('win');
+    }
+
+    /**
+     * ============================================================================
+     * RENDERIZAÇÃO DA ARENA EM HTML5 CANVAS
+     * ============================================================================
+     */
+    function spawnBurst(x, y, color, count) {
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+        const speed = 70 + Math.random() * 160;
+        state.particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 0.65 + Math.random() * 0.25,
+          color,
+          size: 4 + Math.random() * 5
+        });
+      }
+    }
+
+    function renderArena(dt) {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Fundo dividido suavemente (Esquerda: Conta Original | Direita: Transformação)
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, w * 0.5, h);
+      ctx.fillStyle = '#eff6ff';
+      ctx.fillRect(w * 0.5, 0, w * 0.5, h);
+
+      // Rótulos superiores dos dois lados da arena
+      ctx.font = '800 12px Nunito, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('CONTA ORIGINAL', w * 0.24, 22);
+      ctx.fillStyle = '#0284c7';
+      ctx.fillText('TRANSFORMAÇÃO (MULTIPLICAÇÃO)', w * 0.76, 22);
+
+      // Linha divisória central tracejada com o sinal de IGUAL (=) gigante no centro
+      ctx.save();
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([8, 8]);
+      ctx.beginPath();
+      ctx.moveTo(w * 0.5, 34);
+      ctx.lineTo(w * 0.5, h - 18);
+      ctx.stroke();
+      ctx.restore();
+
+      // Medalhão com o sinal de IGUAL (=)
+      ctx.beginPath();
+      ctx.arc(w * 0.5, h * 0.5, 24, 0, Math.PI * 2);
+      ctx.fillStyle = '#081844';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#ffe600';
+      ctx.stroke();
+
+      ctx.fillStyle = '#ffe600';
+      ctx.font = '900 28px Fredoka, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('=', w * 0.5, h * 0.5 + 1);
+
+      const r = ROUNDS[state.roundIdx];
+
+      // Traços de fração (Esquerda e Direita) e Operadores (÷ ou ×)
+      const fBarHalf = Math.max(24, w * 0.042);
+
+      // Esquerda: 1ª fração (x=0.15w), operador r.op (x=0.24w), 2ª fração (x=0.33w)
+      drawFractionBar(w * 0.15, h * 0.5, fBarHalf, '#94a3b8');
+      drawFractionBar(w * 0.33, h * 0.5, fBarHalf, '#94a3b8');
+
+      ctx.fillStyle = r.op === '÷' ? '#ef4444' : '#16a34a';
+      ctx.font = '900 32px Fredoka, sans-serif';
+      ctx.fillText(r.op, w * 0.24, h * 0.5);
+
+      // Direita: 1ª fração (x=0.67w), operador SEMPRE '×' (x=0.76w), 2ª fração (x=0.85w)
+      drawFractionBar(w * 0.67, h * 0.5, fBarHalf, '#0284c7');
+      drawFractionBar(w * 0.85, h * 0.5, fBarHalf, '#0284c7');
+
+      ctx.fillStyle = '#16a34a';
+      ctx.font = '900 32px Fredoka, sans-serif';
+      ctx.fillText('×', w * 0.76, h * 0.5);
+
+      // Desenha os 4 slots-alvo no lado direito
+      const playerToken = state.tokens.find(t => t.isPlayer);
+      state.slots.forEach((slot, sIdx) => {
+        const isPlayerTarget = playerToken && playerToken.targetSlotIdx === sIdx && !playerToken.arrived;
+
+        ctx.beginPath();
+        ctx.arc(slot.x, slot.y, slot.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isPlayerTarget && state.hintActive ? 'rgba(255, 230, 0, 0.35)' : 'rgba(255, 255, 255, 0.85)';
+        ctx.fill();
+
+        ctx.save();
+        ctx.setLineDash([6, 5]);
+        ctx.lineWidth = isPlayerTarget && state.hintActive ? 4 : 2.5;
+        ctx.strokeStyle = isPlayerTarget && state.hintActive ? '#f59e0b' : '#38bdf8';
+        ctx.stroke();
+        ctx.restore();
+
+        // Linha guia pontilhada se a Dica estiver ativa
+        if (isPlayerTarget && state.hintActive && playerToken) {
+          ctx.save();
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 3;
+          ctx.setLineDash([6, 6]);
+          ctx.beginPath();
+          ctx.moveTo(playerToken.x, playerToken.y);
+          ctx.lineTo(slot.x, slot.y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      });
+
+      // Desenha as posições fantasma de origem à esquerda
+      state.tokens.forEach((t) => {
+        ctx.beginPath();
+        ctx.arc(t.startX, t.startY, t.radius * 0.85, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(203, 213, 225, 0.45)';
+        ctx.fill();
+      });
+
+      // Desenha os 4 números-personagens (Robôs primeiro, Jogador por cima)
+      const sortedTokens = [...state.tokens].sort((a, b) => (a.isPlayer ? 1 : -1));
+      sortedTokens.forEach((t) => drawCharacterToken(t));
+
+      // Atualiza e desenha partículas de celebração / explosão
+      for (let i = state.particles.length - 1; i >= 0; i--) {
+        const p = state.particles[i];
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.life -= dt;
+        if (p.life <= 0) {
+          state.particles.splice(i, 1);
+          continue;
+        }
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function drawFractionBar(cx, cy, halfW, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(cx - halfW, cy);
+      ctx.lineTo(cx + halfW, cy);
+      ctx.stroke();
+    }
+
+    function drawCharacterToken(t) {
+      ctx.save();
+      ctx.translate(t.x, t.y);
+
+      // Aura pulsante para a ficha controlada pelo aluno ("VOCÊ")
+      if (t.isPlayer && !t.arrived) {
+        const pulse = 1 + Math.sin(performance.now() * 0.008) * 0.12;
+        ctx.beginPath();
+        ctx.arc(0, 0, t.radius * 1.24 * pulse, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 202, 40, 0.35)';
+        ctx.fill();
+      }
+
+      // Sombra
+      ctx.beginPath();
+      ctx.arc(0, 3, t.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(8, 24, 68, 0.25)';
+      ctx.fill();
+
+      // Corpo circular da ficha
+      ctx.beginPath();
+      ctx.arc(0, 0, t.radius, 0, Math.PI * 2);
+      ctx.fillStyle = t.color;
+      ctx.fill();
+      ctx.lineWidth = t.isPlayer ? 4 : 3;
+      ctx.strokeStyle = t.isPlayer ? '#081844' : '#ffffff';
+      ctx.stroke();
+
+      // Olhinhos fofos estilo personagem de jogo
+      const eyeY = -t.radius * 0.42;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-6, eyeY, 3.5, 0, Math.PI * 2);
+      ctx.arc(6, eyeY, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#081844';
+      ctx.beginPath();
+      ctx.arc(-6, eyeY, 1.8, 0, Math.PI * 2);
+      ctx.arc(6, eyeY, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Número central grande e legível
+      ctx.fillStyle = t.isPlayer ? '#081844' : '#ffffff';
+      ctx.font = `900 ${Math.round(t.radius * 0.92)}px Fredoka, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(t.value), 0, 5);
+
+      // Etiqueta superior ("👑 VOCÊ" ou "🤖")
+      ctx.font = '900 10px Nunito, sans-serif';
+      if (t.isPlayer) {
+        ctx.fillStyle = '#081844';
+        ctx.fillText('👑 VOCÊ', 0, -t.radius - 8);
+      } else {
+        ctx.fillStyle = '#475569';
+        ctx.fillText('🤖', 0, -t.radius - 7);
+      }
+
+      ctx.restore();
+    }
+
+    /**
+     * ============================================================================
+     * LOOP PRINCIPAL DE ANIMAÇÃO (60 FPS)
+     * ============================================================================
+     */
+    function mainLoop(timestamp) {
+      if (!state.lastFrameTime) state.lastFrameTime = timestamp;
+      const dt = Math.min(0.05, (timestamp - state.lastFrameTime) / 1000);
+      state.lastFrameTime = timestamp;
+
+      updateSimulation(dt);
+      renderArena(dt);
+
+      requestAnimationFrame(mainLoop);
+    }
+
+    window.onload = function () {
+      resizeArenaCanvas();
+      setupRound(0);
+      requestAnimationFrame(mainLoop);
+    };
+  </script>
+</body>
+</html>

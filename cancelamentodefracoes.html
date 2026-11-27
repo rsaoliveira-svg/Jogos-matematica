@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cancelamento de Frações 7º Ano - GET Ministro Gama Filho</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: preserva as fontes do logotipo + tipografia moderna 7º ano -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #070d1f;
+      --cyan-glow: #06b6d4;
+      --emerald-glow: #10b981;
+      --violet-glow: #8b5cf6;
+      --amber-glow: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 15%, #172554 0%, #0b1120 55%, #050814 100%);
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Grade cibernética de fundo estilo 7º Ano Engenharia / Lab */
+    .cyber-grid-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(6, 182, 212, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.08) 1px, transparent 1px);
+      background-size: 38px 38px;
+    }
+
+    .cyber-glow-orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.28;
+    }
+
+    /* Fontes do Cabeçalho Preservado */
+    .font-logo-get { font-family: 'Fredoka', sans-serif; }
+    .font-logo-ministro { font-family: 'Fredoka', sans-serif; font-style: italic; }
+    .font-logo-gamafilho { font-family: 'Caveat', cursive; }
+    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+
+    /* Pílula Branca do Cabeçalho (Cores e Marca Preservadas) */
+    .header-pill {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 3px solid #06b6d4;
+      box-shadow: 0 0 22px rgba(6, 182, 212, 0.35), 0 6px 16px rgba(0, 0, 0, 0.45);
+      border-radius: 9999px;
+    }
+
+    /* Chassi Principal Glassmorphism Dark 7º Ano */
+    .lab-chassis {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(9, 14, 29, 0.96) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.32);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Botões Modernos Estilo Console Sci-Fi */
+    .btn-lab {
+      border-radius: 12px;
+      font-weight: 800;
+      transition: all 0.14s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .btn-lab:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.12);
+    }
+    .btn-lab:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .btn-lab:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .btn-cyan {
+      background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+    }
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+    }
+    .btn-violet {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+    }
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #090d16;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+    .btn-slate {
+      background: rgba(30, 41, 59, 0.9);
+      color: #e2e8f0;
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    @keyframes popScale {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popScale 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .shake-box {
+      animation: shakeError 0.36s ease-in-out;
+    }
+
+    #cancelCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="px-2.5 sm:px-5 py-2 sm:py-2.5 justify-between">
+
+  <!-- Fundo Cibernético 7º Ano -->
+  <div class="cyber-grid-bg" aria-hidden="true"></div>
+  <div class="cyber-glow-orb w-80 h-80 bg-cyan-500 -top-20 -left-16" aria-hidden="true"></div>
+  <div class="cyber-glow-orb w-96 h-96 bg-violet-600 -bottom-24 -right-16" aria-hidden="true"></div>
+
+  <!-- CABEÇALHO SUPERIOR (MARCA E CORES PRESERVADAS + BADGE 7º ANO) -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between gap-2 shrink-0 mb-2" style="height: clamp(50px, 8vh, 68px);">
+    <!-- Tag Esquerda 7º Ano -->
+    <div class="hidden lg:flex items-center gap-2 bg-slate-900/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full shadow-lg">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-xs font-extrabold tracking-wider text-cyan-300 uppercase">7º Ano • Cancelamento</span>
+    </div>
+
+    <!-- Pílula Branca Central com GET Ministro Gama Filho | Professor Rafael -->
+    <div class="header-pill h-full px-4 sm:px-7 mx-auto flex items-center justify-center gap-3 sm:gap-5">
+      <!-- Logotipo GET Ministro Gama Filho (Cores Originais Preservadas) -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#081844] flex items-center justify-center shadow border border-[#102a6e]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">G</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#ffe600] flex items-center justify-center shadow border border-[#f5d000]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">E</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00d2ff] flex items-center justify-center shadow border border-[#00b8e6]">
+            <span class="font-logo-get text-lg sm:text-xl font-bold text-[#ff2e4c] leading-none">T</span>
+          </div>
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="font-logo-ministro text-sm sm:text-base font-extrabold text-[#ff6a1a] tracking-wide">MINISTRO</span>
+          <span class="font-logo-gamafilho text-xl sm:text-2xl font-bold text-[#111827] -mt-1 ml-1">Gama Filho</span>
+        </div>
+      </div>
+
+      <!-- Divisor vertical -->
+      <div class="w-0.5 sm:w-1 h-7 sm:h-8 bg-[#081844] rounded-full opacity-90"></div>
+
+      <!-- Professor Rafael -->
+      <span class="text-base sm:text-xl font-extrabold text-[#081844] tracking-tight whitespace-nowrap">
+        Professor Rafael
+      </span>
+    </div>
+
+    <!-- Controles Rápidos Direita (Som + Tela Cheia) -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <button onclick="toggleSound()" id="btnSound" class="btn-lab btn-slate px-2.5 py-2 text-xs sm:text-sm" title="Ativar/Desativar Áudio">
+        🔊
+      </button>
+      <button onclick="toggleFullscreen()" id="btnFullscreen" class="btn-lab btn-cyan px-3 py-2 text-xs sm:text-sm" title="Expandir para Tela Cheia">
+        <span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONSOLE PRINCIPAL DO LABORATÓRIO (100% DA ALTURA RESTANTE, ZERO SCROLL) -->
+  <main id="labChassis" class="relative z-10 w-full max-w-6xl mx-auto lab-chassis">
+
+    <!-- Barra Superior de Telemetria da Missão -->
+    <div class="bg-slate-950/90 border-b border-slate-800 px-3 sm:px-5 py-2 flex flex-wrap items-center justify-between gap-2 shrink-0">
+      <!-- Seletor de Missão e Categoria -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openMissionModal()" class="btn-lab btn-violet px-3 py-1 text-xs sm:text-sm">
+          <span>☰</span> <span id="missionBadge">Situação 1 de 10</span>
+        </button>
+        <span id="problemCategoryTag" class="hidden sm:inline-block bg-cyan-950 text-cyan-300 border border-cyan-700/60 text-xs font-extrabold px-2.5 py-0.5 rounded-full">
+          Fração de Quantidade (×)
+        </span>
+      </div>
+
+      <!-- Status do Cancelamento -->
+      <div class="flex items-center gap-2 bg-slate-900 border border-slate-700/80 px-3.5 py-1 rounded-xl">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 hidden md:inline">Status:</span>
+        <span id="statusSummaryDisplay" class="font-mono-tech text-xs sm:text-sm font-extrabold text-amber-400">
+          Etapa 1: Identifique a Operação
+        </span>
+      </div>
+
+      <!-- Indicadores de Pontuação e Sequência -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="flex items-center gap-1" title="Sequência de acertos">
+          <span class="text-sm">🔥</span>
+          <span id="streakText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-orange-400">0x</span>
+        </div>
+        <div class="flex items-center gap-1" title="Situações concluídas">
+          <span class="text-sm">✅</span>
+          <span id="completedText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-emerald-400">0/10</span>
+        </div>
+        <div class="bg-cyan-950/80 border border-cyan-600/40 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+          <span class="text-[11px] font-bold text-cyan-300">PTS</span>
+          <span id="scoreText" class="font-mono-tech text-xs sm:text-sm font-extrabold text-white">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORPO CENTRAL DIVIDIDO: MESA DE CANCELAMENTO (ESQUERDA) + CONSOLE DE ETAPAS (DIREITA) -->
+    <div class="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3 p-2.5 sm:p-3.5 overflow-hidden">
+
+      <!-- COLUNA ESQUERDA (7 cols): SITUAÇÃO-PROBLEMA + MESA INTERATIVA DE CANCELAMENTO -->
+      <div class="lg:col-span-7 flex flex-col min-h-0 bg-slate-950/75 border border-slate-800 rounded-2xl p-2.5 sm:p-3 relative overflow-hidden">
+        <!-- Cabeçalho e Situação-Problema -->
+        <div class="bg-slate-900/90 border border-cyan-500/30 rounded-xl p-2.5 mb-2 shrink-0">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span id="problemContextLabel" class="text-[11px] font-extrabold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+              <span>📋</span> Situação-Problema
+            </span>
+            <button onclick="toggleHint()" id="btnHint" class="btn-lab btn-amber px-2.5 py-0.5 text-xs shrink-0">
+              💡 Dica
+            </button>
+          </div>
+          <p id="problemStatementText" class="text-xs sm:text-sm text-slate-100 font-bold leading-snug">
+            Carregando situação-problema...
+          </p>
+        </div>
+
+        <!-- Banner de Dica (Exibido ao clicar em Dica) -->
+        <div id="hintBanner" class="hidden mb-2 bg-amber-950/90 border border-amber-500/60 text-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 animate-pop">
+          💡 Dica carregando...
+        </div>
+
+        <!-- Canvas Interativo da Operação e Corte por Cancelamento -->
+        <div class="relative flex-1 min-h-0 w-full rounded-xl overflow-hidden border border-slate-800/90 bg-[#060b19]">
+          <canvas id="cancelCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA (5 cols): CONSOLE DE 3 ETAPAS COM COMPREENSÃO -->
+      <div class="lg:col-span-5 flex flex-col justify-between min-h-0 bg-slate-900/80 border border-slate-800 rounded-2xl p-2.5 sm:p-3.5 gap-2 overflow-hidden">
+
+        <!-- ETAPA 1: RECONHECER A OPERAÇÃO DA SITUAÇÃO-PROBLEMA -->
+        <div id="step1Box" class="bg-slate-950/90 border-2 border-cyan-500/70 rounded-xl p-2.5 transition-all shrink-0">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-cyan-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">1</span>
+              Qual operação resolve o problema?
+            </span>
+            <span id="step1Badge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              Interpretação
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="selectOperation('×')" id="btnOpMult" class="btn-lab btn-slate py-2 px-2.5 text-xs sm:text-sm font-extrabold">
+              <span class="text-base text-cyan-400">×</span> Multiplicar
+            </button>
+            <button onclick="selectOperation('÷')" id="btnOpDiv" class="btn-lab btn-slate py-2 px-2.5 text-xs sm:text-sm font-extrabold">
+              <span class="text-base text-amber-400">÷</span> Dividir
+            </button>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: APLICAR CANCELAMENTO (SIMPLIFICAÇÃO CRUZADA) -->
+        <div id="step2Box" class="bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 transition-all shrink-0 opacity-50">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-violet-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-violet-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">2</span>
+              Cancelamento (Cortar Fator Comum)
+            </span>
+            <span id="step2Badge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+              Bloqueado
+            </span>
+          </div>
+
+          <p id="cancelInstructionText" class="text-xs text-slate-300 font-semibold leading-snug">
+            Selecione primeiro a operação na Etapa 1.
+          </p>
+
+          <!-- Botão Auxiliar para Inverter 2ª Fração (Aparece apenas quando for Divisão) -->
+          <div id="invertActionArea" class="hidden mt-1.5">
+            <button onclick="invertSecondFraction()" id="btnInvertFrac" class="btn-lab btn-amber w-full py-1.5 text-xs">
+              🔄 Inverter 2ª Fração para Transformar em Multiplicação (×)
+            </button>
+          </div>
+        </div>
+
+        <!-- ETAPA 3: RESULTADO IRREDUTÍVEL APÓS CANCELAMENTO -->
+        <div id="step3Box" class="bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-50">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 inline-flex items-center justify-center font-black text-xs">3</span>
+              Resultado Simplificado
+            </span>
+            <span id="unitGoalTag" class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
+              Fração Irredutível
+            </span>
+          </div>
+
+          <!-- Seletores Numéricos de Numerador e Denominador -->
+          <div class="flex items-center justify-center gap-4 my-auto py-0.5">
+            <div class="flex flex-col items-center gap-0.5">
+              <span class="text-[10px] font-extrabold text-emerald-300 uppercase">Numerador</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="adjustFinalNum(-1)" id="btnNumMinus" disabled class="btn-lab btn-slate w-8 h-8 text-base font-black">−</button>
+                <div id="finalNumDisplay" class="font-mono-tech w-13 h-8 rounded-lg bg-slate-900 border-2 border-emerald-500/60 flex items-center justify-center text-base sm:text-lg font-extrabold text-emerald-300">
+                  1
+                </div>
+                <button onclick="adjustFinalNum(1)" id="btnNumPlus" disabled class="btn-lab btn-slate w-8 h-8 text-base font-black">+</button>
+              </div>
+            </div>
+
+            <div class="text-2xl font-black text-slate-600 mt-3">/</div>
+
+            <div class="flex flex-col items-center gap-0.5">
+              <span class="text-[10px] font-extrabold text-cyan-300 uppercase">Denominador</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="adjustFinalDen(-1)" id="btnDenMinus" disabled class="btn-lab btn-slate w-8 h-8 text-base font-black">−</button>
+                <div id="finalDenDisplay" class="font-mono-tech w-13 h-8 rounded-lg bg-slate-900 border-2 border-cyan-500/60 flex items-center justify-center text-base sm:text-lg font-extrabold text-cyan-300">
+                  1
+                </div>
+                <button onclick="adjustFinalDen(1)" id="btnDenPlus" disabled class="btn-lab btn-slate w-8 h-8 text-base font-black">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Principal: Confirmar Solução -->
+          <button onclick="verifyFinalSolution()" id="btnVerifyFinal" disabled class="btn-lab btn-emerald w-full py-2 text-xs sm:text-sm mt-1">
+            ⚡ CONFIRMAR RESULTADO FINAL
+          </button>
+        </div>
+
+        <!-- Barra Inferior Limpa (Apenas os 4 Botões de Navegação) -->
+        <div class="grid grid-cols-4 gap-1.5 shrink-0">
+          <button onclick="prevMission()" id="btnPrev" class="btn-lab btn-slate py-1.5 px-2 text-xs" title="Voltar">
+            ⬅ Voltar
+          </button>
+          <button onclick="openMissionModal()" class="btn-lab btn-violet py-1.5 px-2 text-xs truncate" title="Ver todas as fases">
+            📋 Fases
+          </button>
+          <button onclick="skipMission()" id="btnSkip" class="btn-lab btn-slate py-1.5 px-2 text-xs truncate" title="Pular fase">
+            ⏭ Pular
+          </button>
+          <button onclick="nextMission()" id="btnNext" class="btn-lab btn-cyan py-1.5 px-2 text-xs truncate" title="Avançar">
+            Avançar ➡
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL DE SUCESSO DA SITUAÇÃO-PROBLEMA -->
+  <div id="successModal" class="hidden fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-emerald-400 rounded-3xl max-w-md w-full p-5 sm:p-6 text-center shadow-2xl animate-pop">
+      <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-3xl flex items-center justify-center mx-auto mb-3">
+        ✂️
+      </div>
+      <h3 id="modalSuccessTitle" class="text-xl sm:text-2xl font-extrabold text-white mb-1">
+        Cancelamento Perfeito!
+      </h3>
+      <p id="modalSuccessDesc" class="text-xs sm:text-sm text-slate-300 font-semibold mb-3 leading-relaxed">
+        Explicação do raciocínio aplicado.
+      </p>
+      <div id="modalFormulaCard" class="font-mono-tech bg-slate-950 border border-cyan-500/40 rounded-xl py-2.5 px-3 mb-4 text-xs sm:text-sm font-extrabold text-emerald-300">
+        3/4 × 2/5 = 3/2 × 1/5 = 3/10
+      </div>
+      <button onclick="advanceFromModal()" id="btnModalContinue" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base">
+        Próxima Situação ➡
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: MAPA DAS 10 SITUAÇÕES-PROBLEMA -->
+  <div id="missionsModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-cyan-500/50 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-pop">
+      <div class="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="text-base sm:text-lg font-extrabold text-white">✂️ Situações-Problema — 7º Ano</h3>
+          <p class="text-xs text-cyan-300 font-semibold">Multiplicação e Divisão de Frações com Cancelamento</p>
+        </div>
+        <button onclick="closeMissionModal()" class="btn-lab btn-slate w-8 h-8 text-sm">✕</button>
+      </div>
+      <div id="missionsGrid" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 overflow-y-auto">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="px-5 py-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+        <span id="modalProgressSummary" class="text-xs sm:text-sm font-bold text-slate-300">0 de 10 concluídas</span>
+        <button onclick="closeMissionModal()" class="btn-lab btn-cyan px-4 py-1.5 text-xs sm:text-sm">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONCLUSÃO FINAL (10/10 SITUAÇÕES) -->
+  <div id="finalVictoryModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-slate-900 border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl animate-pop">
+      <div class="text-5xl mb-2">🏆</div>
+      <h2 class="text-2xl font-extrabold text-white mb-1">Mestre do Cancelamento — 7º Ano!</h2>
+      <p class="text-xs sm:text-sm text-slate-300 font-semibold mb-4">
+        Você resolveu todas as 10 situações-problema de multiplicação e divisão de frações do <strong>GET Ministro Gama Filho</strong>!
+      </p>
+      <div id="finalStatsSummary" class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 mb-4 grid grid-cols-2 gap-3">
+        <!-- Preenchido via JS -->
+      </div>
+      <button onclick="restartWholeLab()" class="btn-lab btn-emerald w-full py-2.5 text-sm sm:text-base">
+        🔄 Reiniciar Situações
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * SISTEMA DE ÁUDIO SINTETIZADO (WEB AUDIO API - SEM ARQUIVOS EXTERNOS)
+     * ============================================================================
+     */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playLabSound(type) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          gain.gain.setValueAtTime(0.07, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        } else if (type === 'slash') {
+          // Som nítido de corte/cancelamento
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(680, now);
+          osc.frequency.exponentialRampToValueAtTime(1180, now + 0.14);
+          gain.gain.setValueAtTime(0.16, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+          osc.start(now);
+          osc.stop(now + 0.16);
+        } else if (type === 'success') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(554.37, now + 0.09);
+          osc.frequency.setValueAtTime(659.25, now + 0.18);
+          osc.frequency.setValueAtTime(880, now + 0.27);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.52);
+          osc.start(now);
+          osc.stop(now + 0.52);
+        } else if (type === 'error') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(185, now);
+          osc.frequency.linearRampToValueAtTime(130, now + 0.24);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+          osc.start(now);
+          osc.stop(now + 0.26);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('btnSound').textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    /**
+     * ============================================================================
+     * TELA CHEIA (FULLSCREEN API)
+     * ============================================================================
+     */
+    function toggleFullscreen() {
+      const el = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const btn = document.getElementById('btnFullscreen');
+      btn.innerHTML = document.fullscreenElement
+        ? '<span>🗗</span><span class="hidden sm:inline">Sair Tela Cheia</span>'
+        : '<span>⛶</span><span class="hidden sm:inline">Tela Cheia</span>';
+      setTimeout(resizeCancelCanvas, 60);
+    });
+
+    /**
+     * ============================================================================
+     * BANCO DAS 10 SITUAÇÕES-PROBLEMA (MULTIPLICAÇÃO E DIVISÃO COM CANCELAMENTO)
+     * ============================================================================
+     * Cada missão possui:
+     * - category: ideia matemática (Fração de uma quantidade, Área, Repartição/Medida, etc.)
+     * - statement: texto claro do problema contextualizado para 7º ano
+     * - op: '×' ou '÷'
+     * - a, b: 1ª fração (a/b)
+     * - c, d: 2ª fração (c/d)
+     * - unitLabel: unidade da resposta (ex: "da barra", "m²", "garrafas", "do trajeto")
+     * - hint: dica explicando por que é multiplicação ou divisão e quais termos cancelar
+     * - comprehensionNote: explicação didática exibida na aprovação
+     */
+    const MISSIONS = [
+      {
+        id: 1,
+        category: 'Fração de uma Fração (×)',
+        statement: 'Lucas ganhou 3/4 de uma barra de chocolate e deu 2/5 dessa parte para sua irmã. Que fração da barra inteira ela recebeu?',
+        op: '×',
+        a: 3, b: 4, c: 2, d: 5,
+        unitLabel: 'da barra',
+        hint: 'Calcular "2/5 DE 3/4" significa multiplicar (×). Depois, cancele o 2 (numerador) com o 4 (denominador) dividindo ambos por 2!',
+        comprehensionNote: 'Calcular uma fração de outra fração corresponde à multiplicação: 3/4 × 2/5. Cancelando 2 e 4 por 2, ficamos com 3/2 × 1/5 = 3/10 da barra.'
+      },
+      {
+        id: 2,
+        category: 'Repartição / Medida (÷)',
+        statement: 'Uma jarra contém 3/4 de litro de suco natural. Quantos copos de 1/8 de litro podem ser enchidos totalmente com esse suco?',
+        op: '÷',
+        a: 3, b: 4, c: 1, d: 8,
+        unitLabel: 'copos (fraç.)',
+        hint: 'Queremos saber quantas vezes 1/8 cabe dentro de 3/4: use Divisão (÷), inverta 1/8 para 8/1 e cancele o 8 com o 4!',
+        comprehensionNote: 'Dividir 3/4 por 1/8 equivale a multiplicar 3/4 × 8/1. Cancelando 8 e 4 por 4, obtemos 3/1 × 2/1 = 6/1 = 6 copos!'
+      },
+      {
+        id: 3,
+        category: 'Área Retangular (×)',
+        statement: 'Um canteiro retangular da horta do GET mede 4/9 m de largura por 3/8 m de comprimento. Qual é a área desse canteiro em m²?',
+        op: '×',
+        a: 4, b: 9, c: 3, d: 8,
+        unitLabel: 'm²',
+        hint: 'Área do retângulo = largura × comprimento. Na multiplicação 4/9 × 3/8, há dois cancelamentos cruzados: (4 com 8) e (3 com 9)!',
+        comprehensionNote: 'Multiplicando as dimensões 4/9 × 3/8 e cancelando 4 com 8 (÷4) e 3 com 9 (÷3), chegamos diretamente a 1/3 × 1/2 = 1/6 m².'
+      },
+      {
+        id: 4,
+        category: 'Corte de Fita / Medida (÷)',
+        statement: 'Uma fita de 4/5 de metro será cortada em pedaços iguais de 2/15 de metro para enfeitar murais. Quantos pedaços serão obtidos?',
+        op: '÷',
+        a: 4, b: 5, c: 2, d: 15,
+        unitLabel: 'pedaços',
+        hint: 'Repartir uma medida total em pedaços iguais é Divisão (÷). Inverta 2/15 para 15/2 e cancele (4 com 2) e (15 com 5)!',
+        comprehensionNote: '4/5 ÷ 2/15 = 4/5 × 15/2. Cancelando 4 e 2 por 2 (sobra 2 e 1) e 15 e 5 por 5 (sobra 3 e 1), temos 2 × 3 = 6/1 = 6 pedaços.'
+      },
+      {
+        id: 5,
+        category: 'Fração de um Percurso (×)',
+        statement: 'Em uma trilha ecológica, a turma já percorreu 5/6 do caminho. Desse trecho percorrido, 3/10 eram de subida. Que fração da trilha total era subida?',
+        op: '×',
+        a: 5, b: 6, c: 3, d: 10,
+        unitLabel: 'da trilha',
+        hint: 'Queremos 3/10 DE 5/6, portanto Multiplicação (×). Cancele cruzado: 5 com 10 (dividindo por 5) e 3 com 6 (dividindo por 3)!',
+        comprehensionNote: '5/6 × 3/10: cancelando 5 e 10 por 5, e 3 e 6 por 3, transformamos a conta em 1/2 × 1/2 = 1/4 da trilha!'
+      },
+      {
+        id: 6,
+        category: 'Distribuição de Ingrediente (÷)',
+        statement: 'Uma receita de bolo usa 2/3 de xícara de cacau. Se um pacote tem 8/9 de xícara de cacau, quantas receitas completas dá para fazer?',
+        op: '÷',
+        a: 8, b: 9, c: 2, d: 3,
+        unitLabel: 'receitas',
+        hint: 'Quantos grupos de 2/3 cabem em 8/9? Escolha Divisão (÷), inverta 2/3 para 3/2 e cancele (8 com 2) e (3 com 9)!',
+        comprehensionNote: '8/9 ÷ 2/3 = 8/9 × 3/2. Cancelando 8 com 2 (fica 4 e 1) e 3 com 9 (fica 1 e 3), obtemos 4/3 de receita (1 receita e 1/3).'
+      },
+      {
+        id: 7,
+        category: 'Redução de Escala (×)',
+        statement: 'Uma maquete tem altura de 6/7 m. Uma segunda maquete foi construída com 7/12 da altura da primeira. Qual é a altura da segunda maquete?',
+        op: '×',
+        a: 6, b: 7, c: 7, d: 12,
+        unitLabel: 'metros',
+        hint: 'Aplicar um fator de escala (7/12 de 6/7) é Multiplicação (×). Observe como o 7 de cima cancela inteiro com o 7 de baixo, e o 6 cancela com o 12!',
+        comprehensionNote: 'Em 6/7 × 7/12, cancelamos 7 com 7 (vira 1 e 1) e 6 com 12 por 6 (vira 1 e 2), resultando em 1/2 metro!'
+      },
+      {
+        id: 8,
+        category: 'Velocidade / Taxa (÷)',
+        statement: 'Uma torneira enche 3/10 de um reservatório em 3/5 de hora. Que fração do reservatório ela enche em 1 hora inteira?',
+        op: '÷',
+        a: 3, b: 10, c: 3, d: 5,
+        unitLabel: 'do tanque/h',
+        hint: 'Para achar a taxa por 1 hora, dividimos a fração enchida (3/10) pelo tempo gasto (3/5): Divisão (÷). Inverta 3/5 para 5/3 e cancele!',
+        comprehensionNote: '3/10 ÷ 3/5 = 3/10 × 5/3. Cancelando 3 com 3 e 5 com 10 (÷5), obtemos 1/2 do reservatório por hora!'
+      },
+      {
+        id: 9,
+        category: 'Orçamento Escolar (×)',
+        statement: 'O grêmio estudantil reservou 8/15 da verba para esportes e gastou 5/12 dessa reserva em bolas de vôlei. Que fração da verba total foi usada nas bolas?',
+        op: '×',
+        a: 8, b: 15, c: 5, d: 12,
+        unitLabel: 'da verba',
+        hint: 'Fração de uma parte reservada = Multiplicação (×): 8/15 × 5/12. Cancele 8 e 12 por 4, e 5 e 15 por 5!',
+        comprehensionNote: '8/15 × 5/12: dividindo 8 e 12 por 4 (fica 2 e 3) e 5 e 15 por 5 (fica 1 e 3), multiplicamos 2/3 × 1/3 = 2/9 da verba total.'
+      },
+      {
+        id: 10,
+        category: 'Desafio Final • Repartição (÷)',
+        statement: 'Um rolo com 9/10 kg de arame será dividido em rolos menores de 3/20 kg cada para uma aula de ciências. Quantos rolos menores serão formados?',
+        op: '÷',
+        a: 9, b: 10, c: 3, d: 20,
+        unitLabel: 'rolos',
+        hint: 'Dividir o peso total (9/10 kg) pelo peso de cada rolo menor (3/20 kg) é Divisão (÷). Inverta 3/20 para 20/3 e cancele (9 com 3) e (20 com 10)!',
+        comprehensionNote: '9/10 ÷ 3/20 = 9/10 × 20/3. Cancelando 9 com 3 (sobra 3 e 1) e 20 com 10 (sobra 2 e 1), temos 3 × 2 = 6/1 = 6 rolos menores!'
+      }
+    ];
+
+    /**
+     * ============================================================================
+     * FUNÇÕES MATEMÁTICAS E ESTADO DO LABORATÓRIO
+     * ============================================================================
+     */
+    function gcd(a, b) {
+      a = Math.abs(a);
+      b = Math.abs(b);
+      return b === 0 ? a : gcd(b, a % b);
+    }
+
+    const labState = {
+      missionIdx: 0,
+      completed: Array(MISSIONS.length).fill(false),
+      score: 0,
+      streak: 0,
+      hintVisible: false,
+
+      // Controle das 3 etapas pedagógicas
+      step: 1, // 1: Escolher operação | 2: Inverter (se ÷) e Cancelar cruzado | 3: Calcular resultado
+      chosenOp: null,
+      inverted: false,
+
+      // Valores atuais exibidos nas 4 posições da multiplicação: [num1, den1, num2, den2]
+      origTerms: [1, 1, 1, 1],
+      currTerms: [1, 1, 1, 1],
+      cancelledFlags: [false, false, false, false],
+
+      // Seleção de par para cancelamento direto no Canvas
+      selectedTermIdx: null,
+      pairBoxes: [], // Retângulos clicáveis dos 4 termos no canvas
+      slashAnimations: [],
+
+      // Etapa 3: Resposta final simplificada
+      finalNum: 1,
+      finalDen: 1
+    };
+
+    const canvas = document.getElementById('cancelCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCancelCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      renderCancelBench();
+    }
+
+    window.addEventListener('resize', resizeCancelCanvas);
+
+    /**
+     * ============================================================================
+     * CARREGAMENTO DE MISSÃO E TRANSIÇÃO ENTRE ETAPAS
+     * ============================================================================
+     */
+    function loadMission(idx) {
+      labState.missionIdx = idx;
+      const m = MISSIONS[idx];
+
+      labState.hintVisible = false;
+      document.getElementById('hintBanner').classList.add('hidden');
+
+      labState.step = 1;
+      labState.chosenOp = null;
+      labState.inverted = false;
+      labState.selectedTermIdx = null;
+      labState.origTerms = [m.a, m.b, m.c, m.d];
+      labState.currTerms = [m.a, m.b, m.c, m.d];
+      labState.cancelledFlags = [false, false, false, false];
+      labState.slashAnimations = [];
+
+      labState.finalNum = 1;
+      labState.finalDen = 1;
+
+      document.getElementById('missionBadge').textContent = `Situação ${m.id} de ${MISSIONS.length}`;
+      document.getElementById('problemCategoryTag').textContent = m.category;
+      document.getElementById('problemStatementText').textContent = m.statement;
+      document.getElementById('unitGoalTag').textContent = m.unitLabel;
+
+      updateScoreHud();
+      updateFinalDisplays();
+      configureStepUI();
+
+      document.getElementById('btnPrev').disabled = (idx === 0);
+      document.getElementById('btnNext').disabled = (idx === MISSIONS.length - 1);
+
+      renderCancelBench();
+    }
+
+    function configureStepUI() {
+      const m = MISSIONS[labState.missionIdx];
+      const s1 = document.getElementById('step1Box');
+      const s2 = document.getElementById('step2Box');
+      const s3 = document.getElementById('step3Box');
+      const statusDisp = document.getElementById('statusSummaryDisplay');
+
+      // Reset estilos dos botões de operação
+      const btnMult = document.getElementById('btnOpMult');
+      const btnDiv = document.getElementById('btnOpDiv');
+      btnMult.className = 'btn-lab btn-slate py-2 px-2.5 text-xs sm:text-sm font-extrabold';
+      btnDiv.className = 'btn-lab btn-slate py-2 px-2.5 text-xs sm:text-sm font-extrabold';
+
+      if (labState.step === 1) {
+        statusDisp.textContent = 'Etapa 1: Identifique a Operação';
+        s1.className = 'bg-slate-950/90 border-2 border-cyan-500/70 rounded-xl p-2.5 transition-all shrink-0 opacity-100';
+        document.getElementById('step1Badge').textContent = 'Ativo';
+        document.getElementById('step1Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40';
+        btnMult.disabled = false;
+        btnDiv.disabled = false;
+
+        s2.className = 'bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 transition-all shrink-0 opacity-50';
+        document.getElementById('step2Badge').textContent = 'Bloqueado';
+        document.getElementById('step2Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400';
+        document.getElementById('cancelInstructionText').textContent = 'Selecione primeiro a operação na Etapa 1.';
+        document.getElementById('invertActionArea').classList.add('hidden');
+
+        s3.className = 'bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-50';
+        toggleStep3Controls(false);
+      } else if (labState.step === 2) {
+        s1.className = 'bg-slate-950/90 border-2 border-emerald-500/50 rounded-xl p-2.5 transition-all shrink-0 opacity-85';
+        document.getElementById('step1Badge').textContent = `Operação (${m.op}) ✔`;
+        document.getElementById('step1Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        btnMult.disabled = true;
+        btnDiv.disabled = true;
+
+        if (m.op === '×') {
+          btnMult.className = 'btn-lab btn-emerald py-2 px-2.5 text-xs sm:text-sm font-extrabold';
+        } else {
+          btnDiv.className = 'btn-lab btn-emerald py-2 px-2.5 text-xs sm:text-sm font-extrabold';
+        }
+
+        s2.className = 'bg-slate-950/90 border-2 border-violet-500/70 rounded-xl p-2.5 transition-all shrink-0 opacity-100';
+        document.getElementById('step2Badge').textContent = 'Ativo';
+        document.getElementById('step2Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/40';
+
+        if (m.op === '÷' && !labState.inverted) {
+          statusDisp.textContent = 'Etapa 2A: Inverta a 2ª Fração';
+          document.getElementById('cancelInstructionText').textContent =
+            'Dividir por uma fração é multiplicar pelo seu inverso. Clique abaixo para inverter a 2ª fração:';
+          document.getElementById('invertActionArea').classList.remove('hidden');
+        } else {
+          statusDisp.textContent = 'Etapa 2B: Corte os Fatores Comuns';
+          document.getElementById('invertActionArea').classList.add('hidden');
+          document.getElementById('cancelInstructionText').textContent =
+            'Clique em um número de CIMA e em um de BAIXO que tenham divisor comum para cancelar!';
+        }
+
+        s3.className = 'bg-slate-950/90 border-2 border-slate-800 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-55';
+        toggleStep3Controls(false);
+      } else {
+        // Etapa 3: Tudo cancelado, agora calcular resultado final!
+        statusDisp.textContent = 'Etapa 3: Multiplique os Termos Restantes';
+        s1.className = 'bg-slate-950/90 border-2 border-emerald-500/40 rounded-xl p-2.5 transition-all shrink-0 opacity-80';
+        btnMult.disabled = true;
+        btnDiv.disabled = true;
+        if (m.op === '×') {
+          btnMult.className = 'btn-lab btn-emerald py-2 px-2.5 text-xs sm:text-sm font-extrabold';
+        } else {
+          btnDiv.className = 'btn-lab btn-emerald py-2 px-2.5 text-xs sm:text-sm font-extrabold';
+        }
+
+        s2.className = 'bg-slate-950/90 border-2 border-emerald-500/50 rounded-xl p-2.5 transition-all shrink-0 opacity-85';
+        document.getElementById('step2Badge').textContent = 'Cancelado ✔';
+        document.getElementById('step2Badge').className = 'text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        document.getElementById('invertActionArea').classList.add('hidden');
+        document.getElementById('cancelInstructionText').textContent =
+          'Todos os fatores comuns foram cancelados! Agora multiplique o que sobrou em cima e embaixo.';
+
+        s3.className = 'bg-slate-950/90 border-2 border-emerald-500/70 rounded-xl p-2.5 flex-1 flex flex-col justify-between transition-all opacity-100';
+        toggleStep3Controls(true);
+      }
+    }
+
+    function toggleStep3Controls(enabled) {
+      ['btnNumMinus', 'btnNumPlus', 'btnDenMinus', 'btnDenPlus', 'btnVerifyFinal'].forEach(id => {
+        document.getElementById(id).disabled = !enabled;
+      });
+    }
+
+    /**
+     * ============================================================================
+     * ETAPA 1: IDENTIFICAR SE O PROBLEMA É MULTIPLICAÇÃO OU DIVISÃO
+     * ============================================================================
+     */
+    function selectOperation(op) {
+      if (labState.step !== 1) return;
+      const m = MISSIONS[labState.missionIdx];
+
+      if (op === m.op) {
+        playLabSound('slash');
+        labState.chosenOp = op;
+        labState.step = 2;
+        if (m.op === '×') {
+          labState.inverted = true; // Já é multiplicação
+        }
+        configureStepUI();
+        renderCancelBench();
+      } else {
+        playLabSound('error');
+        const box = document.getElementById('step1Box');
+        box.classList.remove('shake-box');
+        void box.offsetWidth;
+        box.classList.add('shake-box');
+        document.getElementById('statusSummaryDisplay').textContent =
+          op === '×'
+            ? '⚠️ Releia: o problema pede quantas partes cabem no total (Divisão)!'
+            : '⚠️ Releia: o problema pede uma fração DE outra fração (Multiplicação)!';
+      }
+    }
+
+    /**
+     * ============================================================================
+     * ETAPA 2A: INVERTER SEGUNDA FRAÇÃO (QUANDO FOR DIVISÃO)
+     * ============================================================================
+     */
+    function invertSecondFraction() {
+      const m = MISSIONS[labState.missionIdx];
+      if (labState.step !== 2 || m.op !== '÷' || labState.inverted) return;
+
+      playLabSound('slash');
+      labState.inverted = true;
+      // Troca numerador e denominador da segunda fração: [a, b, c, d] -> [a, b, d, c]
+      labState.origTerms = [m.a, m.b, m.d, m.c];
+      labState.currTerms = [m.a, m.b, m.d, m.c];
+      configureStepUI();
+      renderCancelBench();
+    }
+
+    /**
+     * ============================================================================
+     * ETAPA 2B: CANCELAMENTO INTERATIVO POR CLIQUE NO CANVAS
+     * ============================================================================
+     * Índices dos 4 termos da multiplicação:
+     * 0: Numerador 1 (cima-esquerda)
+     * 1: Denominador 1 (baixo-esquerda)
+     * 2: Numerador 2 (cima-direita)
+     * 3: Denominador 2 (baixo-direita)
+     */
+    function hasRemainingCancellations() {
+      const [n1, d1, n2, d2] = labState.currTerms;
+      const pairs = [
+        [n1, d1],
+        [n1, d2],
+        [n2, d1],
+        [n2, d2]
+      ];
+      return pairs.some(([num, den]) => gcd(num, den) > 1);
+    }
+
+    canvas.addEventListener('click', (e) => {
+      if (labState.step !== 2 || !labState.inverted) return;
+      const rect = canvas.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+
+      const clickedBox = labState.pairBoxes.find(b =>
+        px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h
+      );
+
+      if (!clickedBox) return;
+      const idx = clickedBox.idx;
+
+      if (labState.selectedTermIdx === null) {
+        playLabSound('click');
+        labState.selectedTermIdx = idx;
+        renderCancelBench();
+        return;
+      }
+
+      if (labState.selectedTermIdx === idx) {
+        playLabSound('click');
+        labState.selectedTermIdx = null;
+        renderCancelBench();
+        return;
+      }
+
+      const firstIdx = labState.selectedTermIdx;
+      const secondIdx = idx;
+      const isFirstTop = (firstIdx === 0 || firstIdx === 2);
+      const isSecondTop = (secondIdx === 0 || secondIdx === 2);
+
+      // Só é possível cancelar um termo de CIMA (numerador) com um de BAIXO (denominador)
+      if (isFirstTop === isSecondTop) {
+        playLabSound('error');
+        document.getElementById('cancelInstructionText').textContent =
+          '⚠️ Para cancelar, selecione um número de CIMA (numerador) e um de BAIXO (denominador)!';
+        labState.selectedTermIdx = secondIdx;
+        renderCancelBench();
+        return;
+      }
+
+      const val1 = labState.currTerms[firstIdx];
+      const val2 = labState.currTerms[secondIdx];
+      const factor = gcd(val1, val2);
+
+      if (factor > 1) {
+        playLabSound('slash');
+        labState.currTerms[firstIdx] = val1 / factor;
+        labState.currTerms[secondIdx] = val2 / factor;
+        labState.cancelledFlags[firstIdx] = true;
+        labState.cancelledFlags[secondIdx] = true;
+        labState.selectedTermIdx = null;
+
+        document.getElementById('cancelInstructionText').textContent =
+          `✂️ Cancelado por ${factor}! (${val1} ÷ ${factor} = ${val1 / factor} e ${val2} ÷ ${factor} = ${val2 / factor})`;
+
+        if (!hasRemainingCancellations()) {
+          labState.step = 3;
+          configureStepUI();
+        }
+        renderCancelBench();
+      } else {
+        playLabSound('error');
+        document.getElementById('cancelInstructionText').textContent =
+          `⚠️ ${val1} e ${val2} não têm divisor comum maior que 1! Tente outro par cruzado.`;
+        labState.selectedTermIdx = null;
+        renderCancelBench();
+      }
+    });
+
+    /**
+     * ============================================================================
+     * ETAPA 3: AJUSTE E VERIFICAÇÃO DO RESULTADO FINAL
+     * ============================================================================
+     */
+    function adjustFinalNum(delta) {
+      if (labState.step !== 3) return;
+      playLabSound('click');
+      labState.finalNum = Math.max(1, Math.min(60, labState.finalNum + delta));
+      updateFinalDisplays();
+    }
+
+    function adjustFinalDen(delta) {
+      if (labState.step !== 3) return;
+      playLabSound('click');
+      labState.finalDen = Math.max(1, Math.min(60, labState.finalDen + delta));
+      updateFinalDisplays();
+    }
+
+    function updateFinalDisplays() {
+      document.getElementById('finalNumDisplay').textContent = labState.finalNum;
+      document.getElementById('finalDenDisplay').textContent = labState.finalDen;
+    }
+
+    function verifyFinalSolution() {
+      if (labState.step !== 3) return;
+      const [n1, d1, n2, d2] = labState.currTerms;
+      const expectedNum = n1 * n2;
+      const expectedDen = d1 * d2;
+
+      if (labState.finalNum === expectedNum && labState.finalDen === expectedDen) {
+        playLabSound('success');
+        const m = MISSIONS[labState.missionIdx];
+
+        if (!labState.completed[labState.missionIdx]) {
+          labState.completed[labState.missionIdx] = true;
+          labState.streak++;
+          labState.score += 100 + labState.streak * 20;
+          updateScoreHud();
+        }
+
+        const formulaStr = m.op === '×'
+          ? `${m.a}/${m.b} × ${m.c}/${m.d}  ➔  ${n1}/${d1} × ${n2}/${d2} = ${expectedNum}/${expectedDen}`
+          : `${m.a}/${m.b} ÷ ${m.c}/${m.d}  =  ${m.a}/${m.b} × ${m.d}/${m.c}  ➔  ${n1}/${d1} × ${n2}/${d2} = ${expectedNum}/${expectedDen}`;
+
+        document.getElementById('modalSuccessTitle').textContent = `Situação ${m.id} Resolvida!`;
+        document.getElementById('modalSuccessDesc').textContent = m.comprehensionNote;
+        document.getElementById('modalFormulaCard').textContent = formulaStr;
+
+        const allDone = labState.completed.every(Boolean);
+        document.getElementById('btnModalContinue').textContent = allDone
+          ? 'Ver Certificado Final 🏆'
+          : 'Próxima Situação ➡';
+
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        playLabSound('error');
+        labState.streak = 0;
+        updateScoreHud();
+        const box = document.getElementById('step3Box');
+        box.classList.remove('shake-box');
+        void box.offsetWidth;
+        box.classList.add('shake-box');
+      }
+    }
+
+    /**
+     * ============================================================================
+     * NAVEGAÇÃO ENTRE MISSÕES E MODAIS
+     * ============================================================================
+     */
+    function prevMission() {
+      if (labState.missionIdx > 0) {
+        playLabSound('click');
+        loadMission(labState.missionIdx - 1);
+      }
+    }
+
+    function nextMission() {
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        playLabSound('click');
+        loadMission(labState.missionIdx + 1);
+      }
+    }
+
+    function skipMission() {
+      playLabSound('click');
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        loadMission(labState.missionIdx + 1);
+      } else {
+        const firstPending = labState.completed.findIndex(v => !v);
+        loadMission(firstPending !== -1 ? firstPending : 0);
+      }
+    }
+
+    function updateScoreHud() {
+      const doneCount = labState.completed.filter(Boolean).length;
+      document.getElementById('completedText').textContent = `${doneCount}/${MISSIONS.length}`;
+      document.getElementById('streakText').textContent = `${labState.streak}x`;
+      document.getElementById('scoreText').textContent = labState.score;
+    }
+
+    function toggleHint() {
+      playLabSound('click');
+      const m = MISSIONS[labState.missionIdx];
+      const banner = document.getElementById('hintBanner');
+      labState.hintVisible = !labState.hintVisible;
+      if (labState.hintVisible) {
+        banner.textContent = `💡 ${m.hint}`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function advanceFromModal() {
+      const modal = document.getElementById('successModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      if (labState.completed.every(Boolean)) {
+        showFinalVictory();
+        return;
+      }
+
+      if (labState.missionIdx < MISSIONS.length - 1) {
+        loadMission(labState.missionIdx + 1);
+      } else {
+        const nextPending = labState.completed.findIndex(v => !v);
+        loadMission(nextPending !== -1 ? nextPending : 0);
+      }
+    }
+
+    function showFinalVictory() {
+      const done = labState.completed.filter(Boolean).length;
+      document.getElementById('finalStatsSummary').innerHTML = `
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Situações</div>
+          <div class="font-mono-tech text-xl font-extrabold text-emerald-400">${done}/${MISSIONS.length}</div>
+        </div>
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase">Pontuação</div>
+          <div class="font-mono-tech text-xl font-extrabold text-amber-400">${labState.score}</div>
+        </div>
+      `;
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function restartWholeLab() {
+      const modal = document.getElementById('finalVictoryModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      labState.completed = Array(MISSIONS.length).fill(false);
+      labState.score = 0;
+      labState.streak = 0;
+      loadMission(0);
+    }
+
+    function openMissionModal() {
+      playLabSound('click');
+      const grid = document.getElementById('missionsGrid');
+      grid.innerHTML = '';
+
+      MISSIONS.forEach((m, idx) => {
+        const done = labState.completed[idx];
+        const isCurrent = idx === labState.missionIdx;
+        const btn = document.createElement('button');
+        btn.className = `text-left p-3 rounded-2xl border-2 transition cursor-pointer flex items-center justify-between ${
+          done
+            ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-100'
+            : isCurrent
+              ? 'bg-cyan-950/70 border-cyan-400 text-white'
+              : 'bg-slate-950/80 border-slate-800 hover:border-slate-600 text-slate-200'
+        }`;
+        btn.onclick = () => {
+          closeMissionModal();
+          loadMission(idx);
+        };
+        btn.innerHTML = `
+          <div>
+            <div class="text-[11px] font-extrabold uppercase tracking-wider ${done ? 'text-emerald-400' : 'text-cyan-400'}">
+              Situação ${m.id} • ${m.category}
+            </div>
+            <div class="font-mono-tech text-xs sm:text-sm font-extrabold mt-0.5">
+              ${m.a}/${m.b} ${m.op} ${m.c}/${m.d}
+            </div>
+          </div>
+          <span class="text-lg">${done ? '✅' : isCurrent ? '▶' : '✂️'}</span>
+        `;
+        grid.appendChild(btn);
+      });
+
+      const doneCount = labState.completed.filter(Boolean).length;
+      document.getElementById('modalProgressSummary').textContent = `${doneCount} de ${MISSIONS.length} concluídas`;
+
+      const modal = document.getElementById('missionsModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMissionModal() {
+      const modal = document.getElementById('missionsModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /**
+     * ============================================================================
+     * RENDERIZAÇÃO DA MESA INTERATIVA DE CANCELAMENTO EM HTML5 CANVAS
+     * ============================================================================
+     */
+    function renderCancelBench() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w <= 0 || h <= 0) return;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Grade de fundo sutil
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.06)';
+      ctx.lineWidth = 1;
+      for (let gx = 0; gx < w; gx += 28) {
+        ctx.beginPath();
+        ctx.moveTo(gx, 0);
+        ctx.lineTo(gx, h);
+        ctx.stroke();
+      }
+      for (let gy = 0; gy < h; gy += 28) {
+        ctx.beginPath();
+        ctx.moveTo(0, gy);
+        ctx.lineTo(w, gy);
+        ctx.stroke();
+      }
+
+      const m = MISSIONS[labState.missionIdx];
+      const boxW = Math.min(82, w * 0.17);
+      const boxH = Math.min(54, h * 0.22);
+
+      const f1X = w * 0.30;
+      const f2X = w * 0.70;
+      const midY = h * 0.52;
+      const topY = midY - boxH - 16;
+      const botY = midY + 16;
+
+      // Cabeçalho de orientação dentro da mesa
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '800 12px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      if (labState.step === 1) {
+        ctx.fillText('FRAÇÕES EXTRAÍDAS DO PROBLEMA (ESCOLHA × OU ÷)', w * 0.5, 22);
+      } else if (m.op === '÷' && !labState.inverted) {
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillText('DIVISÃO IDENTIFICADA: INVERTE A 2ª FRAÇÃO PARA MULTIPLICAR', w * 0.5, 22);
+      } else if (labState.step === 2) {
+        ctx.fillStyle = '#c084fc';
+        ctx.fillText('TOQUE EM UM TERMO DE CIMA E UM DE BAIXO PARA CANCELAR', w * 0.5, 22);
+      } else {
+        ctx.fillStyle = '#34d399';
+        ctx.fillText('CANCELAMENTO CONCLUÍDO! MULTIPLIQUE OS TERMOS RESTANTES', w * 0.5, 22);
+      }
+
+      // Traços de fração
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(f1X - boxW * 0.65, midY);
+      ctx.lineTo(f1X + boxW * 0.65, midY);
+      ctx.moveTo(f2X - boxW * 0.65, midY);
+      ctx.lineTo(f2X + boxW * 0.65, midY);
+      ctx.stroke();
+
+      // Operador central (?, ÷ ou ×)
+      const opSymbol = labState.step === 1 ? '?' : (labState.inverted ? '×' : m.op);
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.arc(w * 0.5, midY, 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = opSymbol === '×' ? '#10b981' : '#f59e0b';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = opSymbol === '×' ? '#34d399' : '#fbbf24';
+      ctx.font = '800 22px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(opSymbol, w * 0.5, midY + 1);
+      ctx.textBaseline = 'alphabetic';
+
+      // Coordenadas dos 4 cards dos termos: [num1, den1, num2, den2]
+      const coords = [
+        { idx: 0, x: f1X - boxW / 2, y: topY, isTop: true },
+        { idx: 1, x: f1X - boxW / 2, y: botY, isTop: false },
+        { idx: 2, x: f2X - boxW / 2, y: topY, isTop: true },
+        { idx: 3, x: f2X - boxW / 2, y: botY, isTop: false }
+      ];
+
+      labState.pairBoxes = coords.map(c => ({ ...c, w: boxW, h: boxH }));
+
+      coords.forEach((c) => {
+        const origVal = labState.origTerms[c.idx];
+        const currVal = labState.currTerms[c.idx];
+        const isCancelled = labState.cancelledFlags[c.idx];
+        const isSelected = labState.selectedTermIdx === c.idx;
+
+        // Card do termo
+        ctx.fillStyle = isSelected
+          ? 'rgba(139, 92, 246, 0.35)'
+          : isCancelled
+            ? 'rgba(16, 185, 129, 0.16)'
+            : 'rgba(15, 23, 42, 0.92)';
+
+        ctx.beginPath();
+        ctx.roundRect(c.x, c.y, boxW, boxH, 12);
+        ctx.fill();
+
+        ctx.lineWidth = isSelected ? 3 : 2;
+        ctx.strokeStyle = isSelected
+          ? '#a78bfa'
+          : isCancelled
+            ? '#10b981'
+            : (c.isTop ? '#38bdf8' : '#818cf8');
+        ctx.stroke();
+
+        const centerX = c.x + boxW / 2;
+        const centerY = c.y + boxH / 2 + 6;
+
+        if (!isCancelled) {
+          // Número normal
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '800 22px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(String(currVal), centerX, centerY);
+        } else {
+          // Número original cortado diagonalmente + novo valor simplificado ao lado!
+          ctx.fillStyle = '#64748b';
+          ctx.font = '700 16px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(String(origVal), centerX - 15, centerY);
+
+          // Traço diagonal vermelho de cancelamento
+          ctx.strokeStyle = '#ef4444';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(centerX - 25, centerY + 4);
+          ctx.lineTo(centerX - 5, centerY - 14);
+          ctx.stroke();
+
+          // Novo valor simplificado em verde esmeralda
+          ctx.fillStyle = '#34d399';
+          ctx.font = '800 22px "JetBrains Mono", monospace';
+          ctx.fillText(String(currVal), centerX + 16, centerY);
+        }
+      });
+
+      // Rótulos inferiores das frações
+      ctx.fillStyle = '#64748b';
+      ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('1ª Fração', f1X, botY + boxH + 18);
+      ctx.fillText(labState.inverted && m.op === '÷' ? '2ª Fração (Invertida)' : '2ª Fração', f2X, botY + boxH + 18);
+    }
+
+    window.onload = function () {
+      resizeCancelCanvas();
+      loadMission(0);
+    };
+  </script>
+</body>
+</html>
